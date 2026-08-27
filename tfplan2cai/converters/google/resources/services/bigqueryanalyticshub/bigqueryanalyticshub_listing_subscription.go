@@ -122,6 +122,12 @@ func GetBigqueryAnalyticsHubListingSubscriptionApiObject(d tpgresource.Terraform
 	} else if v, ok := d.GetOkExists("destination_dataset"); !tpgresource.IsEmptyValue(reflect.ValueOf(destinationDatasetProp)) && (ok || !reflect.DeepEqual(v, destinationDatasetProp)) {
 		obj["destinationDataset"] = destinationDatasetProp
 	}
+	destinationPubsubSubscriptionProp, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscription(d.Get("destination_pubsub_subscription"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("destination_pubsub_subscription"); !tpgresource.IsEmptyValue(reflect.ValueOf(destinationPubsubSubscriptionProp)) && (ok || !reflect.DeepEqual(v, destinationPubsubSubscriptionProp)) {
+		obj["destinationPubsubSubscription"] = destinationPubsubSubscriptionProp
+	}
 
 	return obj, nil
 }
@@ -245,5 +251,639 @@ func expandBigqueryAnalyticsHubListingSubscriptionDestinationDatasetLabels(v int
 
 func expandBigqueryAnalyticsHubListingSubscriptionDestinationDatasetReplicaLocations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPubsubSubscription, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscription(original["pubsub_subscription"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPubsubSubscription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pubsubSubscription"] = transformedPubsubSubscription
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedName, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedPushConfig, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfig(original["push_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPushConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pushConfig"] = transformedPushConfig
+	}
+
+	transformedBigqueryConfig, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfig(original["bigquery_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBigqueryConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bigqueryConfig"] = transformedBigqueryConfig
+	}
+
+	transformedCloudStorageConfig, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfig(original["cloud_storage_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCloudStorageConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["cloudStorageConfig"] = transformedCloudStorageConfig
+	}
+
+	transformedAckDeadlineSeconds, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionAckDeadlineSeconds(original["ack_deadline_seconds"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAckDeadlineSeconds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ackDeadlineSeconds"] = transformedAckDeadlineSeconds
+	}
+
+	transformedRetainAckedMessages, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionRetainAckedMessages(original["retain_acked_messages"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRetainAckedMessages); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["retainAckedMessages"] = transformedRetainAckedMessages
+	}
+
+	transformedMessageRetentionDuration, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionMessageRetentionDuration(original["message_retention_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMessageRetentionDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["messageRetentionDuration"] = transformedMessageRetentionDuration
+	}
+
+	transformedLabels, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionLabels(original["labels"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLabels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["labels"] = transformedLabels
+	}
+
+	transformedEnableMessageOrdering, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionEnableMessageOrdering(original["enable_message_ordering"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableMessageOrdering); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableMessageOrdering"] = transformedEnableMessageOrdering
+	}
+
+	transformedExpirationPolicy, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionExpirationPolicy(original["expiration_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpirationPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expirationPolicy"] = transformedExpirationPolicy
+	}
+
+	transformedDeadLetterPolicy, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionDeadLetterPolicy(original["dead_letter_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDeadLetterPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["deadLetterPolicy"] = transformedDeadLetterPolicy
+	}
+
+	transformedRetryPolicy, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionRetryPolicy(original["retry_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRetryPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["retryPolicy"] = transformedRetryPolicy
+	}
+
+	transformedFilter, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionFilter(original["filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filter"] = transformedFilter
+	}
+
+	transformedEnableExactlyOnceDelivery, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionEnableExactlyOnceDelivery(original["enable_exactly_once_delivery"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableExactlyOnceDelivery); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableExactlyOnceDelivery"] = transformedEnableExactlyOnceDelivery
+	}
+
+	transformedDetached, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionDetached(original["detached"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDetached); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["detached"] = transformedDetached
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPushEndpoint, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigPushEndpoint(original["push_endpoint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPushEndpoint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pushEndpoint"] = transformedPushEndpoint
+	}
+
+	transformedAttributes, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigAttributes(original["attributes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAttributes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["attributes"] = transformedAttributes
+	}
+
+	transformedOidcToken, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigOidcToken(original["oidc_token"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOidcToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oidcToken"] = transformedOidcToken
+	}
+
+	transformedNoWrapper, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigNoWrapper(original["no_wrapper"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNoWrapper); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["noWrapper"] = transformedNoWrapper
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigPushEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigAttributes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigOidcToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedServiceAccountEmail, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigOidcTokenServiceAccountEmail(original["service_account_email"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountEmail"] = transformedServiceAccountEmail
+	}
+
+	transformedAudience, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigOidcTokenAudience(original["audience"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAudience); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["audience"] = transformedAudience
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigOidcTokenServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigOidcTokenAudience(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigNoWrapper(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWriteMetadata, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigNoWrapperWriteMetadata(original["write_metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWriteMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["writeMetadata"] = transformedWriteMetadata
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionPushConfigNoWrapperWriteMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTable, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigTable(original["table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["table"] = transformedTable
+	}
+
+	transformedUseTopicSchema, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigUseTopicSchema(original["use_topic_schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseTopicSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useTopicSchema"] = transformedUseTopicSchema
+	}
+
+	transformedWriteMetadata, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigWriteMetadata(original["write_metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWriteMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["writeMetadata"] = transformedWriteMetadata
+	}
+
+	transformedDropUnknownFields, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigDropUnknownFields(original["drop_unknown_fields"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDropUnknownFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dropUnknownFields"] = transformedDropUnknownFields
+	}
+
+	transformedUseTableSchema, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigUseTableSchema(original["use_table_schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseTableSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useTableSchema"] = transformedUseTableSchema
+	}
+
+	transformedServiceAccountEmail, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigServiceAccountEmail(original["service_account_email"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountEmail"] = transformedServiceAccountEmail
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigUseTopicSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigWriteMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigDropUnknownFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigUseTableSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionBigqueryConfigServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedBucket, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigBucket(original["bucket"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBucket); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bucket"] = transformedBucket
+	}
+
+	transformedFilenamePrefix, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigFilenamePrefix(original["filename_prefix"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilenamePrefix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filenamePrefix"] = transformedFilenamePrefix
+	}
+
+	transformedFilenameSuffix, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigFilenameSuffix(original["filename_suffix"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilenameSuffix); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filenameSuffix"] = transformedFilenameSuffix
+	}
+
+	transformedFilenameDatetimeFormat, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigFilenameDatetimeFormat(original["filename_datetime_format"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilenameDatetimeFormat); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filenameDatetimeFormat"] = transformedFilenameDatetimeFormat
+	}
+
+	transformedMaxDuration, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigMaxDuration(original["max_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxDuration"] = transformedMaxDuration
+	}
+
+	transformedMaxBytes, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigMaxBytes(original["max_bytes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxBytes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxBytes"] = transformedMaxBytes
+	}
+
+	transformedMaxMessages, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigMaxMessages(original["max_messages"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxMessages); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxMessages"] = transformedMaxMessages
+	}
+
+	transformedServiceAccountEmail, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigServiceAccountEmail(original["service_account_email"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountEmail"] = transformedServiceAccountEmail
+	}
+
+	transformedAvroConfig, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigAvroConfig(original["avro_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAvroConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["avroConfig"] = transformedAvroConfig
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigBucket(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigFilenamePrefix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigFilenameSuffix(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigFilenameDatetimeFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigMaxDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigMaxBytes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigMaxMessages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigAvroConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWriteMetadata, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigAvroConfigWriteMetadata(original["write_metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWriteMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["writeMetadata"] = transformedWriteMetadata
+	}
+
+	transformedUseTopicSchema, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigAvroConfigUseTopicSchema(original["use_topic_schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUseTopicSchema); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["useTopicSchema"] = transformedUseTopicSchema
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigAvroConfigWriteMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionCloudStorageConfigAvroConfigUseTopicSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionAckDeadlineSeconds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionRetainAckedMessages(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionMessageRetentionDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionEnableMessageOrdering(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionExpirationPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTtl, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionExpirationPolicyTtl(original["ttl"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTtl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ttl"] = transformedTtl
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionExpirationPolicyTtl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionDeadLetterPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDeadLetterTopic, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionDeadLetterPolicyDeadLetterTopic(original["dead_letter_topic"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDeadLetterTopic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["deadLetterTopic"] = transformedDeadLetterTopic
+	}
+
+	transformedMaxDeliveryAttempts, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionDeadLetterPolicyMaxDeliveryAttempts(original["max_delivery_attempts"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxDeliveryAttempts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxDeliveryAttempts"] = transformedMaxDeliveryAttempts
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionDeadLetterPolicyDeadLetterTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionDeadLetterPolicyMaxDeliveryAttempts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionRetryPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMinimumBackoff, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionRetryPolicyMinimumBackoff(original["minimum_backoff"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinimumBackoff); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minimumBackoff"] = transformedMinimumBackoff
+	}
+
+	transformedMaximumBackoff, err := expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionRetryPolicyMaximumBackoff(original["maximum_backoff"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaximumBackoff); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maximumBackoff"] = transformedMaximumBackoff
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionRetryPolicyMinimumBackoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionRetryPolicyMaximumBackoff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionEnableExactlyOnceDelivery(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubListingSubscriptionDestinationPubsubSubscriptionPubsubSubscriptionDetached(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
