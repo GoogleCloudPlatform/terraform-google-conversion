@@ -133,6 +133,16 @@ func (c *ColabRuntimeCai2hclConverter) convertResourceData(asset caiasset.Asset,
 	}
 	hclData := make(map[string]interface{})
 
+	res, err = resourceColabRuntimeDecoder(d, config, res)
+	if err != nil {
+		return nil, err
+	}
+
+	if res == nil {
+		// Decoding the object has resulted in it being gone. It may be marked deleted.
+		return nil, nil
+	}
+
 	outputFields := map[string]struct{}{"expiration_time": struct{}{}, "is_upgradable": struct{}{}, "notebook_runtime_type": struct{}{}, "state": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//aiplatform.googleapis.com/projects/{{project}}/locations/{{location}}/notebookRuntimes/{{name}}", outputFields, hclData)
 
@@ -206,4 +216,11 @@ func flattenColabRuntimeDescription(v interface{}, d *schema.ResourceData, confi
 		return nil
 	}
 	return v
+}
+
+func resourceColabRuntimeDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+	if v, ok := res["name"].(string); ok && v != "" {
+		res["name"] = tpgresource.GetResourceNameFromSelfLink(v)
+	}
+	return res, nil
 }

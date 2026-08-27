@@ -133,6 +133,16 @@ func (c *ColabNotebookExecutionCai2hclConverter) convertResourceData(asset caias
 	}
 	hclData := make(map[string]interface{})
 
+	res, err = resourceColabNotebookExecutionDecoder(d, config, res)
+	if err != nil {
+		return nil, err
+	}
+
+	if res == nil {
+		// Decoding the object has resulted in it being gone. It may be marked deleted.
+		return nil, nil
+	}
+
 	outputFields := map[string]struct{}{}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//aiplatform.googleapis.com/projects/{{project}}/locations/{{location}}/notebookExecutionJobs/{{notebook_execution_job_id}}", outputFields, hclData)
 
@@ -562,4 +572,11 @@ func flattenColabNotebookExecutionServiceAccount(v interface{}, d *schema.Resour
 		return nil
 	}
 	return v
+}
+
+func resourceColabNotebookExecutionDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+	if v, ok := res["name"].(string); ok && v != "" {
+		res["notebookExecutionJobId"] = tpgresource.GetResourceNameFromSelfLink(v)
+	}
+	return res, nil
 }
