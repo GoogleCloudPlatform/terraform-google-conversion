@@ -182,6 +182,12 @@ func GetAppEngineStandardAppVersionApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("vpc_access_connector"); !tpgresource.IsEmptyValue(reflect.ValueOf(vpcAccessConnectorProp)) && (ok || !reflect.DeepEqual(v, vpcAccessConnectorProp)) {
 		obj["vpcAccessConnector"] = vpcAccessConnectorProp
 	}
+	vpcAccessProp, err := expandAppEngineStandardAppVersionVpcAccess(d.Get("vpc_access"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("vpc_access"); !tpgresource.IsEmptyValue(reflect.ValueOf(vpcAccessProp)) && (ok || !reflect.DeepEqual(v, vpcAccessProp)) {
+		obj["vpcAccess"] = vpcAccessProp
+	}
 	inboundServicesProp, err := expandAppEngineStandardAppVersionInboundServices(d.Get("inbound_services"), d, config)
 	if err != nil {
 		return nil, err
@@ -675,6 +681,90 @@ func expandAppEngineStandardAppVersionVpcAccessConnectorName(v interface{}, d tp
 }
 
 func expandAppEngineStandardAppVersionVpcAccessConnectorEgressSetting(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineStandardAppVersionVpcAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEgressSetting, err := expandAppEngineStandardAppVersionVpcAccessEgressSetting(original["egress_setting"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEgressSetting); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["vpcEgress"] = transformedEgressSetting
+	}
+
+	transformedNetworkInterfaces, err := expandAppEngineStandardAppVersionVpcAccessNetworkInterfaces(original["network_interfaces"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkInterfaces); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkInterfaces"] = transformedNetworkInterfaces
+	}
+
+	return transformed, nil
+}
+
+func expandAppEngineStandardAppVersionVpcAccessEgressSetting(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineStandardAppVersionVpcAccessNetworkInterfaces(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedNetwork, err := expandAppEngineStandardAppVersionVpcAccessNetworkInterfacesNetwork(original["network"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["network"] = transformedNetwork
+		}
+
+		transformedSubnetwork, err := expandAppEngineStandardAppVersionVpcAccessNetworkInterfacesSubnetwork(original["subnetwork"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSubnetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["subnet"] = transformedSubnetwork
+		}
+
+		transformedTags, err := expandAppEngineStandardAppVersionVpcAccessNetworkInterfacesTags(original["tags"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tags"] = transformedTags
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAppEngineStandardAppVersionVpcAccessNetworkInterfacesNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineStandardAppVersionVpcAccessNetworkInterfacesSubnetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAppEngineStandardAppVersionVpcAccessNetworkInterfacesTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
