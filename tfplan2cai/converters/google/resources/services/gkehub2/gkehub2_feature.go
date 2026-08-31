@@ -154,7 +154,7 @@ func expandGKEHub2FeatureSpec(v interface{}, d tpgresource.TerraformResourceData
 	transformedFleetobservability, err := expandGKEHub2FeatureSpecFleetobservability(original["fleetobservability"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedFleetobservability); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["fleetobservability"] = transformedFleetobservability
 	}
 
@@ -175,7 +175,7 @@ func expandGKEHub2FeatureSpec(v interface{}, d tpgresource.TerraformResourceData
 	transformedWorkloadidentity, err := expandGKEHub2FeatureSpecWorkloadidentity(original["workloadidentity"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedWorkloadidentity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["workloadidentity"] = transformedWorkloadidentity
 	}
 
