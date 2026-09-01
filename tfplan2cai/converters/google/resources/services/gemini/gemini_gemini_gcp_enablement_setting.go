@@ -128,6 +128,12 @@ func GetGeminiGeminiGcpEnablementSettingApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("web_grounding_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(webGroundingTypeProp)) && (ok || !reflect.DeepEqual(v, webGroundingTypeProp)) {
 		obj["webGroundingType"] = webGroundingTypeProp
 	}
+	mutationsEnabledProp, err := expandGeminiGeminiGcpEnablementSettingMutationsEnabled(d.Get("mutations_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("mutations_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(mutationsEnabledProp)) && (ok || !reflect.DeepEqual(v, mutationsEnabledProp)) {
+		obj["mutationsEnabled"] = mutationsEnabledProp
+	}
 	effectiveLabelsProp, err := expandGeminiGeminiGcpEnablementSettingEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -147,6 +153,10 @@ func expandGeminiGeminiGcpEnablementSettingDisableWebGrounding(v interface{}, d 
 }
 
 func expandGeminiGeminiGcpEnablementSettingWebGroundingType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGeminiGeminiGcpEnablementSettingMutationsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
