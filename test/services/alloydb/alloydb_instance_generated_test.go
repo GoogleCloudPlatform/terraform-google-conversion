@@ -83,6 +83,9 @@ func TestAccAlloydbInstance(t *testing.T) {
 			Name: "TestAccAlloydbInstance_ObservabilityConfig_Update",
 		},
 		{
+			Name: "TestAccAlloydbInstance_networkConfigNoPublicIpNoDiff",
+		},
+		{
 			Name: "TestAccAlloydbInstance_secondaryInstanceUpdateMachineConfig",
 		},
 		{
