@@ -160,6 +160,12 @@ func GetStorageFtpServerApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("external_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(externalConfigProp)) && (ok || !reflect.DeepEqual(v, externalConfigProp)) {
 		obj["externalConfig"] = externalConfigProp
 	}
+	effectiveLabelsProp, err := expandStorageFtpServerEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
+	}
 
 	return obj, nil
 }
@@ -297,4 +303,15 @@ func expandStorageFtpServerExternalConfig(v interface{}, d tpgresource.Terraform
 func expandStorageFtpServerExternalConfigAllowedCidrBlocks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
+}
+
+func expandStorageFtpServerEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
