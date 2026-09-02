@@ -851,7 +851,21 @@ func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobUpd
 }
 
 func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobWorkbenchRuntime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
 
 func expandColabScheduleCreateNotebookExecutionJobRequestNotebookExecutionJobId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
