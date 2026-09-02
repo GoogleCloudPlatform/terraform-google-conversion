@@ -1249,6 +1249,13 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadence(v inter
 		transformed["tableModifiedCadence"] = transformedTableModifiedCadence
 	}
 
+	transformedRefreshFrequency, err := expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceRefreshFrequency(original["refresh_frequency"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRefreshFrequency); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["refreshFrequency"] = transformedRefreshFrequency
+	}
+
 	transformedInspectTemplateModifiedCadence, err := expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceInspectTemplateModifiedCadence(original["inspect_template_modified_cadence"], d, config)
 	if err != nil {
 		return nil, err
@@ -1330,6 +1337,10 @@ func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceTableMod
 }
 
 func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceTableModifiedCadenceFrequency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataLossPreventionDiscoveryConfigTargetsBigQueryTargetCadenceRefreshFrequency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
