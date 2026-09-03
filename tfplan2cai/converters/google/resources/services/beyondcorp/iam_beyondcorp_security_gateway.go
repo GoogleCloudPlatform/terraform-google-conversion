@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewBeyondcorpSecurityGatewayIamMemberResource returns the google_beyondcorp_security_gateway_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewBeyondcorpSecurityGatewayIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		BeyondcorpSecurityGatewayIamSchema,
+		BeyondcorpSecurityGatewayIamUpdaterProducer,
+		BeyondcorpSecurityGatewayIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(BeyondcorpSecurityGatewayIamParentParentResourceIdentityParser),
+	)
+}
+
 var BeyondcorpSecurityGatewayIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

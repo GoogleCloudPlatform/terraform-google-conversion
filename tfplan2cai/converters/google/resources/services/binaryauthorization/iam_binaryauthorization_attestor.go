@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewBinaryAuthorizationAttestorIamMemberResource returns the google_binary_authorization_attestor_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewBinaryAuthorizationAttestorIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		BinaryAuthorizationAttestorIamSchema,
+		BinaryAuthorizationAttestorIamUpdaterProducer,
+		BinaryAuthorizationAttestorIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(BinaryAuthorizationAttestorIamParentParentResourceIdentityParser),
+	)
+}
+
 var BinaryAuthorizationAttestorIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

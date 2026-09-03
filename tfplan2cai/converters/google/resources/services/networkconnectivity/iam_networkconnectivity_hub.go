@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewNetworkConnectivityHubIamMemberResource returns the google_network_connectivity_hub_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewNetworkConnectivityHubIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		NetworkConnectivityHubIamSchema,
+		NetworkConnectivityHubIamUpdaterProducer,
+		NetworkConnectivityHubIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(NetworkConnectivityHubIamParentParentResourceIdentityParser),
+	)
+}
+
 var NetworkConnectivityHubIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

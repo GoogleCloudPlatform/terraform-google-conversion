@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewComputeBackendBucketIamMemberResource returns the google_compute_backend_bucket_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewComputeBackendBucketIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ComputeBackendBucketIamSchema,
+		ComputeBackendBucketIamUpdaterProducer,
+		ComputeBackendBucketIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ComputeBackendBucketIamParentParentResourceIdentityParser),
+	)
+}
+
 var ComputeBackendBucketIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

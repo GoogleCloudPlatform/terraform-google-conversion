@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewServiceDirectoryNamespaceIamMemberResource returns the google_service_directory_namespace_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewServiceDirectoryNamespaceIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ServiceDirectoryNamespaceIamSchema,
+		ServiceDirectoryNamespaceIamUpdaterProducer,
+		ServiceDirectoryNamespaceIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ServiceDirectoryNamespaceIamParentParentResourceIdentityParser),
+	)
+}
+
 var ServiceDirectoryNamespaceIamSchema = map[string]*schema.Schema{
 	"name": {
 		Type:             schema.TypeString,

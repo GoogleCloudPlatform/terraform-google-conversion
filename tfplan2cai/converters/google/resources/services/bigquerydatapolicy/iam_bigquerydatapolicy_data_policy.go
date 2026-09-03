@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewBigqueryDatapolicyDataPolicyIamMemberResource returns the google_bigquery_datapolicy_data_policy_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewBigqueryDatapolicyDataPolicyIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		BigqueryDatapolicyDataPolicyIamSchema,
+		BigqueryDatapolicyDataPolicyIamUpdaterProducer,
+		BigqueryDatapolicyDataPolicyIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(BigqueryDatapolicyDataPolicyIamParentParentResourceIdentityParser),
+	)
+}
+
 var BigqueryDatapolicyDataPolicyIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

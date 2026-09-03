@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewBigqueryConnectionConnectionIamMemberResource returns the google_bigquery_connection_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewBigqueryConnectionConnectionIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		BigqueryConnectionConnectionIamSchema,
+		BigqueryConnectionConnectionIamUpdaterProducer,
+		BigqueryConnectionConnectionIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(BigqueryConnectionConnectionIamParentParentResourceIdentityParser),
+	)
+}
+
 var BigqueryConnectionConnectionIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

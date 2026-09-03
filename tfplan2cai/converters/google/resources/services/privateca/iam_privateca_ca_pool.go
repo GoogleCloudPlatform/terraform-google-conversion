@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewPrivatecaCaPoolIamMemberResource returns the google_privateca_ca_pool_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewPrivatecaCaPoolIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		PrivatecaCaPoolIamSchema,
+		PrivatecaCaPoolIamUpdaterProducer,
+		PrivatecaCaPoolIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(PrivatecaCaPoolIamParentParentResourceIdentityParser),
+	)
+}
+
 var PrivatecaCaPoolIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

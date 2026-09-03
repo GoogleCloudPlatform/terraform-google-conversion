@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewDataplexEntryTypeIamMemberResource returns the google_dataplex_entry_type_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewDataplexEntryTypeIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		DataplexEntryTypeIamSchema,
+		DataplexEntryTypeIamUpdaterProducer,
+		DataplexEntryTypeIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(DataplexEntryTypeIamParentParentResourceIdentityParser),
+	)
+}
+
 var DataplexEntryTypeIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

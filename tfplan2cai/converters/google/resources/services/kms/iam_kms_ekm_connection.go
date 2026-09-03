@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewKMSEkmConnectionIamMemberResource returns the google_kms_ekm_connection_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewKMSEkmConnectionIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		KMSEkmConnectionIamSchema,
+		KMSEkmConnectionIamUpdaterProducer,
+		KMSEkmConnectionIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(KMSEkmConnectionIamParentParentResourceIdentityParser),
+	)
+}
+
 var KMSEkmConnectionIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

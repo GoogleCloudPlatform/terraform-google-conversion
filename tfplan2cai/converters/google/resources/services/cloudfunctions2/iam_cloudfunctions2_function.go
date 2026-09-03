@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewCloudfunctions2functionIamMemberResource returns the google_cloudfunctions2_function_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewCloudfunctions2functionIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		Cloudfunctions2functionIamSchema,
+		Cloudfunctions2functionIamUpdaterProducer,
+		Cloudfunctions2functionIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(Cloudfunctions2functionIamParentParentResourceIdentityParser),
+	)
+}
+
 var Cloudfunctions2functionIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

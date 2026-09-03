@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewApiGatewayApiConfigIamMemberResource returns the google_api_gateway_api_config_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewApiGatewayApiConfigIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ApiGatewayApiConfigIamSchema,
+		ApiGatewayApiConfigIamUpdaterProducer,
+		ApiGatewayApiConfigIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ApiGatewayApiConfigIamParentParentResourceIdentityParser),
+	)
+}
+
 var ApiGatewayApiConfigIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

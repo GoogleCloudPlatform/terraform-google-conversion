@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewBigQueryTableIamMemberResource returns the google_bigquery_table_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewBigQueryTableIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		BigQueryTableIamSchema,
+		BigQueryTableIamUpdaterProducer,
+		BigQueryTableIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(BigQueryTableIamParentParentResourceIdentityParser),
+	)
+}
+
 var BigQueryTableIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

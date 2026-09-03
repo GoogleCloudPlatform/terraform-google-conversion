@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewDataprocMetastoreServiceIamMemberResource returns the google_dataproc_metastore_service_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewDataprocMetastoreServiceIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		DataprocMetastoreServiceIamSchema,
+		DataprocMetastoreServiceIamUpdaterProducer,
+		DataprocMetastoreServiceIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(DataprocMetastoreServiceIamParentParentResourceIdentityParser),
+	)
+}
+
 var DataprocMetastoreServiceIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewDataprocAutoscalingPolicyIamMemberResource returns the google_dataproc_autoscaling_policy_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewDataprocAutoscalingPolicyIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		DataprocAutoscalingPolicyIamSchema,
+		DataprocAutoscalingPolicyIamUpdaterProducer,
+		DataprocAutoscalingPolicyIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(DataprocAutoscalingPolicyIamParentParentResourceIdentityParser),
+	)
+}
+
 var DataprocAutoscalingPolicyIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

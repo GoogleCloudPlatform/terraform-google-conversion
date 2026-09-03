@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewIAMWorkforcePoolWorkforcePoolIamMemberResource returns the google_iam_workforce_pool_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewIAMWorkforcePoolWorkforcePoolIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		IAMWorkforcePoolWorkforcePoolIamSchema,
+		IAMWorkforcePoolWorkforcePoolIamUpdaterProducer,
+		IAMWorkforcePoolWorkforcePoolIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(IAMWorkforcePoolWorkforcePoolIamParentParentResourceIdentityParser),
+	)
+}
+
 var IAMWorkforcePoolWorkforcePoolIamSchema = map[string]*schema.Schema{
 	"location": {
 		Type:     schema.TypeString,

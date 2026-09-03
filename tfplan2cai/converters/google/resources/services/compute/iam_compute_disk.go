@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewComputeDiskIamMemberResource returns the google_compute_disk_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewComputeDiskIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ComputeDiskIamSchema,
+		ComputeDiskIamUpdaterProducer,
+		ComputeDiskIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ComputeDiskIamParentParentResourceIdentityParser),
+	)
+}
+
 var ComputeDiskIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewVertexAIReasoningEngineIamMemberResource returns the google_vertex_ai_reasoning_engine_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewVertexAIReasoningEngineIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		VertexAIReasoningEngineIamSchema,
+		VertexAIReasoningEngineIamUpdaterProducer,
+		VertexAIReasoningEngineIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(VertexAIReasoningEngineIamParentParentResourceIdentityParser),
+	)
+}
+
 var VertexAIReasoningEngineIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

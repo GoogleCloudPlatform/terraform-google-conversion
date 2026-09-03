@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewBiglakeIcebergIcebergCatalogIamMemberResource returns the google_biglake_iceberg_catalog_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewBiglakeIcebergIcebergCatalogIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		BiglakeIcebergIcebergCatalogIamSchema,
+		BiglakeIcebergIcebergCatalogIamUpdaterProducer,
+		BiglakeIcebergIcebergCatalogIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(BiglakeIcebergIcebergCatalogIamParentParentResourceIdentityParser),
+	)
+}
+
 var BiglakeIcebergIcebergCatalogIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

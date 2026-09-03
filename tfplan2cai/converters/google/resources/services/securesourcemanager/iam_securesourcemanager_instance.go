@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewSecureSourceManagerInstanceIamMemberResource returns the google_secure_source_manager_instance_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewSecureSourceManagerInstanceIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		SecureSourceManagerInstanceIamSchema,
+		SecureSourceManagerInstanceIamUpdaterProducer,
+		SecureSourceManagerInstanceIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(SecureSourceManagerInstanceIamParentParentResourceIdentityParser),
+	)
+}
+
 var SecureSourceManagerInstanceIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

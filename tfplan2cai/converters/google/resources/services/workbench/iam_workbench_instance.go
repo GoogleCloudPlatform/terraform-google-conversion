@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewWorkbenchInstanceIamMemberResource returns the google_workbench_instance_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewWorkbenchInstanceIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		WorkbenchInstanceIamSchema,
+		WorkbenchInstanceIamUpdaterProducer,
+		WorkbenchInstanceIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(WorkbenchInstanceIamParentParentResourceIdentityParser),
+	)
+}
+
 var WorkbenchInstanceIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

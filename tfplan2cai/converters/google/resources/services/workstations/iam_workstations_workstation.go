@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewWorkstationsWorkstationIamMemberResource returns the google_workstations_workstation_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewWorkstationsWorkstationIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		WorkstationsWorkstationIamSchema,
+		WorkstationsWorkstationIamUpdaterProducer,
+		WorkstationsWorkstationIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(WorkstationsWorkstationIamParentParentResourceIdentityParser),
+	)
+}
+
 var WorkstationsWorkstationIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

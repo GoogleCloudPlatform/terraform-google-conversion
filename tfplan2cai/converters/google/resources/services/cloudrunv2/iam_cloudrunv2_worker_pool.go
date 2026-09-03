@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewCloudRunV2WorkerPoolIamMemberResource returns the google_cloud_run_v2_worker_pool_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewCloudRunV2WorkerPoolIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		CloudRunV2WorkerPoolIamSchema,
+		CloudRunV2WorkerPoolIamUpdaterProducer,
+		CloudRunV2WorkerPoolIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(CloudRunV2WorkerPoolIamParentParentResourceIdentityParser),
+	)
+}
+
 var CloudRunV2WorkerPoolIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

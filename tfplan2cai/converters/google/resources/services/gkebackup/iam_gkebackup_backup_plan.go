@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewGKEBackupBackupPlanIamMemberResource returns the google_gke_backup_backup_plan_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewGKEBackupBackupPlanIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		GKEBackupBackupPlanIamSchema,
+		GKEBackupBackupPlanIamUpdaterProducer,
+		GKEBackupBackupPlanIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(GKEBackupBackupPlanIamParentParentResourceIdentityParser),
+	)
+}
+
 var GKEBackupBackupPlanIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

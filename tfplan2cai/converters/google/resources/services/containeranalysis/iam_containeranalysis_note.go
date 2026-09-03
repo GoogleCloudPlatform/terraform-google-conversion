@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewContainerAnalysisNoteIamMemberResource returns the google_container_analysis_note_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewContainerAnalysisNoteIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ContainerAnalysisNoteIamSchema,
+		ContainerAnalysisNoteIamUpdaterProducer,
+		ContainerAnalysisNoteIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ContainerAnalysisNoteIamParentParentResourceIdentityParser),
+	)
+}
+
 var ContainerAnalysisNoteIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

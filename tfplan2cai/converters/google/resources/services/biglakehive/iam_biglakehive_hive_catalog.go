@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewBiglakeHiveHiveCatalogIamMemberResource returns the google_biglake_hive_catalog_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewBiglakeHiveHiveCatalogIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		BiglakeHiveHiveCatalogIamSchema,
+		BiglakeHiveHiveCatalogIamUpdaterProducer,
+		BiglakeHiveHiveCatalogIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(BiglakeHiveHiveCatalogIamParentParentResourceIdentityParser),
+	)
+}
+
 var BiglakeHiveHiveCatalogIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

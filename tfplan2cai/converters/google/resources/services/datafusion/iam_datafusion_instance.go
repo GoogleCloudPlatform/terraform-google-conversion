@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewDataFusionInstanceIamMemberResource returns the google_data_fusion_instance_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewDataFusionInstanceIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		DataFusionInstanceIamSchema,
+		DataFusionInstanceIamUpdaterProducer,
+		DataFusionInstanceIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(DataFusionInstanceIamParentParentResourceIdentityParser),
+	)
+}
+
 var DataFusionInstanceIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

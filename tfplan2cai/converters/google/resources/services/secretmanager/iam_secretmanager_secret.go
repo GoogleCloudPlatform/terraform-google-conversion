@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewSecretManagerSecretIamMemberResource returns the google_secret_manager_secret_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewSecretManagerSecretIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		SecretManagerSecretIamSchema,
+		SecretManagerSecretIamUpdaterProducer,
+		SecretManagerSecretIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(SecretManagerSecretIamParentParentResourceIdentityParser),
+	)
+}
+
 var SecretManagerSecretIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

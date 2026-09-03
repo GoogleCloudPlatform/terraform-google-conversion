@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewEventarcPipelineIamMemberResource returns the google_eventarc_pipeline_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewEventarcPipelineIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		EventarcPipelineIamSchema,
+		EventarcPipelineIamUpdaterProducer,
+		EventarcPipelineIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(EventarcPipelineIamParentParentResourceIdentityParser),
+	)
+}
+
 var EventarcPipelineIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

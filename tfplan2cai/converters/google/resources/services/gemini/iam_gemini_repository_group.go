@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewGeminiRepositoryGroupIamMemberResource returns the google_gemini_repository_group_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewGeminiRepositoryGroupIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		GeminiRepositoryGroupIamSchema,
+		GeminiRepositoryGroupIamUpdaterProducer,
+		GeminiRepositoryGroupIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(GeminiRepositoryGroupIamParentParentResourceIdentityParser),
+	)
+}
+
 var GeminiRepositoryGroupIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,
