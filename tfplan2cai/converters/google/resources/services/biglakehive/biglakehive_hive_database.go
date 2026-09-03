@@ -88,7 +88,7 @@ func ResourceConverterBiglakeHiveHiveDatabase() cai.ResourceConverter {
 }
 
 func GetBiglakeHiveHiveDatabaseCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
-	name, err := cai.AssetName(d, config, "//biglake.googleapis.com/hive/v1beta/projects/{{project}}/catalogs/{{catalog}}/databases/{{name}}")
+	name, err := cai.AssetName(d, config, "//biglake.googleapis.com/hive/v1/projects/{{project}}/catalogs/{{catalog}}/databases/{{name}}")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
@@ -97,8 +97,8 @@ func GetBiglakeHiveHiveDatabaseCaiObject(d tpgresource.TerraformResourceData, co
 			Name: name,
 			Type: BiglakeHiveHiveDatabaseAssetType,
 			Resource: &cai.AssetResource{
-				Version:              "v1beta",
-				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/biglake/v1beta/rest",
+				Version:              "v1",
+				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/biglake/v1/rest",
 				DiscoveryName:        "HiveDatabase",
 				Data:                 obj,
 			},
