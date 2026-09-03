@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewDataCatalogTaxonomyIamMemberResource returns the google_data_catalog_taxonomy_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewDataCatalogTaxonomyIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		DataCatalogTaxonomyIamSchema,
+		DataCatalogTaxonomyIamUpdaterProducer,
+		DataCatalogTaxonomyIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(DataCatalogTaxonomyIamParentParentResourceIdentityParser),
+	)
+}
+
 var DataCatalogTaxonomyIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

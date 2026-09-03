@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewBigqueryAnalyticsHubDataExchangeIamMemberResource returns the google_bigquery_analytics_hub_data_exchange_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewBigqueryAnalyticsHubDataExchangeIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		BigqueryAnalyticsHubDataExchangeIamSchema,
+		BigqueryAnalyticsHubDataExchangeIamUpdaterProducer,
+		BigqueryAnalyticsHubDataExchangeIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(BigqueryAnalyticsHubDataExchangeIamParentParentResourceIdentityParser),
+	)
+}
+
 var BigqueryAnalyticsHubDataExchangeIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

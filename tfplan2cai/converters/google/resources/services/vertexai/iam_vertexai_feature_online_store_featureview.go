@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewVertexAIFeatureOnlineStoreFeatureviewIamMemberResource returns the google_vertex_ai_feature_online_store_featureview_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewVertexAIFeatureOnlineStoreFeatureviewIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		VertexAIFeatureOnlineStoreFeatureviewIamSchema,
+		VertexAIFeatureOnlineStoreFeatureviewIamUpdaterProducer,
+		VertexAIFeatureOnlineStoreFeatureviewIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(VertexAIFeatureOnlineStoreFeatureviewIamParentParentResourceIdentityParser),
+	)
+}
+
 var VertexAIFeatureOnlineStoreFeatureviewIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewCloudTasksQueueIamMemberResource returns the google_cloud_tasks_queue_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewCloudTasksQueueIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		CloudTasksQueueIamSchema,
+		CloudTasksQueueIamUpdaterProducer,
+		CloudTasksQueueIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(CloudTasksQueueIamParentParentResourceIdentityParser),
+	)
+}
+
 var CloudTasksQueueIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

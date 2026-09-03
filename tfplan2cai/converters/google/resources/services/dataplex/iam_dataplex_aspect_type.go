@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewDataplexAspectTypeIamMemberResource returns the google_dataplex_aspect_type_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewDataplexAspectTypeIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		DataplexAspectTypeIamSchema,
+		DataplexAspectTypeIamUpdaterProducer,
+		DataplexAspectTypeIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(DataplexAspectTypeIamParentParentResourceIdentityParser),
+	)
+}
+
 var DataplexAspectTypeIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

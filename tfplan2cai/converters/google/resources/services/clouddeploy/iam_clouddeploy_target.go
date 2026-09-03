@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewClouddeployTargetIamMemberResource returns the google_clouddeploy_target_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewClouddeployTargetIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ClouddeployTargetIamSchema,
+		ClouddeployTargetIamUpdaterProducer,
+		ClouddeployTargetIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ClouddeployTargetIamParentParentResourceIdentityParser),
+	)
+}
+
 var ClouddeployTargetIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

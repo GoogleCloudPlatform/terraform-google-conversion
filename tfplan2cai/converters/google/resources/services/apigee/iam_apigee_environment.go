@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewApigeeEnvironmentIamMemberResource returns the google_apigee_environment_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewApigeeEnvironmentIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ApigeeEnvironmentIamSchema,
+		ApigeeEnvironmentIamUpdaterProducer,
+		ApigeeEnvironmentIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ApigeeEnvironmentIamParentParentResourceIdentityParser),
+	)
+}
+
 var ApigeeEnvironmentIamSchema = map[string]*schema.Schema{
 	"org_id": {
 		Type:     schema.TypeString,

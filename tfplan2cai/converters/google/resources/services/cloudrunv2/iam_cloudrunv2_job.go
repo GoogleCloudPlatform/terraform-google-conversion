@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewCloudRunV2JobIamMemberResource returns the google_cloud_run_v2_job_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewCloudRunV2JobIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		CloudRunV2JobIamSchema,
+		CloudRunV2JobIamUpdaterProducer,
+		CloudRunV2JobIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(CloudRunV2JobIamParentParentResourceIdentityParser),
+	)
+}
+
 var CloudRunV2JobIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

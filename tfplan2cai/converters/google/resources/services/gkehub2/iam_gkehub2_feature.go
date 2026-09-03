@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewGKEHub2FeatureIamMemberResource returns the google_gke_hub_feature_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewGKEHub2FeatureIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		GKEHub2FeatureIamSchema,
+		GKEHub2FeatureIamUpdaterProducer,
+		GKEHub2FeatureIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(GKEHub2FeatureIamParentParentResourceIdentityParser),
+	)
+}
+
 var GKEHub2FeatureIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

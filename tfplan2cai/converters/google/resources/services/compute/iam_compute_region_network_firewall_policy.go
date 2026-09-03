@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewComputeRegionNetworkFirewallPolicyIamMemberResource returns the google_compute_region_network_firewall_policy_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewComputeRegionNetworkFirewallPolicyIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ComputeRegionNetworkFirewallPolicyIamSchema,
+		ComputeRegionNetworkFirewallPolicyIamUpdaterProducer,
+		ComputeRegionNetworkFirewallPolicyIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ComputeRegionNetworkFirewallPolicyIamParentParentResourceIdentityParser),
+	)
+}
+
 var ComputeRegionNetworkFirewallPolicyIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

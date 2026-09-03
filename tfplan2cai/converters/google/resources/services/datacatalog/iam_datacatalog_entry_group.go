@@ -37,6 +37,19 @@ var (
 	_ = schema.Noop
 )
 
+// NewDataCatalogEntryGroupIamMemberResource returns the google_data_catalog_entry_group_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewDataCatalogEntryGroupIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		DataCatalogEntryGroupIamSchema,
+		DataCatalogEntryGroupIamUpdaterProducer,
+		DataCatalogEntryGroupIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(DataCatalogEntryGroupIamParentParentResourceIdentityParser),
+		tpgiamresource.IamWithDeprecationMessage("The parent resource has been deprecated: `google_data_catalog_entry_group` is deprecated and will be removed in a future major release. Use `google_dataplex_entry_group` instead. For steps to transition your Data Catalog users, workloads, and content to Dataplex Catalog, see https://cloud.google.com/dataplex/docs/transition-to-dataplex-catalog."),
+	)
+}
+
 var DataCatalogEntryGroupIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

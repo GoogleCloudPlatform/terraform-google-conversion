@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewBigqueryAnalyticsHubListingIamMemberResource returns the google_bigquery_analytics_hub_listing_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewBigqueryAnalyticsHubListingIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		BigqueryAnalyticsHubListingIamSchema,
+		BigqueryAnalyticsHubListingIamUpdaterProducer,
+		BigqueryAnalyticsHubListingIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(BigqueryAnalyticsHubListingIamParentParentResourceIdentityParser),
+	)
+}
+
 var BigqueryAnalyticsHubListingIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

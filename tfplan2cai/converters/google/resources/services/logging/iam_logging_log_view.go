@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewLoggingLogViewIamMemberResource returns the google_logging_log_view_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewLoggingLogViewIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		LoggingLogViewIamSchema,
+		LoggingLogViewIamUpdaterProducer,
+		LoggingLogViewIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(LoggingLogViewIamParentParentResourceIdentityParser),
+	)
+}
+
 var LoggingLogViewIamSchema = map[string]*schema.Schema{
 	"parent": {
 		Type:     schema.TypeString,

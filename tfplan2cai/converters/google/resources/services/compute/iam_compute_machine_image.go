@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewComputeMachineImageIamMemberResource returns the google_compute_machine_image_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewComputeMachineImageIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ComputeMachineImageIamSchema,
+		ComputeMachineImageIamUpdaterProducer,
+		ComputeMachineImageIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ComputeMachineImageIamParentParentResourceIdentityParser),
+	)
+}
+
 var ComputeMachineImageIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

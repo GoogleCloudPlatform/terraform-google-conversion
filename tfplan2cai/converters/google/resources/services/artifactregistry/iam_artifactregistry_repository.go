@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewArtifactRegistryRepositoryIamMemberResource returns the google_artifact_registry_repository_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewArtifactRegistryRepositoryIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ArtifactRegistryRepositoryIamSchema,
+		ArtifactRegistryRepositoryIamUpdaterProducer,
+		ArtifactRegistryRepositoryIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ArtifactRegistryRepositoryIamParentParentResourceIdentityParser),
+	)
+}
+
 var ArtifactRegistryRepositoryIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

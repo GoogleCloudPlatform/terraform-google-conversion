@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewPubsubTopicIamMemberResource returns the google_pubsub_topic_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewPubsubTopicIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		PubsubTopicIamSchema,
+		PubsubTopicIamUpdaterProducer,
+		PubsubTopicIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(PubsubTopicIamParentParentResourceIdentityParser),
+	)
+}
+
 var PubsubTopicIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

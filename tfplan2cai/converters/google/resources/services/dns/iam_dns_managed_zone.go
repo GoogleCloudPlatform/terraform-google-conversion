@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewDNSManagedZoneIamMemberResource returns the google_dns_managed_zone_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewDNSManagedZoneIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		DNSManagedZoneIamSchema,
+		DNSManagedZoneIamUpdaterProducer,
+		DNSManagedZoneIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(DNSManagedZoneIamParentParentResourceIdentityParser),
+	)
+}
+
 var DNSManagedZoneIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

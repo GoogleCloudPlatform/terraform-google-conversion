@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewComputeInstantSnapshotIamMemberResource returns the google_compute_instant_snapshot_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewComputeInstantSnapshotIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ComputeInstantSnapshotIamSchema,
+		ComputeInstantSnapshotIamUpdaterProducer,
+		ComputeInstantSnapshotIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ComputeInstantSnapshotIamParentParentResourceIdentityParser),
+	)
+}
+
 var ComputeInstantSnapshotIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

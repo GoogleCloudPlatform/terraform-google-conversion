@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewIapTunnelInstanceIamMemberResource returns the google_iap_tunnel_instance_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewIapTunnelInstanceIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		IapTunnelInstanceIamSchema,
+		IapTunnelInstanceIamUpdaterProducer,
+		IapTunnelInstanceIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(IapTunnelInstanceIamParentParentResourceIdentityParser),
+	)
+}
+
 var IapTunnelInstanceIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

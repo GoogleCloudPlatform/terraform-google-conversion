@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewPrivatecaCertificateTemplateIamMemberResource returns the google_privateca_certificate_template_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewPrivatecaCertificateTemplateIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		PrivatecaCertificateTemplateIamSchema,
+		PrivatecaCertificateTemplateIamUpdaterProducer,
+		PrivatecaCertificateTemplateIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(PrivatecaCertificateTemplateIamParentParentResourceIdentityParser),
+	)
+}
+
 var PrivatecaCertificateTemplateIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

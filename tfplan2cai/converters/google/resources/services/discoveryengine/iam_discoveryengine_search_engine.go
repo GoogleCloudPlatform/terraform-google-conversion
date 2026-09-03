@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewDiscoveryEngineSearchEngineIamMemberResource returns the google_discovery_engine_search_engine_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewDiscoveryEngineSearchEngineIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		DiscoveryEngineSearchEngineIamSchema,
+		DiscoveryEngineSearchEngineIamUpdaterProducer,
+		DiscoveryEngineSearchEngineIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(DiscoveryEngineSearchEngineIamParentParentResourceIdentityParser),
+	)
+}
+
 var DiscoveryEngineSearchEngineIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

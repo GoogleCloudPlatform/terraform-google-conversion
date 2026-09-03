@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewVertexAIFeatureGroupIamMemberResource returns the google_vertex_ai_feature_group_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewVertexAIFeatureGroupIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		VertexAIFeatureGroupIamSchema,
+		VertexAIFeatureGroupIamUpdaterProducer,
+		VertexAIFeatureGroupIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(VertexAIFeatureGroupIamParentParentResourceIdentityParser),
+	)
+}
+
 var VertexAIFeatureGroupIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

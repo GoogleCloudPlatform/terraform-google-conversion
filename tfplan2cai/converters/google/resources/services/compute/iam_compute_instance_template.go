@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewComputeInstanceTemplateIamMemberResource returns the google_compute_instance_template_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewComputeInstanceTemplateIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ComputeInstanceTemplateIamSchema,
+		ComputeInstanceTemplateIamUpdaterProducer,
+		ComputeInstanceTemplateIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ComputeInstanceTemplateIamParentParentResourceIdentityParser),
+	)
+}
+
 var ComputeInstanceTemplateIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

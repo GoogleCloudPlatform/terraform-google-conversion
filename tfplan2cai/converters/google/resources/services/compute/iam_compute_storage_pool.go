@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewComputeStoragePoolIamMemberResource returns the google_compute_storage_pool_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewComputeStoragePoolIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		ComputeStoragePoolIamSchema,
+		ComputeStoragePoolIamUpdaterProducer,
+		ComputeStoragePoolIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(ComputeStoragePoolIamParentParentResourceIdentityParser),
+	)
+}
+
 var ComputeStoragePoolIamSchema = map[string]*schema.Schema{
 	"project": {
 		Type:     schema.TypeString,

@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewDataCatalogPolicyTagIamMemberResource returns the google_data_catalog_policy_tag_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewDataCatalogPolicyTagIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		DataCatalogPolicyTagIamSchema,
+		DataCatalogPolicyTagIamUpdaterProducer,
+		DataCatalogPolicyTagIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(DataCatalogPolicyTagIamParentParentResourceIdentityParser),
+	)
+}
+
 var DataCatalogPolicyTagIamSchema = map[string]*schema.Schema{
 	"policy_tag": {
 		Type:             schema.TypeString,

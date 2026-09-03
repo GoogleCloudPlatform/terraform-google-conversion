@@ -37,6 +37,18 @@ var (
 	_ = schema.Noop
 )
 
+// NewSecurityCenterV2OrganizationSourceIamMemberResource returns the google_scc_v2_organization_source_iam_member
+// managed resource. It is shared by the managed resource registration and the
+// list resource, so both stay in sync.
+func NewSecurityCenterV2OrganizationSourceIamMemberResource() *schema.Resource {
+	return tpgiamresource.ResourceIamMember(
+		SecurityCenterV2OrganizationSourceIamSchema,
+		SecurityCenterV2OrganizationSourceIamUpdaterProducer,
+		SecurityCenterV2OrganizationSourceIdParseFunc,
+		tpgiamresource.IamWithParentResourceIdentity(SecurityCenterV2OrganizationSourceIamParentParentResourceIdentityParser),
+	)
+}
+
 var SecurityCenterV2OrganizationSourceIamSchema = map[string]*schema.Schema{
 	"organization": {
 		Type:     schema.TypeString,
