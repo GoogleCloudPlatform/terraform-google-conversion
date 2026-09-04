@@ -723,6 +723,20 @@ func expandCESAppEvaluationMetricsThresholds(v interface{}, d tpgresource.Terraf
 		transformed["goldenEvaluationMetricsThresholds"] = transformedGoldenEvaluationMetricsThresholds
 	}
 
+	transformedGoldenHallucinationMetricBehavior, err := expandCESAppEvaluationMetricsThresholdsGoldenHallucinationMetricBehavior(original["golden_hallucination_metric_behavior"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGoldenHallucinationMetricBehavior); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["goldenHallucinationMetricBehavior"] = transformedGoldenHallucinationMetricBehavior
+	}
+
+	transformedScenarioHallucinationMetricBehavior, err := expandCESAppEvaluationMetricsThresholdsScenarioHallucinationMetricBehavior(original["scenario_hallucination_metric_behavior"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScenarioHallucinationMetricBehavior); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scenarioHallucinationMetricBehavior"] = transformedScenarioHallucinationMetricBehavior
+	}
+
 	return transformed, nil
 }
 
@@ -815,6 +829,14 @@ func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTur
 }
 
 func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTurnLevelMetricsThresholdsSemanticSimilaritySuccessThreshold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppEvaluationMetricsThresholdsGoldenHallucinationMetricBehavior(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppEvaluationMetricsThresholdsScenarioHallucinationMetricBehavior(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
