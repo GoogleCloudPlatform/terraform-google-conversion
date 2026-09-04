@@ -925,6 +925,13 @@ func expandCESAppLoggingSettings(v interface{}, d tpgresource.TerraformResourceD
 		transformed["conversationLoggingSettings"] = transformedConversationLoggingSettings
 	}
 
+	transformedMetricAnalysisSettings, err := expandCESAppLoggingSettingsMetricAnalysisSettings(original["metric_analysis_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMetricAnalysisSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["metricAnalysisSettings"] = transformedMetricAnalysisSettings
+	}
+
 	transformedRedactionConfig, err := expandCESAppLoggingSettingsRedactionConfig(original["redaction_config"], d, config)
 	if err != nil {
 		return nil, err
@@ -1080,6 +1087,37 @@ func expandCESAppLoggingSettingsConversationLoggingSettingsDisableConversationLo
 }
 
 func expandCESAppLoggingSettingsConversationLoggingSettingsRetentionWindow(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppLoggingSettingsMetricAnalysisSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLlmMetricsOptedOut, err := expandCESAppLoggingSettingsMetricAnalysisSettingsLlmMetricsOptedOut(original["llm_metrics_opted_out"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["llmMetricsOptedOut"] = transformedLlmMetricsOptedOut
+	}
+
+	return transformed, nil
+}
+
+func expandCESAppLoggingSettingsMetricAnalysisSettingsLlmMetricsOptedOut(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
