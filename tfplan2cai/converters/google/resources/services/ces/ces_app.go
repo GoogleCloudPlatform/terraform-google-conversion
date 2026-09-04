@@ -176,6 +176,12 @@ func GetCESAppApiObject(d tpgresource.TerraformResourceData, config *transport_t
 	} else if v, ok := d.GetOkExists("logging_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(loggingSettingsProp)) && (ok || !reflect.DeepEqual(v, loggingSettingsProp)) {
 		obj["loggingSettings"] = loggingSettingsProp
 	}
+	lockedProp, err := expandCESAppLocked(d.Get("locked"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("locked"); !tpgresource.IsEmptyValue(reflect.ValueOf(lockedProp)) && (ok || !reflect.DeepEqual(v, lockedProp)) {
+		obj["locked"] = lockedProp
+	}
 	metadataProp, err := expandCESAppMetadata(d.Get("metadata"), d, config)
 	if err != nil {
 		return nil, err
@@ -600,6 +606,13 @@ func expandCESAppDefaultChannelProfileWebWidgetConfig(v interface{}, d tpgresour
 		transformed["webWidgetTitle"] = transformedWebWidgetTitle
 	}
 
+	transformedSecuritySettings, err := expandCESAppDefaultChannelProfileWebWidgetConfigSecuritySettings(original["security_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSecuritySettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["securitySettings"] = transformedSecuritySettings
+	}
+
 	return transformed, nil
 }
 
@@ -612,6 +625,65 @@ func expandCESAppDefaultChannelProfileWebWidgetConfigTheme(v interface{}, d tpgr
 }
 
 func expandCESAppDefaultChannelProfileWebWidgetConfigWebWidgetTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppDefaultChannelProfileWebWidgetConfigSecuritySettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowedOrigins, err := expandCESAppDefaultChannelProfileWebWidgetConfigSecuritySettingsAllowedOrigins(original["allowed_origins"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedOrigins); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedOrigins"] = transformedAllowedOrigins
+	}
+
+	transformedEnableOriginCheck, err := expandCESAppDefaultChannelProfileWebWidgetConfigSecuritySettingsEnableOriginCheck(original["enable_origin_check"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableOriginCheck); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableOriginCheck"] = transformedEnableOriginCheck
+	}
+
+	transformedEnablePublicAccess, err := expandCESAppDefaultChannelProfileWebWidgetConfigSecuritySettingsEnablePublicAccess(original["enable_public_access"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnablePublicAccess); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enablePublicAccess"] = transformedEnablePublicAccess
+	}
+
+	transformedEnableRecaptcha, err := expandCESAppDefaultChannelProfileWebWidgetConfigSecuritySettingsEnableRecaptcha(original["enable_recaptcha"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableRecaptcha); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableRecaptcha"] = transformedEnableRecaptcha
+	}
+
+	return transformed, nil
+}
+
+func expandCESAppDefaultChannelProfileWebWidgetConfigSecuritySettingsAllowedOrigins(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppDefaultChannelProfileWebWidgetConfigSecuritySettingsEnableOriginCheck(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppDefaultChannelProfileWebWidgetConfigSecuritySettingsEnablePublicAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppDefaultChannelProfileWebWidgetConfigSecuritySettingsEnableRecaptcha(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1188,6 +1260,10 @@ func expandCESAppLoggingSettingsRedactionConfigEnableRedaction(v interface{}, d 
 }
 
 func expandCESAppLoggingSettingsRedactionConfigInspectTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppLocked(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
