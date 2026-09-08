@@ -838,6 +838,13 @@ func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholds(v 
 		transformed["turnLevelMetricsThresholds"] = transformedTurnLevelMetricsThresholds
 	}
 
+	transformedToolMatchingSettings, err := expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsToolMatchingSettings(original["tool_matching_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolMatchingSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolMatchingSettings"] = transformedToolMatchingSettings
+	}
+
 	return transformed, nil
 }
 
@@ -912,6 +919,32 @@ func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTur
 }
 
 func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTurnLevelMetricsThresholdsSemanticSimilarityChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsToolMatchingSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExtraToolCallBehavior, err := expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsToolMatchingSettingsExtraToolCallBehavior(original["extra_tool_call_behavior"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExtraToolCallBehavior); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["extraToolCallBehavior"] = transformedExtraToolCallBehavior
+	}
+
+	return transformed, nil
+}
+
+func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsToolMatchingSettingsExtraToolCallBehavior(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
