@@ -893,6 +893,13 @@ func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTur
 		transformed["semanticSimilaritySuccessThreshold"] = transformedSemanticSimilaritySuccessThreshold
 	}
 
+	transformedSemanticSimilarityChannel, err := expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTurnLevelMetricsThresholdsSemanticSimilarityChannel(original["semantic_similarity_channel"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSemanticSimilarityChannel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["semanticSimilarityChannel"] = transformedSemanticSimilarityChannel
+	}
+
 	return transformed, nil
 }
 
@@ -901,6 +908,10 @@ func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTur
 }
 
 func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTurnLevelMetricsThresholdsSemanticSimilaritySuccessThreshold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppEvaluationMetricsThresholdsGoldenEvaluationMetricsThresholdsTurnLevelMetricsThresholdsSemanticSimilarityChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
