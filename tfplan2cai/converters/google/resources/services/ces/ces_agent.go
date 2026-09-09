@@ -206,6 +206,12 @@ func GetCESAgentApiObject(d tpgresource.TerraformResourceData, config *transport
 	} else if v, ok := d.GetOkExists("toolsets"); !tpgresource.IsEmptyValue(reflect.ValueOf(toolsetsProp)) && (ok || !reflect.DeepEqual(v, toolsetsProp)) {
 		obj["toolsets"] = toolsetsProp
 	}
+	transferRulesProp, err := expandCESAgentTransferRules(d.Get("transfer_rules"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("transfer_rules"); !tpgresource.IsEmptyValue(reflect.ValueOf(transferRulesProp)) && (ok || !reflect.DeepEqual(v, transferRulesProp)) {
+		obj["transferRules"] = transferRulesProp
+	}
 
 	return obj, nil
 }
@@ -738,5 +744,188 @@ func expandCESAgentToolsetsToolset(v interface{}, d tpgresource.TerraformResourc
 }
 
 func expandCESAgentToolsetsToolIds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentTransferRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedChildAgent, err := expandCESAgentTransferRulesChildAgent(original["child_agent"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedChildAgent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["childAgent"] = transformedChildAgent
+		}
+
+		transformedDeterministicTransfer, err := expandCESAgentTransferRulesDeterministicTransfer(original["deterministic_transfer"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDeterministicTransfer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["deterministicTransfer"] = transformedDeterministicTransfer
+		}
+
+		transformedDirection, err := expandCESAgentTransferRulesDirection(original["direction"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDirection); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["direction"] = transformedDirection
+		}
+
+		transformedDisablePlannerTransfer, err := expandCESAgentTransferRulesDisablePlannerTransfer(original["disable_planner_transfer"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDisablePlannerTransfer); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["disablePlannerTransfer"] = transformedDisablePlannerTransfer
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCESAgentTransferRulesChildAgent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentTransferRulesDeterministicTransfer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExpressionCondition, err := expandCESAgentTransferRulesDeterministicTransferExpressionCondition(original["expression_condition"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpressionCondition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expressionCondition"] = transformedExpressionCondition
+	}
+
+	transformedPythonCodeCondition, err := expandCESAgentTransferRulesDeterministicTransferPythonCodeCondition(original["python_code_condition"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPythonCodeCondition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pythonCodeCondition"] = transformedPythonCodeCondition
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentTransferRulesDeterministicTransferExpressionCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExpression, err := expandCESAgentTransferRulesDeterministicTransferExpressionConditionExpression(original["expression"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpression); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expression"] = transformedExpression
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentTransferRulesDeterministicTransferExpressionConditionExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentTransferRulesDeterministicTransferPythonCodeCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPythonCode, err := expandCESAgentTransferRulesDeterministicTransferPythonCodeConditionPythonCode(original["python_code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPythonCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pythonCode"] = transformedPythonCode
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentTransferRulesDeterministicTransferPythonCodeConditionPythonCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentTransferRulesDirection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentTransferRulesDisablePlannerTransfer(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExpressionCondition, err := expandCESAgentTransferRulesDisablePlannerTransferExpressionCondition(original["expression_condition"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpressionCondition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expressionCondition"] = transformedExpressionCondition
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentTransferRulesDisablePlannerTransferExpressionCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedExpression, err := expandCESAgentTransferRulesDisablePlannerTransferExpressionConditionExpression(original["expression"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExpression); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["expression"] = transformedExpression
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentTransferRulesDisablePlannerTransferExpressionConditionExpression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
