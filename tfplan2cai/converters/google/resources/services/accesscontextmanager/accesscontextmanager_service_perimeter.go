@@ -234,6 +234,12 @@ func GetAccessContextManagerServicePerimeterApiObject(d tpgresource.TerraformRes
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	etagProp, err := expandAccessContextManagerServicePerimeterEtag(d.Get("etag"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("etag"); !tpgresource.IsEmptyValue(reflect.ValueOf(etagProp)) && (ok || !reflect.DeepEqual(v, etagProp)) {
+		obj["etag"] = etagProp
+	}
 	perimeterTypeProp, err := expandAccessContextManagerServicePerimeterPerimeterType(d.Get("perimeter_type"), d, config)
 	if err != nil {
 		return nil, err
@@ -284,6 +290,10 @@ func expandAccessContextManagerServicePerimeterTitle(v interface{}, d tpgresourc
 }
 
 func expandAccessContextManagerServicePerimeterDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAccessContextManagerServicePerimeterEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
