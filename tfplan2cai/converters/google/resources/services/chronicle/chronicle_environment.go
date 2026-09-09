@@ -158,6 +158,30 @@ func GetChronicleEnvironmentApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("retention_duration"); !tpgresource.IsEmptyValue(reflect.ValueOf(retentionDurationProp)) && (ok || !reflect.DeepEqual(v, retentionDurationProp)) {
 		obj["retentionDuration"] = retentionDurationProp
 	}
+	base64ImageProp, err := expandChronicleEnvironmentBase64Image(d.Get("base64_image"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("base64_image"); !tpgresource.IsEmptyValue(reflect.ValueOf(base64ImageProp)) && (ok || !reflect.DeepEqual(v, base64ImageProp)) {
+		obj["base64Image"] = base64ImageProp
+	}
+	dynamicParametersProp, err := expandChronicleEnvironmentDynamicParameters(d.Get("dynamic_parameters"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("dynamic_parameters"); !tpgresource.IsEmptyValue(reflect.ValueOf(dynamicParametersProp)) && (ok || !reflect.DeepEqual(v, dynamicParametersProp)) {
+		obj["dynamicParameters"] = dynamicParametersProp
+	}
+	instanceUriProp, err := expandChronicleEnvironmentInstanceUri(d.Get("instance_uri"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("instance_uri"); !tpgresource.IsEmptyValue(reflect.ValueOf(instanceUriProp)) && (ok || !reflect.DeepEqual(v, instanceUriProp)) {
+		obj["instanceUri"] = instanceUriProp
+	}
+	weightProp, err := expandChronicleEnvironmentWeight(d.Get("weight"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("weight"); !tpgresource.IsEmptyValue(reflect.ValueOf(weightProp)) && (ok || !reflect.DeepEqual(v, weightProp)) {
+		obj["weight"] = weightProp
+	}
 
 	return obj, nil
 }
@@ -191,5 +215,68 @@ func expandChronicleEnvironmentDataAccessScopesJson(v interface{}, d tpgresource
 }
 
 func expandChronicleEnvironmentRetentionDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandChronicleEnvironmentBase64Image(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandChronicleEnvironmentDynamicParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedValue, err := expandChronicleEnvironmentDynamicParametersValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		transformedDynamicParameterId, err := expandChronicleEnvironmentDynamicParametersDynamicParameterId(original["dynamic_parameter_id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDynamicParameterId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dynamicParameterId"] = transformedDynamicParameterId
+		}
+
+		transformedEnvironmentId, err := expandChronicleEnvironmentDynamicParametersEnvironmentId(original["environment_id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEnvironmentId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["environmentId"] = transformedEnvironmentId
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandChronicleEnvironmentDynamicParametersValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandChronicleEnvironmentDynamicParametersDynamicParameterId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandChronicleEnvironmentDynamicParametersEnvironmentId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandChronicleEnvironmentInstanceUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandChronicleEnvironmentWeight(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
