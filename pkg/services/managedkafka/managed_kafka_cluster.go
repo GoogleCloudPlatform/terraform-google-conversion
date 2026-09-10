@@ -132,6 +132,24 @@ func ResourceManagedKafkaCluster() *schema.Resource {
 											},
 										},
 									},
+									"public_cluster_config": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Public connection configuration for the Kafka cluster.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"allowed_source_ip_ranges": {
+													Type:        schema.TypeList,
+													Required:    true,
+													Description: `A list of IPv4 addresses or CIDR ranges that are allowed to connect to the cluster.`,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
 								},
 							},
 						},
@@ -231,6 +249,11 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 					},
 				},
 			},
+			"bootstrap_address": {
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: `The bootstrap address of the Kafka cluster. Use port :9092 for SASL connection and :9192 for mTLS connection`,
+			},
 			"create_time": {
 				Type:        schema.TypeString,
 				Computed:    true,
@@ -246,6 +269,14 @@ Please refer to the field 'effective_labels' for all of the labels present on th
 				Type:        schema.TypeString,
 				Computed:    true,
 				Description: `The name of the cluster. Structured like: 'projects/PROJECT_ID/locations/LOCATION/clusters/CLUSTER_ID'.`,
+			},
+			"public_cluster_details": {
+				Type:        schema.TypeList,
+				Computed:    true,
+				Description: `Details of the public cluster feature for the Kafka cluster.`,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{},
+				},
 			},
 			"state": {
 				Type:        schema.TypeString,

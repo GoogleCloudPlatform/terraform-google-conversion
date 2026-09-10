@@ -133,7 +133,7 @@ func (c *ManagedKafkaClusterCai2hclConverter) convertResourceData(asset caiasset
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "name": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
+	outputFields := map[string]struct{}{"bootstrap_address": struct{}{}, "create_time": struct{}{}, "effective_labels": struct{}{}, "name": struct{}{}, "public_cluster_details": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//managedkafka.googleapis.com/projects/{{project}}/locations/{{location}}/clusters/{{cluster_id}}", outputFields, hclData)
 
 	hclData["gcp_config"] = flattenManagedKafkaClusterGcpConfig(res["gcpConfig"], d, config)
@@ -177,6 +177,8 @@ func flattenManagedKafkaClusterGcpConfigAccessConfig(v interface{}, d *schema.Re
 	transformed := make(map[string]interface{})
 	transformed["network_configs"] =
 		flattenManagedKafkaClusterGcpConfigAccessConfigNetworkConfigs(original["networkConfigs"], d, config)
+	transformed["public_cluster_config"] =
+		flattenManagedKafkaClusterGcpConfigAccessConfigPublicClusterConfig(original["publicClusterConfig"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -210,6 +212,24 @@ func flattenManagedKafkaClusterGcpConfigAccessConfigNetworkConfigsSubnet(v inter
 	if transformed == "" {
 		return "unknown"
 	}
+	return v
+}
+
+func flattenManagedKafkaClusterGcpConfigAccessConfigPublicClusterConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["allowed_source_ip_ranges"] =
+		flattenManagedKafkaClusterGcpConfigAccessConfigPublicClusterConfigAllowedSourceIpRanges(original["allowedSourceIpRanges"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenManagedKafkaClusterGcpConfigAccessConfigPublicClusterConfigAllowedSourceIpRanges(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

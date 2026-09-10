@@ -31,6 +31,10 @@ func TestAccManagedKafkaCluster(t *testing.T) {
 			Name: "TestAccManagedKafkaCluster_managedkafkaClusterMtlsExample",
 		},
 		{
+			Name: "TestAccManagedKafkaCluster_managedkafkaClusterPublicExample",
+			Skip: "Test data unavailable in CAI yet",
+		},
+		{
 			Name: "TestAccManagedKafkaCluster_update",
 		},
 	}
