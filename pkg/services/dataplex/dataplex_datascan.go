@@ -319,6 +319,14 @@ Cloud Storage bucket (//storage.googleapis.com/projects/PROJECT_ID/buckets/BUCKE
 							Optional:    true,
 							Description: `If set, the latest DataScan job result will be published to Knowledge Catalog.`,
 						},
+						"sql_dialect": {
+							Type:         schema.TypeString,
+							Computed:     true,
+							Optional:     true,
+							ValidateFunc: verify.ValidateEnum([]string{"GOOGLE_SQL", "SPARK_SQL", ""}),
+							Description: `The SQL dialect to use in the generated SQL queries.
+If not specified, the default dialect is Google SQL. Possible values: ["GOOGLE_SQL", "SPARK_SQL"]`,
+						},
 					},
 				},
 				ExactlyOneOf: []string{"data_discovery_spec", "data_documentation_spec", "data_profile_spec", "data_quality_spec"},
