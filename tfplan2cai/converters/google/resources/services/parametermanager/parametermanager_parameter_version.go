@@ -139,6 +139,13 @@ func expandParameterManagerParameterVersionPayload(v interface{}, d tpgresource.
 		transformed["data"] = transformedParameterData
 	}
 
+	transformedDataCrc32c, err := expandParameterManagerParameterVersionPayloadDataCrc32c(d.Get("data_crc32c"), d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataCrc32c); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataCrc32c"] = transformedDataCrc32c
+	}
+
 	return transformed, nil
 }
 
@@ -148,4 +155,8 @@ func expandParameterManagerParameterVersionPayloadParameterData(v interface{}, d
 	}
 
 	return base64.StdEncoding.EncodeToString([]byte(v.(string))), nil
+}
+
+func expandParameterManagerParameterVersionPayloadDataCrc32c(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
