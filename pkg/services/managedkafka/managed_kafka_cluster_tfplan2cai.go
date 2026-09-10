@@ -203,6 +203,13 @@ func expandManagedKafkaClusterGcpConfigAccessConfig(v interface{}, d tpgresource
 		transformed["networkConfigs"] = transformedNetworkConfigs
 	}
 
+	transformedPublicClusterConfig, err := expandManagedKafkaClusterGcpConfigAccessConfigPublicClusterConfig(original["public_cluster_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPublicClusterConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["publicClusterConfig"] = transformedPublicClusterConfig
+	}
+
 	return transformed, nil
 }
 
@@ -232,6 +239,32 @@ func expandManagedKafkaClusterGcpConfigAccessConfigNetworkConfigs(v interface{},
 }
 
 func expandManagedKafkaClusterGcpConfigAccessConfigNetworkConfigsSubnet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandManagedKafkaClusterGcpConfigAccessConfigPublicClusterConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAllowedSourceIpRanges, err := expandManagedKafkaClusterGcpConfigAccessConfigPublicClusterConfigAllowedSourceIpRanges(original["allowed_source_ip_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedSourceIpRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedSourceIpRanges"] = transformedAllowedSourceIpRanges
+	}
+
+	return transformed, nil
+}
+
+func expandManagedKafkaClusterGcpConfigAccessConfigPublicClusterConfigAllowedSourceIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
