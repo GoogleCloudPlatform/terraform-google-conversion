@@ -1720,10 +1720,21 @@ func expandDataplexDatascanDataDocumentationSpec(v interface{}, d tpgresource.Te
 		transformed["catalogPublishingEnabled"] = transformedCatalogPublishingEnabled
 	}
 
+	transformedSqlDialect, err := expandDataplexDatascanDataDocumentationSpecSqlDialect(original["sql_dialect"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSqlDialect); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sqlDialect"] = transformedSqlDialect
+	}
+
 	return transformed, nil
 }
 
 func expandDataplexDatascanDataDocumentationSpecCatalogPublishingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDocumentationSpecSqlDialect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -1251,10 +1251,16 @@ func flattenDataplexDatascanDataDocumentationSpec(v interface{}, d *schema.Resou
 	transformed := make(map[string]interface{})
 	transformed["catalog_publishing_enabled"] =
 		flattenDataplexDatascanDataDocumentationSpecCatalogPublishingEnabled(original["catalogPublishingEnabled"], d, config)
+	transformed["sql_dialect"] =
+		flattenDataplexDatascanDataDocumentationSpecSqlDialect(original["sqlDialect"], d, config)
 	return []interface{}{transformed}
 }
 
 func flattenDataplexDatascanDataDocumentationSpecCatalogPublishingEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDataplexDatascanDataDocumentationSpecSqlDialect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
