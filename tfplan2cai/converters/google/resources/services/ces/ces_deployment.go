@@ -202,6 +202,13 @@ func expandCESDeploymentChannelProfile(v interface{}, d tpgresource.TerraformRes
 		transformed["webWidgetConfig"] = transformedWebWidgetConfig
 	}
 
+	transformedWhatsappConfig, err := expandCESDeploymentChannelProfileWhatsappConfig(original["whatsapp_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWhatsappConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["whatsappConfig"] = transformedWhatsappConfig
+	}
+
 	return transformed, nil
 }
 
@@ -358,6 +365,87 @@ func expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsAllowedOrig
 }
 
 func expandCESDeploymentChannelProfileWebWidgetConfigSecuritySettingsEnableRecaptcha(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileWhatsappConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDescription, err := expandCESDeploymentChannelProfileWhatsappConfigDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	transformedDisplayName, err := expandCESDeploymentChannelProfileWhatsappConfigDisplayName(original["display_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["displayName"] = transformedDisplayName
+	}
+
+	transformedPhoneNumber, err := expandCESDeploymentChannelProfileWhatsappConfigPhoneNumber(original["phone_number"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPhoneNumber); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["phoneNumber"] = transformedPhoneNumber
+	}
+
+	transformedPhoneNumberId, err := expandCESDeploymentChannelProfileWhatsappConfigPhoneNumberId(original["phone_number_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPhoneNumberId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["phoneNumberId"] = transformedPhoneNumberId
+	}
+
+	transformedThumbnailUrl, err := expandCESDeploymentChannelProfileWhatsappConfigThumbnailUrl(original["thumbnail_url"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThumbnailUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["thumbnailUrl"] = transformedThumbnailUrl
+	}
+
+	transformedWabaId, err := expandCESDeploymentChannelProfileWhatsappConfigWabaId(original["waba_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWabaId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["wabaId"] = transformedWabaId
+	}
+
+	return transformed, nil
+}
+
+func expandCESDeploymentChannelProfileWhatsappConfigDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileWhatsappConfigDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileWhatsappConfigPhoneNumber(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileWhatsappConfigPhoneNumberId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileWhatsappConfigThumbnailUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileWhatsappConfigWabaId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
