@@ -865,6 +865,13 @@ func expandCESToolsetMcpToolset(v interface{}, d tpgresource.TerraformResourceDa
 		transformed["customHeaders"] = transformedCustomHeaders
 	}
 
+	transformedToolOverrides, err := expandCESToolsetMcpToolsetToolOverrides(original["tool_overrides"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolOverrides); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolOverrides"] = transformedToolOverrides
+	}
+
 	return transformed, nil
 }
 
@@ -1218,6 +1225,57 @@ func expandCESToolsetMcpToolsetCustomHeaders(v interface{}, d tpgresource.Terraf
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandCESToolsetMcpToolsetToolOverrides(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDescriptionOverride, err := expandCESToolsetMcpToolsetToolOverridesDescriptionOverride(original["description_override"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDescriptionOverride); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["descriptionOverride"] = transformedDescriptionOverride
+		}
+
+		transformedNameOverride, err := expandCESToolsetMcpToolsetToolOverridesNameOverride(original["name_override"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedNameOverride); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["nameOverride"] = transformedNameOverride
+		}
+
+		transformedTool, err := expandCESToolsetMcpToolsetToolOverridesTool(original["tool"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tool"] = transformedTool
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCESToolsetMcpToolsetToolOverridesDescriptionOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetToolOverridesNameOverride(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolsetMcpToolsetToolOverridesTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESToolsetTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
