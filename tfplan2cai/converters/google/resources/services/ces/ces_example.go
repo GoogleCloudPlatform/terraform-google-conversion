@@ -212,6 +212,13 @@ func expandCESExampleMessagesChunks(v interface{}, d tpgresource.TerraformResour
 			transformed["agentTransfer"] = transformedAgentTransfer
 		}
 
+		transformedBlob, err := expandCESExampleMessagesChunksBlob(original["blob"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBlob); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["blob"] = transformedBlob
+		}
+
 		transformedImage, err := expandCESExampleMessagesChunksImage(original["image"], d, config)
 		if err != nil {
 			return nil, err
@@ -286,6 +293,43 @@ func expandCESExampleMessagesChunksAgentTransferDisplayName(v interface{}, d tpg
 }
 
 func expandCESExampleMessagesChunksAgentTransferTargetAgent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksBlob(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedData, err := expandCESExampleMessagesChunksBlobData(original["data"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedData); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["data"] = transformedData
+	}
+
+	transformedMimeType, err := expandCESExampleMessagesChunksBlobMimeType(original["mime_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMimeType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mimeType"] = transformedMimeType
+	}
+
+	return transformed, nil
+}
+
+func expandCESExampleMessagesChunksBlobData(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESExampleMessagesChunksBlobMimeType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
