@@ -408,6 +408,13 @@ func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutput(v interf
 		transformed["summarySuggestion"] = transformedSummarySuggestion
 	}
 
+	transformedToolCallInfo, err := expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfo(original["tool_call_info"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToolCallInfo); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["toolCallInfo"] = transformedToolCallInfo
+	}
+
 	return transformed, nil
 }
 
@@ -470,6 +477,145 @@ func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputSummarySu
 }
 
 func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputSummarySuggestionSummarySectionsSummary(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfo(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedToolCall, err := expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCall(original["tool_call"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedToolCall); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["toolCall"] = transformedToolCall
+		}
+
+		transformedToolCallResult, err := expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallResult(original["tool_call_result"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedToolCallResult); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["toolCallResult"] = transformedToolCallResult
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCall(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTool, err := expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallTool(original["tool"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTool); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tool"] = transformedTool
+	}
+
+	transformedAction, err := expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallAction(original["action"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["action"] = transformedAction
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallTool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallResult(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAction, err := expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallResultAction(original["action"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["action"] = transformedAction
+	}
+
+	transformedError, err := expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallResultError(original["error"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedError); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["error"] = transformedError
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallResultAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallResultError(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMessage, err := expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallResultErrorMessage(original["message"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMessage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["message"] = transformedMessage
+	}
+
+	transformedRetryable, err := expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallResultErrorRetryable(original["retryable"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["retryable"] = transformedRetryable
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallResultErrorMessage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorSummarizationContextFewShotExamplesOutputToolCallInfoToolCallResultErrorRetryable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
