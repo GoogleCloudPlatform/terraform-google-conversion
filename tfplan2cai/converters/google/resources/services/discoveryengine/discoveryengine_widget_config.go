@@ -311,6 +311,13 @@ func expandDiscoveryEngineWidgetConfigUiSettings(v interface{}, d tpgresource.Te
 		transformed["enableCreateAgentButton"] = transformedEnableCreateAgentButton
 	}
 
+	transformedSourceAdminDisplayNameEnabled, err := expandDiscoveryEngineWidgetConfigUiSettingsSourceAdminDisplayNameEnabled(original["source_admin_display_name_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["sourceAdminDisplayNameEnabled"] = transformedSourceAdminDisplayNameEnabled
+	}
+
 	return transformed, nil
 }
 
@@ -614,6 +621,10 @@ func expandDiscoveryEngineWidgetConfigUiSettingsEnablePeopleSearch(v interface{}
 }
 
 func expandDiscoveryEngineWidgetConfigUiSettingsEnableCreateAgentButton(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineWidgetConfigUiSettingsSourceAdminDisplayNameEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
