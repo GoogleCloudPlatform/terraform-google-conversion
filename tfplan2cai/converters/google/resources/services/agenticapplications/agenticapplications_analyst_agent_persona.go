@@ -531,6 +531,13 @@ func expandAgenticApplicationsAnalystAgentPersonaArtifactsConfig(v interface{}, 
 		transformed["documentGenerationOptions"] = transformedDocumentGenerationOptions
 	}
 
+	transformedMethodologyExportOptions, err := expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigMethodologyExportOptions(original["methodology_export_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMethodologyExportOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["methodologyExportOptions"] = transformedMethodologyExportOptions
+	}
+
 	transformedSlideGenerationOptions, err := expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigSlideGenerationOptions(original["slide_generation_options"], d, config)
 	if err != nil {
 		return nil, err
@@ -889,6 +896,54 @@ func expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigDocumentGenerati
 }
 
 func expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigDocumentGenerationOptionsExportFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigMethodologyExportOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAppendMethodology, err := expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigMethodologyExportOptionsAppendMethodology(original["append_methodology"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAppendMethodology); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["appendMethodology"] = transformedAppendMethodology
+	}
+
+	transformedExportFormat, err := expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigMethodologyExportOptionsExportFormat(original["export_format"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExportFormat); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["exportFormat"] = transformedExportFormat
+	}
+
+	transformedExportMethodologyArtifact, err := expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigMethodologyExportOptionsExportMethodologyArtifact(original["export_methodology_artifact"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExportMethodologyArtifact); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["exportMethodologyArtifact"] = transformedExportMethodologyArtifact
+	}
+
+	return transformed, nil
+}
+
+func expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigMethodologyExportOptionsAppendMethodology(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigMethodologyExportOptionsExportFormat(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAgenticApplicationsAnalystAgentPersonaArtifactsConfigMethodologyExportOptionsExportMethodologyArtifact(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
