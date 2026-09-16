@@ -300,6 +300,9 @@ func TestAccContainerNodePool(t *testing.T) {
 		{
 			Name: "TestAccContainerNodePool_withCustomNodeInitSecret",
 		},
+		{
+			Name: "TestAccContainerNodePool_additionalNodeNetworkConfigsStackType",
+		},
 	}
 
 	for _, tt := range tests {
