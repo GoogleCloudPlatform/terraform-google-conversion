@@ -146,6 +146,12 @@ func GetNetworkServicesAgentGatewayApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("registries"); !tpgresource.IsEmptyValue(reflect.ValueOf(registriesProp)) && (ok || !reflect.DeepEqual(v, registriesProp)) {
 		obj["registries"] = registriesProp
 	}
+	agentConnectivityTemplateProp, err := expandNetworkServicesAgentGatewayAgentConnectivityTemplate(d.Get("agent_connectivity_template"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("agent_connectivity_template"); !tpgresource.IsEmptyValue(reflect.ValueOf(agentConnectivityTemplateProp)) && (ok || !reflect.DeepEqual(v, agentConnectivityTemplateProp)) {
+		obj["agentConnectivityTemplate"] = agentConnectivityTemplateProp
+	}
 	networkConfigProp, err := expandNetworkServicesAgentGatewayNetworkConfig(d.Get("network_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -233,6 +239,10 @@ func expandNetworkServicesAgentGatewaySelfManagedResourceUri(v interface{}, d tp
 }
 
 func expandNetworkServicesAgentGatewayRegistries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesAgentGatewayAgentConnectivityTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
