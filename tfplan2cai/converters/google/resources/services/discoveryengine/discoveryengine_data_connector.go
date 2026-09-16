@@ -210,6 +210,18 @@ func GetDiscoveryEngineDataConnectorApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("incremental_sync_disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(incrementalSyncDisabledProp)) && (ok || !reflect.DeepEqual(v, incrementalSyncDisabledProp)) {
 		obj["incrementalSyncDisabled"] = incrementalSyncDisabledProp
 	}
+	tagProp, err := expandDiscoveryEngineDataConnectorTag(d.Get("tag"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tag"); !tpgresource.IsEmptyValue(reflect.ValueOf(tagProp)) && (ok || !reflect.DeepEqual(v, tagProp)) {
+		obj["tag"] = tagProp
+	}
+	metadataProp, err := expandDiscoveryEngineDataConnectorMetadata(d.Get("metadata"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("metadata"); !tpgresource.IsEmptyValue(reflect.ValueOf(metadataProp)) && (ok || !reflect.DeepEqual(v, metadataProp)) {
+		obj["metadata"] = metadataProp
+	}
 
 	return obj, nil
 }
@@ -530,5 +542,79 @@ func expandDiscoveryEngineDataConnectorAutoRunDisabled(v interface{}, d tpgresou
 }
 
 func expandDiscoveryEngineDataConnectorIncrementalSyncDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorTag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTitle, err := expandDiscoveryEngineDataConnectorMetadataTitle(original["title"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTitle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["title"] = transformedTitle
+	}
+
+	transformedDescription, err := expandDiscoveryEngineDataConnectorMetadataDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	transformedShortDescription, err := expandDiscoveryEngineDataConnectorMetadataShortDescription(original["short_description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedShortDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["shortDescription"] = transformedShortDescription
+	}
+
+	transformedAuthor, err := expandDiscoveryEngineDataConnectorMetadataAuthor(original["author"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthor); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["author"] = transformedAuthor
+	}
+
+	transformedNote, err := expandDiscoveryEngineDataConnectorMetadataNote(original["note"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNote); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["note"] = transformedNote
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineDataConnectorMetadataTitle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorMetadataDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorMetadataShortDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorMetadataAuthor(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineDataConnectorMetadataNote(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
