@@ -318,6 +318,13 @@ func expandDiscoveryEngineWidgetConfigUiSettings(v interface{}, d tpgresource.Te
 		transformed["sourceAdminDisplayNameEnabled"] = transformedSourceAdminDisplayNameEnabled
 	}
 
+	transformedSearchAddonSpec, err := expandDiscoveryEngineWidgetConfigUiSettingsSearchAddonSpec(original["search_addon_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSearchAddonSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["searchAddonSpec"] = transformedSearchAddonSpec
+	}
+
 	return transformed, nil
 }
 
@@ -625,6 +632,54 @@ func expandDiscoveryEngineWidgetConfigUiSettingsEnableCreateAgentButton(v interf
 }
 
 func expandDiscoveryEngineWidgetConfigUiSettingsSourceAdminDisplayNameEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineWidgetConfigUiSettingsSearchAddonSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSemanticAddOnDisabled, err := expandDiscoveryEngineWidgetConfigUiSettingsSearchAddonSpecSemanticAddOnDisabled(original["semantic_add_on_disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["semanticAddOnDisabled"] = transformedSemanticAddOnDisabled
+	}
+
+	transformedKpiPersonalizationAddOnDisabled, err := expandDiscoveryEngineWidgetConfigUiSettingsSearchAddonSpecKpiPersonalizationAddOnDisabled(original["kpi_personalization_add_on_disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["kpiPersonalizationAddOnDisabled"] = transformedKpiPersonalizationAddOnDisabled
+	}
+
+	transformedGenerativeAnswerAddOnDisabled, err := expandDiscoveryEngineWidgetConfigUiSettingsSearchAddonSpecGenerativeAnswerAddOnDisabled(original["generative_answer_add_on_disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["generativeAnswerAddOnDisabled"] = transformedGenerativeAnswerAddOnDisabled
+	}
+
+	return transformed, nil
+}
+
+func expandDiscoveryEngineWidgetConfigUiSettingsSearchAddonSpecSemanticAddOnDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineWidgetConfigUiSettingsSearchAddonSpecKpiPersonalizationAddOnDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineWidgetConfigUiSettingsSearchAddonSpecGenerativeAnswerAddOnDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
