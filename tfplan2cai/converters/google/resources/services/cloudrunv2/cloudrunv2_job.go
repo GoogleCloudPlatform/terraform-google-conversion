@@ -282,6 +282,13 @@ func expandCloudRunV2JobTemplate(v interface{}, d tpgresource.TerraformResourceD
 		transformed["taskCount"] = transformedTaskCount
 	}
 
+	transformedDelayExecution, err := expandCloudRunV2JobTemplateDelayExecution(original["delay_execution"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDelayExecution); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["delayExecution"] = transformedDelayExecution
+	}
+
 	transformedTemplate, err := expandCloudRunV2JobTemplateTemplate(original["template"], d, config)
 	if err != nil {
 		return nil, err
@@ -319,6 +326,10 @@ func expandCloudRunV2JobTemplateParallelism(v interface{}, d tpgresource.Terrafo
 }
 
 func expandCloudRunV2JobTemplateTaskCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateDelayExecution(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
