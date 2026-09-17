@@ -146,6 +146,7 @@ func (c *SecretManagerSecretCai2hclConverter) convertResourceData(asset caiasset
 	hclData["ttl"] = flattenSecretManagerSecretTtl(res["ttl"], d, config)
 	hclData["rotation"] = flattenSecretManagerSecretRotation(res["rotation"], d, config)
 	hclData["tags"] = flattenSecretManagerSecretTags(res["tags"], d, config)
+	hclData["secret_type"] = flattenSecretManagerSecretSecretType(res["secretType"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -382,5 +383,15 @@ func flattenSecretManagerSecretRotationRotationPeriod(v interface{}, d *schema.R
 }
 
 func flattenSecretManagerSecretTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenSecretManagerSecretSecretType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }

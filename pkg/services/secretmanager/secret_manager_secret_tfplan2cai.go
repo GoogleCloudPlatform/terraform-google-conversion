@@ -163,6 +163,12 @@ func GetSecretManagerSecretCaiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("tags"); !tpgresource.IsEmptyValue(reflect.ValueOf(tagsProp)) && (ok || !reflect.DeepEqual(v, tagsProp)) {
 		obj["tags"] = tagsProp
 	}
+	secretTypeProp, err := expandSecretManagerSecretSecretType(d.Get("secret_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("secret_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(secretTypeProp)) && (ok || !reflect.DeepEqual(v, secretTypeProp)) {
+		obj["secretType"] = secretTypeProp
+	}
 	effectiveLabelsProp, err := expandSecretManagerSecretEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -443,6 +449,10 @@ func expandSecretManagerSecretTags(v interface{}, d tpgresource.TerraformResourc
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandSecretManagerSecretSecretType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandSecretManagerSecretEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {

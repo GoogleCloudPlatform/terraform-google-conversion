@@ -158,6 +158,12 @@ func GetSecretManagerRegionalRegionalSecretApiObject(d tpgresource.TerraformReso
 	} else if v, ok := d.GetOkExists("tags"); !tpgresource.IsEmptyValue(reflect.ValueOf(tagsProp)) && (ok || !reflect.DeepEqual(v, tagsProp)) {
 		obj["tags"] = tagsProp
 	}
+	secretTypeProp, err := expandSecretManagerRegionalRegionalSecretSecretType(d.Get("secret_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("secret_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(secretTypeProp)) && (ok || !reflect.DeepEqual(v, secretTypeProp)) {
+		obj["secretType"] = secretTypeProp
+	}
 	effectiveLabelsProp, err := expandSecretManagerRegionalRegionalSecretEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -298,6 +304,10 @@ func expandSecretManagerRegionalRegionalSecretTags(v interface{}, d tpgresource.
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandSecretManagerRegionalRegionalSecretSecretType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandSecretManagerRegionalRegionalSecretEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {

@@ -270,6 +270,13 @@ If rotationPeriod is set, 'next_rotation_time' must be set. 'next_rotation_time'
 				},
 				RequiredWith: []string{"topics"},
 			},
+			"secret_type": {
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+				Description: `This defines the type of the secret. Enforces certain structural requirements on the SecretVersions.
+For secret of type UNSPECIFIED, the SecretVersions can be of any type.`,
+			},
 			"tags": {
 				Type:     schema.TypeMap,
 				Optional: true,

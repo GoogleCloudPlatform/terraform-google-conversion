@@ -146,6 +146,7 @@ func (c *SecretManagerRegionalRegionalSecretCai2hclConverter) convertResourceDat
 	hclData["ttl"] = flattenSecretManagerRegionalRegionalSecretTtl(res["ttl"], d, config)
 	hclData["version_destroy_ttl"] = flattenSecretManagerRegionalRegionalSecretVersionDestroyTtl(res["versionDestroyTtl"], d, config)
 	hclData["tags"] = flattenSecretManagerRegionalRegionalSecretTags(res["tags"], d, config)
+	hclData["secret_type"] = flattenSecretManagerRegionalRegionalSecretSecretType(res["secretType"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -285,5 +286,15 @@ func flattenSecretManagerRegionalRegionalSecretVersionDestroyTtl(v interface{}, 
 }
 
 func flattenSecretManagerRegionalRegionalSecretTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenSecretManagerRegionalRegionalSecretSecretType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
