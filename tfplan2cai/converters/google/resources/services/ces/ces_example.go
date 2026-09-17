@@ -345,6 +345,13 @@ func expandCESExampleMessagesChunksImage(v interface{}, d tpgresource.TerraformR
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedAltText, err := expandCESExampleMessagesChunksImageAltText(original["alt_text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAltText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["altText"] = transformedAltText
+	}
+
 	transformedData, err := expandCESExampleMessagesChunksImageData(original["data"], d, config)
 	if err != nil {
 		return nil, err
@@ -360,6 +367,10 @@ func expandCESExampleMessagesChunksImage(v interface{}, d tpgresource.TerraformR
 	}
 
 	return transformed, nil
+}
+
+func expandCESExampleMessagesChunksImageAltText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESExampleMessagesChunksImageData(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
