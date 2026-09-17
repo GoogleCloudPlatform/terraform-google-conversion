@@ -480,6 +480,13 @@ func expandCloudRunV2JobTemplateTemplateContainers(v interface{}, d tpgresource.
 			transformed["ports"] = transformedPorts
 		}
 
+		transformedSandboxLauncher, err := expandCloudRunV2JobTemplateTemplateContainersSandboxLauncher(original["sandbox_launcher"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSandboxLauncher); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sandboxLauncher"] = transformedSandboxLauncher
+		}
+
 		transformedVolumeMounts, err := expandCloudRunV2JobTemplateTemplateContainersVolumeMounts(original["volume_mounts"], d, config)
 		if err != nil {
 			return nil, err
@@ -706,6 +713,10 @@ func expandCloudRunV2JobTemplateTemplateContainersPortsName(v interface{}, d tpg
 }
 
 func expandCloudRunV2JobTemplateTemplateContainersPortsContainerPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateContainersSandboxLauncher(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
