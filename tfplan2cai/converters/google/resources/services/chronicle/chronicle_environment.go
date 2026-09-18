@@ -176,6 +176,12 @@ func GetChronicleEnvironmentApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("instance_uri"); !tpgresource.IsEmptyValue(reflect.ValueOf(instanceUriProp)) && (ok || !reflect.DeepEqual(v, instanceUriProp)) {
 		obj["instanceUri"] = instanceUriProp
 	}
+	parallelInstanceProp, err := expandChronicleEnvironmentParallelInstance(d.Get("parallel_instance"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("parallel_instance"); !tpgresource.IsEmptyValue(reflect.ValueOf(parallelInstanceProp)) && (ok || !reflect.DeepEqual(v, parallelInstanceProp)) {
+		obj["instance"] = parallelInstanceProp
+	}
 	weightProp, err := expandChronicleEnvironmentWeight(d.Get("weight"), d, config)
 	if err != nil {
 		return nil, err
@@ -274,6 +280,10 @@ func expandChronicleEnvironmentDynamicParametersEnvironmentId(v interface{}, d t
 }
 
 func expandChronicleEnvironmentInstanceUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandChronicleEnvironmentParallelInstance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
