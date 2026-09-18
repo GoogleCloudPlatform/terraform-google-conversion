@@ -188,6 +188,12 @@ func GetCESAgentApiObject(d tpgresource.TerraformResourceData, config *transport
 	} else if v, ok := d.GetOkExists("llm_agent"); ok || (v != nil && !reflect.DeepEqual(v, llmAgentProp)) {
 		obj["llmAgent"] = llmAgentProp
 	}
+	remoteA2aAgentProp, err := expandCESAgentRemoteA2aAgent(d.Get("remote_a2a_agent"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("remote_a2a_agent"); !tpgresource.IsEmptyValue(reflect.ValueOf(remoteA2aAgentProp)) && (ok || !reflect.DeepEqual(v, remoteA2aAgentProp)) {
+		obj["remoteA2aAgent"] = remoteA2aAgentProp
+	}
 	remoteDialogflowAgentProp, err := expandCESAgentRemoteDialogflowAgent(d.Get("remote_dialogflow_agent"), d, config)
 	if err != nil {
 		return nil, err
@@ -595,6 +601,569 @@ func expandCESAgentLlmAgent(v interface{}, d tpgresource.TerraformResourceData, 
 	transformed := make(map[string]interface{})
 
 	return transformed, nil
+}
+
+func expandCESAgentRemoteA2aAgent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedA2aConfig, err := expandCESAgentRemoteA2aAgentA2aConfig(original["a2a_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedA2aConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["a2aConfig"] = transformedA2aConfig
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAgentCard, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCard(original["agent_card"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAgentCard); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["agentCard"] = transformedAgentCard
+	}
+
+	transformedAgentRegistry, err := expandCESAgentRemoteA2aAgentA2aConfigAgentRegistry(original["agent_registry"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAgentRegistry); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["agentRegistry"] = transformedAgentRegistry
+	}
+
+	transformedApiAuthentication, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthentication(original["api_authentication"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApiAuthentication); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["apiAuthentication"] = transformedApiAuthentication
+	}
+
+	transformedContextId, err := expandCESAgentRemoteA2aAgentA2aConfigContextId(original["context_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContextId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["contextId"] = transformedContextId
+	}
+
+	transformedInputVariableMapping, err := expandCESAgentRemoteA2aAgentA2aConfigInputVariableMapping(original["input_variable_mapping"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInputVariableMapping); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["inputVariableMapping"] = transformedInputVariableMapping
+	}
+
+	transformedOutputVariableMapping, err := expandCESAgentRemoteA2aAgentA2aConfigOutputVariableMapping(original["output_variable_mapping"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOutputVariableMapping); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["outputVariableMapping"] = transformedOutputVariableMapping
+	}
+
+	transformedStreamingEnabled, err := expandCESAgentRemoteA2aAgentA2aConfigStreamingEnabled(original["streaming_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStreamingEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["streamingEnabled"] = transformedStreamingEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCard(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedDescription, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardDescription(original["description"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["description"] = transformedDescription
+	}
+
+	transformedName, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardName(original["name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["name"] = transformedName
+	}
+
+	transformedSkills, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkills(original["skills"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSkills); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["skills"] = transformedSkills
+	}
+
+	transformedSupportedInterfaces, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSupportedInterfaces(original["supported_interfaces"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSupportedInterfaces); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["supportedInterfaces"] = transformedSupportedInterfaces
+	}
+
+	transformedVersion, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkills(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDescription, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsDescription(original["description"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["description"] = transformedDescription
+		}
+
+		transformedExamples, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsExamples(original["examples"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedExamples); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["examples"] = transformedExamples
+		}
+
+		transformedId, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsId(original["id"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["id"] = transformedId
+		}
+
+		transformedInputModes, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsInputModes(original["input_modes"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedInputModes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["inputModes"] = transformedInputModes
+		}
+
+		transformedName, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedOutputModes, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsOutputModes(original["output_modes"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOutputModes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["outputModes"] = transformedOutputModes
+		}
+
+		transformedTags, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsTags(original["tags"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tags"] = transformedTags
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsExamples(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsInputModes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsOutputModes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSkillsTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSupportedInterfaces(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedProtocolBinding, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSupportedInterfacesProtocolBinding(original["protocol_binding"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedProtocolBinding); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["protocolBinding"] = transformedProtocolBinding
+		}
+
+		transformedProtocolVersion, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSupportedInterfacesProtocolVersion(original["protocol_version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedProtocolVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["protocolVersion"] = transformedProtocolVersion
+		}
+
+		transformedTenant, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSupportedInterfacesTenant(original["tenant"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTenant); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["tenant"] = transformedTenant
+		}
+
+		transformedUrl, err := expandCESAgentRemoteA2aAgentA2aConfigAgentCardSupportedInterfacesUrl(original["url"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedUrl); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["url"] = transformedUrl
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSupportedInterfacesProtocolBinding(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSupportedInterfacesProtocolVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSupportedInterfacesTenant(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardSupportedInterfacesUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentCardVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigAgentRegistry(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthentication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedApiKeyConfig, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationApiKeyConfig(original["api_key_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApiKeyConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["apiKeyConfig"] = transformedApiKeyConfig
+	}
+
+	transformedBearerTokenConfig, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationBearerTokenConfig(original["bearer_token_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBearerTokenConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bearerTokenConfig"] = transformedBearerTokenConfig
+	}
+
+	transformedOauthConfig, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfig(original["oauth_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauthConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oauthConfig"] = transformedOauthConfig
+	}
+
+	transformedServiceAccountAuthConfig, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationServiceAccountAuthConfig(original["service_account_auth_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountAuthConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountAuthConfig"] = transformedServiceAccountAuthConfig
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationApiKeyConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedApiKeySecretVersion, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationApiKeyConfigApiKeySecretVersion(original["api_key_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApiKeySecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["apiKeySecretVersion"] = transformedApiKeySecretVersion
+	}
+
+	transformedKeyName, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationApiKeyConfigKeyName(original["key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["keyName"] = transformedKeyName
+	}
+
+	transformedRequestLocation, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationApiKeyConfigRequestLocation(original["request_location"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestLocation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestLocation"] = transformedRequestLocation
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationApiKeyConfigApiKeySecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationApiKeyConfigKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationApiKeyConfigRequestLocation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationBearerTokenConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedToken, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationBearerTokenConfigToken(original["token"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["token"] = transformedToken
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationBearerTokenConfigToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedClientId, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfigClientId(original["client_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientId"] = transformedClientId
+	}
+
+	transformedClientSecretVersion, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfigClientSecretVersion(original["client_secret_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientSecretVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientSecretVersion"] = transformedClientSecretVersion
+	}
+
+	transformedOauthGrantType, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfigOauthGrantType(original["oauth_grant_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOauthGrantType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oauthGrantType"] = transformedOauthGrantType
+	}
+
+	transformedScopes, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfigScopes(original["scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scopes"] = transformedScopes
+	}
+
+	transformedTokenEndpoint, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfigTokenEndpoint(original["token_endpoint"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTokenEndpoint); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tokenEndpoint"] = transformedTokenEndpoint
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfigClientId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfigClientSecretVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfigOauthGrantType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfigScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationOauthConfigTokenEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationServiceAccountAuthConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedScopes, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationServiceAccountAuthConfigScopes(original["scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scopes"] = transformedScopes
+	}
+
+	transformedServiceAccount, err := expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationServiceAccountAuthConfigServiceAccount(original["service_account"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	return transformed, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationServiceAccountAuthConfigScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigApiAuthenticationServiceAccountAuthConfigServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigContextId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigInputVariableMapping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigOutputVariableMapping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
+}
+
+func expandCESAgentRemoteA2aAgentA2aConfigStreamingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandCESAgentRemoteDialogflowAgent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
