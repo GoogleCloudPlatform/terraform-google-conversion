@@ -28,6 +28,14 @@ func TestAccComputeRegionDisk(t *testing.T) {
 			Name: "TestAccComputeRegionDisk_regionDiskBasicExample",
 		},
 		{
+			Name: "TestAccComputeRegionDisk_regionDiskDiskEncryptionKeyWoExample",
+			Skip: "write-only fields are not generated for TGC",
+		},
+		{
+			Name: "TestAccComputeRegionDisk_regionDiskRsaEncryptedKeyWoExample",
+			Skip: "write-only fields are not generated for TGC",
+		},
+		{
 			Name: "TestAccComputeRegionDisk_regionDiskAsyncExample",
 		},
 		{

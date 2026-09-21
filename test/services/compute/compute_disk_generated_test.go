@@ -28,6 +28,14 @@ func TestAccComputeDisk(t *testing.T) {
 			Name: "TestAccComputeDisk_diskBasicExample",
 		},
 		{
+			Name: "TestAccComputeDisk_diskBasicWoExample",
+			Skip: "write-only fields are not generated for TGC",
+		},
+		{
+			Name: "TestAccComputeDisk_diskRsaEncryptedKeyWoExample",
+			Skip: "write-only fields are not generated for TGC",
+		},
+		{
 			Name: "TestAccComputeDisk_diskAsyncExample",
 		},
 		{
