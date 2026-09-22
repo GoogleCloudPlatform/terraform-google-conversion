@@ -67,6 +67,30 @@ func ProjectIamMemberResource() *schema.Resource {
 	)
 }
 
+func ProjectIamBindingResource() *schema.Resource {
+	return tpgiamresource.ResourceIamBinding(
+		IamProjectSchema,
+		NewProjectIamUpdater,
+		ProjectIdParseFunc,
+		tpgiamresource.IamWithBatching,
+		tpgiamresource.IamWithParentResourceIdentity(ProjectIamParentResourceIdentityParser),
+	)
+}
+
+// NewProjectIamBindingListResource returns the list implementation for google_project_iam_binding.
+func NewProjectIamBindingListResource() list.ListResource {
+	return tpgiamresource.NewIamBindingListResource(
+		"google_project_iam_binding",
+		ProjectIamBindingResource(),
+		NewProjectIamUpdater,
+		tpgiamresource.IamListCallConfig{
+			ParentResourceField: "project",
+			EnableRoleFilter:    true,
+			EnableMemberFilter:  true,
+		},
+	)
+}
+
 // NewProjectIamMemberListResource returns the list implementation for google_project_iam_member.
 func NewProjectIamMemberListResource() list.ListResource {
 	return tpgiamresource.NewIamMemberListResource(
