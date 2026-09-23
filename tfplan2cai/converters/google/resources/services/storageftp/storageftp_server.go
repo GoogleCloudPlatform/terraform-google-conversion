@@ -204,6 +204,13 @@ func expandStorageFtpServerInternalConfig(v interface{}, d tpgresource.Terraform
 		transformed["consumerRejectList"] = transformedConsumerRejectList
 	}
 
+	transformedServiceAttachment, err := expandStorageFtpServerInternalConfigServiceAttachment(original["service_attachment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAttachment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAttachment"] = transformedServiceAttachment
+	}
+
 	return transformed, nil
 }
 
@@ -278,6 +285,10 @@ func expandStorageFtpServerInternalConfigConsumerRejectListProject(v interface{}
 	return v, nil
 }
 
+func expandStorageFtpServerInternalConfigServiceAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandStorageFtpServerExternalConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -297,11 +308,22 @@ func expandStorageFtpServerExternalConfig(v interface{}, d tpgresource.Terraform
 		transformed["allowedCidrBlocks"] = transformedAllowedCidrBlocks
 	}
 
+	transformedIpAddress, err := expandStorageFtpServerExternalConfigIpAddress(original["ip_address"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIpAddress); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ipAddress"] = transformedIpAddress
+	}
+
 	return transformed, nil
 }
 
 func expandStorageFtpServerExternalConfigAllowedCidrBlocks(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandStorageFtpServerExternalConfigIpAddress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
