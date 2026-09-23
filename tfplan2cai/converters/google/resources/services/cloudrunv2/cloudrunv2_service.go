@@ -206,6 +206,12 @@ func GetCloudRunV2ServiceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("iap_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(iapEnabledProp)) && (ok || !reflect.DeepEqual(v, iapEnabledProp)) {
 		obj["iapEnabled"] = iapEnabledProp
 	}
+	sshEnabledProp, err := expandCloudRunV2ServiceSshEnabled(d.Get("ssh_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ssh_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(sshEnabledProp)) && (ok || !reflect.DeepEqual(v, sshEnabledProp)) {
+		obj["sshEnabled"] = sshEnabledProp
+	}
 	effectiveLabelsProp, err := expandCloudRunV2ServiceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -2713,6 +2719,10 @@ func expandCloudRunV2ServiceMultiRegionSettingsMultiRegionId(v interface{}, d tp
 }
 
 func expandCloudRunV2ServiceIapEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceSshEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
