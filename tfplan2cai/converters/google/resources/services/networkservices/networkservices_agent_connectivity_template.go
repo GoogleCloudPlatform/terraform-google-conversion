@@ -225,6 +225,13 @@ func expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigDnsPeering
 		transformed["domain"] = transformedDomain
 	}
 
+	transformedDomains, err := expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigDnsPeeringConfigDomains(original["domains"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDomains); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["domains"] = transformedDomains
+	}
+
 	transformedTargetNetwork, err := expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigDnsPeeringConfigTargetNetwork(original["target_network"], d, config)
 	if err != nil {
 		return nil, err
@@ -236,6 +243,10 @@ func expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigDnsPeering
 }
 
 func expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigDnsPeeringConfigDomain(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigDnsPeeringConfigDomains(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
