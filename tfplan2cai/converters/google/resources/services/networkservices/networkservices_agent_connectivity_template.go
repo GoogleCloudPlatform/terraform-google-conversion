@@ -199,6 +199,13 @@ func expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfig(v interfa
 		transformed["vpcEgress"] = transformedVpcEgress
 	}
 
+	transformedTlsConfig, err := expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigTlsConfig(original["tls_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTlsConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tlsConfig"] = transformedTlsConfig
+	}
+
 	return transformed, nil
 }
 
@@ -255,6 +262,43 @@ func expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigDnsPeering
 }
 
 func expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigVpcEgress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigTlsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTrustConfig, err := expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigTlsConfigTrustConfig(original["trust_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTrustConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["trustConfig"] = transformedTrustConfig
+	}
+
+	transformedAdditionalRoots, err := expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigTlsConfigAdditionalRoots(original["additional_roots"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAdditionalRoots); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["additionalRoots"] = transformedAdditionalRoots
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigTlsConfigTrustConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesAgentConnectivityTemplateEgressNetworkConfigTlsConfigAdditionalRoots(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
