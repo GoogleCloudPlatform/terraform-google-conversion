@@ -28,6 +28,9 @@ func TestAccComputeServiceAttachment(t *testing.T) {
 			Name: "TestAccComputeServiceAttachment_serviceAttachmentBasicExample",
 		},
 		{
+			Name: "TestAccComputeServiceAttachment_serviceAttachmentNatIpsExample",
+		},
+		{
 			Name: "TestAccComputeServiceAttachment_serviceAttachmentExplicitProjectsExample",
 		},
 		{

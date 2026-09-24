@@ -142,6 +142,7 @@ func (c *ComputeServiceAttachmentCai2hclConverter) convertResourceData(asset cai
 	hclData["target_service"] = flattenComputeServiceAttachmentTargetService(res["targetService"], d, config)
 	hclData["nat_subnets"] = flattenComputeServiceAttachmentNatSubnets(res["natSubnets"], d, config)
 	hclData["enable_proxy_protocol"] = flattenComputeServiceAttachmentEnableProxyProtocol(res["enableProxyProtocol"], d, config)
+	hclData["nat_ips_per_endpoint"] = flattenComputeServiceAttachmentNatIpsPerEndpoint(res["natIpsPerEndpoint"], d, config)
 	hclData["domain_names"] = flattenComputeServiceAttachmentDomainNames(res["domainNames"], d, config)
 	hclData["consumer_reject_lists"] = flattenComputeServiceAttachmentConsumerRejectLists(res["consumerRejectLists"], d, config)
 	hclData["consumer_accept_lists"] = flattenComputeServiceAttachmentConsumerAcceptLists(res["consumerAcceptLists"], d, config)
@@ -214,6 +215,23 @@ func flattenComputeServiceAttachmentEnableProxyProtocol(v interface{}, d *schema
 		return false
 	}
 	return v
+}
+
+func flattenComputeServiceAttachmentNatIpsPerEndpoint(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
 }
 
 func flattenComputeServiceAttachmentDomainNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
