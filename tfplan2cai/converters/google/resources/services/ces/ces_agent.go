@@ -249,6 +249,13 @@ func expandCESAgentAfterAgentCallbacks(v interface{}, d tpgresource.TerraformRes
 			transformed["disabled"] = transformedDisabled
 		}
 
+		transformedProactiveExecutionEnabled, err := expandCESAgentAfterAgentCallbacksProactiveExecutionEnabled(original["proactive_execution_enabled"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedProactiveExecutionEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["proactiveExecutionEnabled"] = transformedProactiveExecutionEnabled
+		}
+
 		transformedPythonCode, err := expandCESAgentAfterAgentCallbacksPythonCode(original["python_code"], d, config)
 		if err != nil {
 			return nil, err
@@ -266,6 +273,10 @@ func expandCESAgentAfterAgentCallbacksDescription(v interface{}, d tpgresource.T
 }
 
 func expandCESAgentAfterAgentCallbacksDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentAfterAgentCallbacksProactiveExecutionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -300,6 +311,13 @@ func expandCESAgentAfterModelCallbacks(v interface{}, d tpgresource.TerraformRes
 			transformed["disabled"] = transformedDisabled
 		}
 
+		transformedProactiveExecutionEnabled, err := expandCESAgentAfterModelCallbacksProactiveExecutionEnabled(original["proactive_execution_enabled"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedProactiveExecutionEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["proactiveExecutionEnabled"] = transformedProactiveExecutionEnabled
+		}
+
 		transformedPythonCode, err := expandCESAgentAfterModelCallbacksPythonCode(original["python_code"], d, config)
 		if err != nil {
 			return nil, err
@@ -317,6 +335,10 @@ func expandCESAgentAfterModelCallbacksDescription(v interface{}, d tpgresource.T
 }
 
 func expandCESAgentAfterModelCallbacksDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentAfterModelCallbacksProactiveExecutionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -351,6 +373,13 @@ func expandCESAgentAfterToolCallbacks(v interface{}, d tpgresource.TerraformReso
 			transformed["disabled"] = transformedDisabled
 		}
 
+		transformedProactiveExecutionEnabled, err := expandCESAgentAfterToolCallbacksProactiveExecutionEnabled(original["proactive_execution_enabled"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedProactiveExecutionEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["proactiveExecutionEnabled"] = transformedProactiveExecutionEnabled
+		}
+
 		transformedPythonCode, err := expandCESAgentAfterToolCallbacksPythonCode(original["python_code"], d, config)
 		if err != nil {
 			return nil, err
@@ -368,6 +397,10 @@ func expandCESAgentAfterToolCallbacksDescription(v interface{}, d tpgresource.Te
 }
 
 func expandCESAgentAfterToolCallbacksDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentAfterToolCallbacksProactiveExecutionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -402,6 +435,13 @@ func expandCESAgentBeforeAgentCallbacks(v interface{}, d tpgresource.TerraformRe
 			transformed["disabled"] = transformedDisabled
 		}
 
+		transformedProactiveExecutionEnabled, err := expandCESAgentBeforeAgentCallbacksProactiveExecutionEnabled(original["proactive_execution_enabled"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedProactiveExecutionEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["proactiveExecutionEnabled"] = transformedProactiveExecutionEnabled
+		}
+
 		transformedPythonCode, err := expandCESAgentBeforeAgentCallbacksPythonCode(original["python_code"], d, config)
 		if err != nil {
 			return nil, err
@@ -419,6 +459,10 @@ func expandCESAgentBeforeAgentCallbacksDescription(v interface{}, d tpgresource.
 }
 
 func expandCESAgentBeforeAgentCallbacksDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentBeforeAgentCallbacksProactiveExecutionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -453,6 +497,13 @@ func expandCESAgentBeforeModelCallbacks(v interface{}, d tpgresource.TerraformRe
 			transformed["disabled"] = transformedDisabled
 		}
 
+		transformedProactiveExecutionEnabled, err := expandCESAgentBeforeModelCallbacksProactiveExecutionEnabled(original["proactive_execution_enabled"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedProactiveExecutionEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["proactiveExecutionEnabled"] = transformedProactiveExecutionEnabled
+		}
+
 		transformedPythonCode, err := expandCESAgentBeforeModelCallbacksPythonCode(original["python_code"], d, config)
 		if err != nil {
 			return nil, err
@@ -470,6 +521,10 @@ func expandCESAgentBeforeModelCallbacksDescription(v interface{}, d tpgresource.
 }
 
 func expandCESAgentBeforeModelCallbacksDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentBeforeModelCallbacksProactiveExecutionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -504,6 +559,13 @@ func expandCESAgentBeforeToolCallbacks(v interface{}, d tpgresource.TerraformRes
 			transformed["disabled"] = transformedDisabled
 		}
 
+		transformedProactiveExecutionEnabled, err := expandCESAgentBeforeToolCallbacksProactiveExecutionEnabled(original["proactive_execution_enabled"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedProactiveExecutionEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["proactiveExecutionEnabled"] = transformedProactiveExecutionEnabled
+		}
+
 		transformedPythonCode, err := expandCESAgentBeforeToolCallbacksPythonCode(original["python_code"], d, config)
 		if err != nil {
 			return nil, err
@@ -521,6 +583,10 @@ func expandCESAgentBeforeToolCallbacksDescription(v interface{}, d tpgresource.T
 }
 
 func expandCESAgentBeforeToolCallbacksDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAgentBeforeToolCallbacksProactiveExecutionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
