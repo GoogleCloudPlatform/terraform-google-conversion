@@ -138,7 +138,6 @@ func expandSecretManagerRegionalRegionalSecretVersionPayload(v interface{}, d tp
 	} else if val := reflect.ValueOf(transformedSecretData); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["data"] = transformedSecretData
 	}
-
 	return transformed, nil
 }
 

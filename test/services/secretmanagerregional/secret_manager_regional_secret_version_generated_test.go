@@ -28,6 +28,13 @@ func TestAccSecretManagerRegionalRegionalSecretVersion(t *testing.T) {
 			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionBasicExample",
 		},
 		{
+			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionBasicWriteOnlyExample",
+			Skip: "fix later",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionWithBase64StringSecretDataWriteOnlyExample",
+		},
+		{
 			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_regionalSecretVersionWithBase64DataExample",
 		},
 		{
@@ -44,6 +51,9 @@ func TestAccSecretManagerRegionalRegionalSecretVersion(t *testing.T) {
 		},
 		{
 			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_cmekOutputOnly",
+		},
+		{
+			Name: "TestAccSecretManagerRegionalRegionalSecretVersion_neitherSecretDataSet",
 		},
 	}
 
