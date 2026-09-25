@@ -145,6 +145,12 @@ func GetComputeTargetTcpProxyCaiObject(d tpgresource.TerraformResourceData, conf
 	} else if v, ok := d.GetOkExists("proxy_bind"); ok || (v != nil && !reflect.DeepEqual(v, proxyBindProp)) {
 		obj["proxyBind"] = proxyBindProp
 	}
+	loadBalancingSchemeProp, err := expandComputeTargetTcpProxyLoadBalancingScheme(d.Get("load_balancing_scheme"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("load_balancing_scheme"); !tpgresource.IsEmptyValue(reflect.ValueOf(loadBalancingSchemeProp)) && (ok || !reflect.DeepEqual(v, loadBalancingSchemeProp)) {
+		obj["loadBalancingScheme"] = loadBalancingSchemeProp
+	}
 
 	return obj, nil
 }
@@ -171,5 +177,9 @@ func expandComputeTargetTcpProxyBackendService(v interface{}, d tpgresource.Terr
 }
 
 func expandComputeTargetTcpProxyProxyBind(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeTargetTcpProxyLoadBalancingScheme(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

@@ -92,14 +92,24 @@ character, which cannot be a dash.`,
 				Optional:         true,
 				DiffSuppressFunc: tpgresource.CompareSelfLinkOrResourceName,
 				Description: `A reference to the BackendService resource. This field is optional when
-the loadBalancingScheme (available in beta) is set to INTERNAL_MANAGED.`,
-				AtLeastOneOf: []string{"backend_service"},
+the loadBalancingScheme is set to INTERNAL_MANAGED.`,
+				AtLeastOneOf: []string{"backend_service", "load_balancing_scheme"},
 			},
 			"description": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				ForceNew:    true,
 				Description: `An optional description of this resource.`,
+			},
+			"load_balancing_scheme": {
+				Type:         schema.TypeString,
+				Optional:     true,
+				ForceNew:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"EXTERNAL", "EXTERNAL_MANAGED", "INTERNAL_MANAGED", ""}),
+				Description: `Specifies the load balancer type. A target TCP proxy created for one type
+of load balancer cannot be used with another. For more information, refer
+to [Summary of types of Google Cloud load balancers](https://docs.cloud.google.com/load-balancing/docs/load-balancing-overview#summary-gclb). Possible values: ["EXTERNAL", "EXTERNAL_MANAGED", "INTERNAL_MANAGED"]`,
+				AtLeastOneOf: []string{"backend_service", "load_balancing_scheme"},
 			},
 			"proxy_bind": {
 				Type:     schema.TypeBool,
