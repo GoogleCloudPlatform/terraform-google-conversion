@@ -141,6 +141,7 @@ func (c *ComputeTargetTcpProxyCai2hclConverter) convertResourceData(asset caiass
 	hclData["proxy_header"] = flattenComputeTargetTcpProxyProxyHeader(res["proxyHeader"], d, config)
 	hclData["backend_service"] = flattenComputeTargetTcpProxyBackendService(res["service"], d, config)
 	hclData["proxy_bind"] = flattenComputeTargetTcpProxyProxyBind(res["proxyBind"], d, config)
+	hclData["load_balancing_scheme"] = flattenComputeTargetTcpProxyLoadBalancingScheme(res["loadBalancingScheme"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -189,5 +190,9 @@ func flattenComputeTargetTcpProxyBackendService(v interface{}, d *schema.Resourc
 }
 
 func flattenComputeTargetTcpProxyProxyBind(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeTargetTcpProxyLoadBalancingScheme(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
