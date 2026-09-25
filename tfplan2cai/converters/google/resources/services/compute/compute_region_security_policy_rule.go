@@ -332,6 +332,13 @@ func expandComputeRegionSecurityPolicyRulePreconfiguredWafConfigExclusion(v inte
 			transformed["requestUrisToExclude"] = transformedRequestUri
 		}
 
+		transformedRequestBody, err := expandComputeRegionSecurityPolicyRulePreconfiguredWafConfigExclusionRequestBody(original["request_body"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestBody); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestBodiesToExclude"] = transformedRequestBody
+		}
+
 		transformedRequestQueryParam, err := expandComputeRegionSecurityPolicyRulePreconfiguredWafConfigExclusionRequestQueryParam(original["request_query_param"], d, config)
 		if err != nil {
 			return nil, err
@@ -469,6 +476,46 @@ func expandComputeRegionSecurityPolicyRulePreconfiguredWafConfigExclusionRequest
 }
 
 func expandComputeRegionSecurityPolicyRulePreconfiguredWafConfigExclusionRequestUriValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulePreconfiguredWafConfigExclusionRequestBody(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedOperator, err := expandComputeRegionSecurityPolicyRulePreconfiguredWafConfigExclusionRequestBodyOperator(original["operator"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedOperator); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["op"] = transformedOperator
+		}
+
+		transformedValue, err := expandComputeRegionSecurityPolicyRulePreconfiguredWafConfigExclusionRequestBodyValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["val"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandComputeRegionSecurityPolicyRulePreconfiguredWafConfigExclusionRequestBodyOperator(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionSecurityPolicyRulePreconfiguredWafConfigExclusionRequestBodyValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
