@@ -385,11 +385,12 @@ you create the resource. This field can be set only at resource
 creation time.`,
 			},
 			"external_ipv6_prefix": {
-				Type:        schema.TypeString,
-				Computed:    true,
-				Optional:    true,
-				ForceNew:    true,
-				Description: `The range of external IPv6 addresses that are owned by this subnetwork.`,
+				Type:             schema.TypeString,
+				Computed:         true,
+				Optional:         true,
+				ValidateFunc:     verify.ValidateIpCidrRange,
+				DiffSuppressFunc: IpDiffSuppress,
+				Description:      `The range of external IPv6 addresses that are owned by this subnetwork.`,
 			},
 			"internal_ipv6_prefix": {
 				Type:             schema.TypeString,
