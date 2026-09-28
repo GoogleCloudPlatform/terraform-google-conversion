@@ -94,6 +94,9 @@ func TestAccComputeSubnetwork(t *testing.T) {
 			Name: "TestAccComputeSubnetwork_ipv6UpdateWithPdp",
 		},
 		{
+			Name: "TestAccComputeSubnetwork_ipv6UpdateWithExternalPdpAndVm",
+		},
+		{
 			Name: "TestAccComputeSubnetwork_secondaryIpRangeInternalRangeInUse",
 		},
 	}
