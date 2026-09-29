@@ -141,6 +141,7 @@ func (c *ManagedKafkaClusterCai2hclConverter) convertResourceData(asset caiasset
 	hclData["capacity_config"] = flattenManagedKafkaClusterCapacityConfig(res["capacityConfig"], d, config)
 	hclData["broker_capacity_config"] = flattenManagedKafkaClusterBrokerCapacityConfig(res["brokerCapacityConfig"], d, config)
 	hclData["rebalance_config"] = flattenManagedKafkaClusterRebalanceConfig(res["rebalanceConfig"], d, config)
+	hclData["kafka_version"] = flattenManagedKafkaClusterKafkaVersion(res["kafkaVersion"], d, config)
 	hclData["tls_config"] = flattenManagedKafkaClusterTlsConfig(res["tlsConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -330,6 +331,10 @@ func flattenManagedKafkaClusterRebalanceConfigMode(v interface{}, d *schema.Reso
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenManagedKafkaClusterKafkaVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

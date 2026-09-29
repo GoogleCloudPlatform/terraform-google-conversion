@@ -184,6 +184,12 @@ func ResourceManagedKafkaCluster() *schema.Resource {
 					},
 				},
 			},
+			"kafka_version": {
+				Type:        schema.TypeString,
+				Computed:    true,
+				Optional:    true,
+				Description: `The Apache Kafka version of the cluster (for example, '3.7.x', '4.3.x'). If not specified during cluster creation, defaults to '3.7.x'.`,
+			},
 			"labels": {
 				Type:     schema.TypeMap,
 				Optional: true,

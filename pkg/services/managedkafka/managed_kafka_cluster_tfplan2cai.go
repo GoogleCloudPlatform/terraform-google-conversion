@@ -139,6 +139,12 @@ func GetManagedKafkaClusterCaiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("rebalance_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(rebalanceConfigProp)) && (ok || !reflect.DeepEqual(v, rebalanceConfigProp)) {
 		obj["rebalanceConfig"] = rebalanceConfigProp
 	}
+	kafkaVersionProp, err := expandManagedKafkaClusterKafkaVersion(d.Get("kafka_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("kafka_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(kafkaVersionProp)) && (ok || !reflect.DeepEqual(v, kafkaVersionProp)) {
+		obj["kafkaVersion"] = kafkaVersionProp
+	}
 	tlsConfigProp, err := expandManagedKafkaClusterTlsConfig(d.Get("tls_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -358,6 +364,10 @@ func expandManagedKafkaClusterRebalanceConfig(v interface{}, d tpgresource.Terra
 }
 
 func expandManagedKafkaClusterRebalanceConfigMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandManagedKafkaClusterKafkaVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
