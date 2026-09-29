@@ -159,6 +159,13 @@ func expandNetworkSecurityUllMirroringCollectorRuleMatch(v interface{}, d tpgres
 		transformed["ipProtocols"] = transformedIpProtocols
 	}
 
+	transformedPrimaryIpRanges, err := expandNetworkSecurityUllMirroringCollectorRuleMatchPrimaryIpRanges(original["primary_ip_ranges"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrimaryIpRanges); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["primaryIpRanges"] = transformedPrimaryIpRanges
+	}
+
 	transformedSrcIpRanges, err := expandNetworkSecurityUllMirroringCollectorRuleMatchSrcIpRanges(original["src_ip_ranges"], d, config)
 	if err != nil {
 		return nil, err
@@ -178,6 +185,10 @@ func expandNetworkSecurityUllMirroringCollectorRuleMatchDstIpRanges(v interface{
 }
 
 func expandNetworkSecurityUllMirroringCollectorRuleMatchIpProtocols(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityUllMirroringCollectorRuleMatchPrimaryIpRanges(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
