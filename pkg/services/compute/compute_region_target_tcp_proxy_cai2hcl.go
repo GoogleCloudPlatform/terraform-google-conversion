@@ -141,6 +141,7 @@ func (c *ComputeRegionTargetTcpProxyCai2hclConverter) convertResourceData(asset 
 	hclData["proxy_header"] = flattenComputeRegionTargetTcpProxyProxyHeader(res["proxyHeader"], d, config)
 	hclData["backend_service"] = flattenComputeRegionTargetTcpProxyBackendService(res["service"], d, config)
 	hclData["proxy_bind"] = flattenComputeRegionTargetTcpProxyProxyBind(res["proxyBind"], d, config)
+	hclData["load_balancing_scheme"] = flattenComputeRegionTargetTcpProxyLoadBalancingScheme(res["loadBalancingScheme"], d, config)
 	hclData["region"] = flattenComputeRegionTargetTcpProxyRegion(res["region"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -190,6 +191,10 @@ func flattenComputeRegionTargetTcpProxyBackendService(v interface{}, d *schema.R
 }
 
 func flattenComputeRegionTargetTcpProxyProxyBind(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeRegionTargetTcpProxyLoadBalancingScheme(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
