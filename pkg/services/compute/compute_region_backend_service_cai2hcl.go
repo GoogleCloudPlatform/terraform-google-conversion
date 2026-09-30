@@ -1751,6 +1751,8 @@ func flattenComputeRegionBackendServiceTlsSettings(v interface{}, d *schema.Reso
 		flattenComputeRegionBackendServiceTlsSettingsSubjectAltNames(original["subjectAltNames"], d, config)
 	transformed["authentication_config"] =
 		flattenComputeRegionBackendServiceTlsSettingsAuthenticationConfig(original["authenticationConfig"], d, config)
+	transformed["identity"] =
+		flattenComputeRegionBackendServiceTlsSettingsIdentity(original["identity"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -1808,6 +1810,16 @@ func flattenComputeRegionBackendServiceTlsSettingsSubjectAltNamesUniformResource
 }
 
 func flattenComputeRegionBackendServiceTlsSettingsAuthenticationConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenComputeRegionBackendServiceTlsSettingsIdentity(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}

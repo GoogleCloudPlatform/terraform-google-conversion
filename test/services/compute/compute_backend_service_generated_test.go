@@ -62,6 +62,9 @@ func TestAccComputeBackendService(t *testing.T) {
 			Name: "TestAccComputeBackendService_backendServiceTlsSettingsExample",
 		},
 		{
+			Name: "TestAccComputeBackendService_backendServiceIdentityExample",
+		},
+		{
 			Name: "TestAccComputeBackendService_basic",
 		},
 		{
