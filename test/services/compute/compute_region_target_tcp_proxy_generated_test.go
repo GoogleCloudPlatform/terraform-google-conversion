@@ -28,6 +28,12 @@ func TestAccComputeRegionTargetTcpProxy(t *testing.T) {
 			Name: "TestAccComputeRegionTargetTcpProxy_regionTargetTcpProxyBasicExample",
 		},
 		{
+			Name: "TestAccComputeRegionTargetTcpProxy_regionTargetTcpProxyBackendlessExample",
+		},
+		{
+			Name: "TestAccComputeRegionTargetTcpProxy_regionTargetTcpProxyTlsRouteExample",
+		},
+		{
 			Name: "TestAccComputeRegionTargetTcpProxy_update",
 		},
 	}
