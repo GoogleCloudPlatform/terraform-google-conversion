@@ -384,6 +384,20 @@ func expandCESAppAudioProcessingConfigSynthesizeSpeechConfigs(v interface{}, d t
 			transformed["speakingRate"] = transformedSpeakingRate
 		}
 
+		transformedModel, err := expandCESAppAudioProcessingConfigSynthesizeSpeechConfigsModel(original["model"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedModel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["model"] = transformedModel
+		}
+
+		transformedInstruction, err := expandCESAppAudioProcessingConfigSynthesizeSpeechConfigsInstruction(original["instruction"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedInstruction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["instruction"] = transformedInstruction
+		}
+
 		transformedLanguageCode, err := tpgresource.ExpandString(original["language_code"], d, config)
 		if err != nil {
 			return nil, err
@@ -398,6 +412,14 @@ func expandCESAppAudioProcessingConfigSynthesizeSpeechConfigsVoice(v interface{}
 }
 
 func expandCESAppAudioProcessingConfigSynthesizeSpeechConfigsSpeakingRate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppAudioProcessingConfigSynthesizeSpeechConfigsModel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppAudioProcessingConfigSynthesizeSpeechConfigsInstruction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
