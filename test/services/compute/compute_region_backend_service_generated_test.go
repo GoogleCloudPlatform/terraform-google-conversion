@@ -61,6 +61,9 @@ func TestAccComputeRegionBackendService(t *testing.T) {
 			Name: "TestAccComputeRegionBackendService_regionBackendServiceTlsSettingsExample",
 		},
 		{
+			Name: "TestAccComputeRegionBackendService_regionBackendServiceIdentityExample",
+		},
+		{
 			Name: "TestAccComputeRegionBackendService_basic",
 		},
 		{

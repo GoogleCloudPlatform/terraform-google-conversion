@@ -1238,11 +1238,23 @@ The full range of timeout values allowed goes from 1 through 2,147,483,647 secon
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"authentication_config": {
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: suppressAuthenticationConfigWhenIdentitySet,
 							Description: `Reference to the BackendAuthenticationConfig resource from the networksecurity.googleapis.com namespace.
 Can be used in authenticating TLS connections to the backend, as specified by the authenticationMode field.
 Can only be specified if authenticationMode is not NONE.`,
+							ConflictsWith: []string{"tls_settings.0.identity"},
+						},
+						"identity": {
+							Type:     schema.TypeString,
+							Optional: true,
+							ForceNew: true,
+							Description: `The fully-specified SPIFFE ID without the spiffe:// scheme. Must be in the format //<trust_domain>/ns/<namespace>/sa/<subject>.
+The load balancer uses certificates and roots of trust provisioned by the Managed Workload Identity system for this identity.
+The Trust Domain within the identity must refer to a valid Workload Identity Pool, from which the TrustConfig and CertificateIssuanceConfig are inherited.
+If set, you cannot configure sni, subjectAltNames, or authenticationConfig manually.`,
+							ConflictsWith: []string{"tls_settings.0.authentication_config", "tls_settings.0.sni", "tls_settings.0.subject_alt_names"},
 						},
 						"sni": {
 							Type:     schema.TypeString,
@@ -1251,6 +1263,7 @@ Can only be specified if authenticationMode is not NONE.`,
 TLS connection to the backend, and requires that this string match a Subject Alternative Name (SAN) in the backend's
 server certificate. With a Regional Internet NEG backend, if the SNI is specified here, the load balancer uses it
 regardless of whether the Regional Internet NEG is specified with FQDN or IP address and port.`,
+							ConflictsWith: []string{"tls_settings.0.identity"},
 						},
 						"subject_alt_names": {
 							Type:     schema.TypeList,
@@ -1276,6 +1289,7 @@ subjectAltNames.`,
 									},
 								},
 							},
+							ConflictsWith: []string{"tls_settings.0.identity"},
 						},
 					},
 				},

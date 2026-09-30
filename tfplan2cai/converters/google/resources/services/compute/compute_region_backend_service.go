@@ -2226,6 +2226,13 @@ func expandComputeRegionBackendServiceTlsSettings(v interface{}, d tpgresource.T
 		transformed["authenticationConfig"] = transformedAuthenticationConfig
 	}
 
+	transformedIdentity, err := expandComputeRegionBackendServiceTlsSettingsIdentity(original["identity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["identity"] = transformedIdentity
+	}
+
 	return transformed, nil
 }
 
@@ -2274,6 +2281,10 @@ func expandComputeRegionBackendServiceTlsSettingsSubjectAltNamesUniformResourceI
 }
 
 func expandComputeRegionBackendServiceTlsSettingsAuthenticationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionBackendServiceTlsSettingsIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

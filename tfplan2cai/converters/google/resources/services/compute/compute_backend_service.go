@@ -67,6 +67,14 @@ func suppressIapDiffWhenUnset(_ string, _, _ string, d *schema.ResourceData) boo
 	return iap.IsKnown() && iap.LengthInt() == 0
 }
 
+// suppress changes on authentication_config if identity is set.
+func suppressAuthenticationConfigWhenIdentitySet(k, old, new string, d *schema.ResourceData) bool {
+	if v, ok := d.GetOk("tls_settings.0.identity"); ok && v.(string) != "" {
+		return true
+	}
+	return false
+}
+
 // Whether the backend is a global or regional NEG
 func isNegBackend(backend map[string]interface{}) bool {
 	backendGroup, ok := backend["group"]
@@ -2182,6 +2190,13 @@ func expandComputeBackendServiceTlsSettings(v interface{}, d tpgresource.Terrafo
 		transformed["authenticationConfig"] = transformedAuthenticationConfig
 	}
 
+	transformedIdentity, err := expandComputeBackendServiceTlsSettingsIdentity(original["identity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["identity"] = transformedIdentity
+	}
+
 	return transformed, nil
 }
 
@@ -2230,6 +2245,10 @@ func expandComputeBackendServiceTlsSettingsSubjectAltNamesUniformResourceIdentif
 }
 
 func expandComputeBackendServiceTlsSettingsAuthenticationConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeBackendServiceTlsSettingsIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
