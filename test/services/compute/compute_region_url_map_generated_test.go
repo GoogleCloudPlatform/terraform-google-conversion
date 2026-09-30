@@ -75,6 +75,9 @@ func TestAccComputeRegionUrlMap(t *testing.T) {
 		{
 			Name: "TestAccComputeRegionUrlMap_defaultRouteAction_full_update",
 		},
+		{
+			Name: "TestAccComputeRegionUrlMap_regexRewrite",
+		},
 	}
 
 	for _, tt := range tests {
