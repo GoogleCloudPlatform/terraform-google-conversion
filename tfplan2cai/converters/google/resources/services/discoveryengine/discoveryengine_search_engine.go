@@ -170,6 +170,12 @@ func GetDiscoveryEngineSearchEngineApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("knowledge_graph_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(knowledgeGraphConfigProp)) && (ok || !reflect.DeepEqual(v, knowledgeGraphConfigProp)) {
 		obj["knowledgeGraphConfig"] = knowledgeGraphConfigProp
 	}
+	procurementContactEmailsProp, err := expandDiscoveryEngineSearchEngineProcurementContactEmails(d.Get("procurement_contact_emails"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("procurement_contact_emails"); !tpgresource.IsEmptyValue(reflect.ValueOf(procurementContactEmailsProp)) && (ok || !reflect.DeepEqual(v, procurementContactEmailsProp)) {
+		obj["procurementContactEmails"] = procurementContactEmailsProp
+	}
 
 	return resourceDiscoveryEngineSearchEngineEncoder(d, config, obj)
 }
@@ -400,5 +406,9 @@ func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePr
 }
 
 func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePrivateKgQueryUiChips(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineProcurementContactEmails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
