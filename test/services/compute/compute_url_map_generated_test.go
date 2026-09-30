@@ -109,6 +109,9 @@ func TestAccComputeUrlMap(t *testing.T) {
 		{
 			Name: "TestAccComputeUrlMap_routeRulesCustomErrorResponsePolicy",
 		},
+		{
+			Name: "TestAccComputeUrlMap_regexRewrite",
+		},
 	}
 
 	for _, tt := range tests {
