@@ -133,6 +133,16 @@ func (c *NetworkSecuritySecurityProfileCai2hclConverter) convertResourceData(ass
 	}
 	hclData := make(map[string]interface{})
 
+	res, err = resourceNetworkSecuritySecurityProfileDecoder(d, config, res)
+	if err != nil {
+		return nil, err
+	}
+
+	if res == nil {
+		// Decoding the object has resulted in it being gone. It may be marked deleted.
+		return nil, nil
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "etag": struct{}{}, "self_link": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//networksecurity.googleapis.com/{{parent}}/locations/{{location}}/securityProfiles/{{name}}", outputFields, hclData)
 
@@ -418,4 +428,9 @@ func flattenNetworkSecuritySecurityProfileCustomInterceptProfileInterceptEndpoin
 
 func flattenNetworkSecuritySecurityProfileType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func resourceNetworkSecuritySecurityProfileDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+
+	return res, nil
 }
