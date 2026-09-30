@@ -2538,7 +2538,10 @@ header is replaced with contents of hostRewrite. The value must be between 1 and
 																Optional: true,
 																Description: `Prior to forwarding the request to the selected backend service, the matching
 portion of the request's path is replaced by pathPrefixRewrite. The value must
-be between 1 and 1024 characters.`,
+be between 1 and 1024 characters.
+
+Only one of pathPrefixRewrite, pathTemplateRewrite, or regexRewrite may be
+specified.`,
 															},
 															"path_template_rewrite": {
 																Type:     schema.TypeString,
@@ -2555,8 +2558,42 @@ captured by the route's pathTemplate matchers.
 pathTemplateRewrite may only be used when all of a route's
 MatchRules specify pathTemplate.
 
-Only one of pathPrefixRewrite and pathTemplateRewrite may be
+Only one of pathPrefixRewrite, pathTemplateRewrite, or regexRewrite may be
 specified.`,
+															},
+															"regex_rewrite": {
+																Type:     schema.TypeList,
+																Optional: true,
+																Description: `The regex rewrite to be applied to the URL. Only one of
+pathPrefixRewrite, pathTemplateRewrite, or regexRewrite may be
+specified.`,
+																MaxItems: 1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+																		"path_pattern": {
+																			Type:     schema.TypeString,
+																			Required: true,
+																			Description: `The regular expression used to match against the URL path.
+It uses RE2 syntax with the following constraints:
+
+* Any single character operators are allowed.
+* Groups may only contain a submatch operator, and may not
+  contain character repetition (for example, '.*').
+* Character repetition (for example, '.*') may only be used in
+  a regex together with empty string operators, other
+  repetitions, ranges, and repetitions of ranges.
+* Ranges may only contain character ranges, digit ranges, and
+  symbols allowed for ranges.`,
+																		},
+																		"path_substitution": {
+																			Type:     schema.TypeString,
+																			Required: true,
+																			Description: `The substitution used to rewrite the parts of the URL path
+matched by pathPattern. May reference capture groups from
+pathPattern.`,
+																		},
+																	},
+																},
 															},
 														},
 													},
