@@ -128,6 +128,12 @@ func GetDatabaseMigrationServicePrivateConnectionApiObject(d tpgresource.Terrafo
 	} else if v, ok := d.GetOkExists("psc_interface_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(pscInterfaceConfigProp)) && (ok || !reflect.DeepEqual(v, pscInterfaceConfigProp)) {
 		obj["pscInterfaceConfig"] = pscInterfaceConfigProp
 	}
+	reservedPublicIpConfigProp, err := expandDatabaseMigrationServicePrivateConnectionReservedPublicIpConfig(d.Get("reserved_public_ip_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("reserved_public_ip_config"); ok || (v != nil && !reflect.DeepEqual(v, reservedPublicIpConfigProp)) {
+		obj["reservedPublicIpConfig"] = reservedPublicIpConfigProp
+	}
 	effectiveLabelsProp, err := expandDatabaseMigrationServicePrivateConnectionEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -202,6 +208,43 @@ func expandDatabaseMigrationServicePrivateConnectionPscInterfaceConfig(v interfa
 }
 
 func expandDatabaseMigrationServicePrivateConnectionPscInterfaceConfigNetworkAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServicePrivateConnectionReservedPublicIpConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNatIpsCount, err := expandDatabaseMigrationServicePrivateConnectionReservedPublicIpConfigNatIpsCount(original["nat_ips_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNatIpsCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["natIpsCount"] = transformedNatIpsCount
+	}
+
+	transformedEgressPublicIps, err := expandDatabaseMigrationServicePrivateConnectionReservedPublicIpConfigEgressPublicIps(original["egress_public_ips"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEgressPublicIps); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["egressPublicIps"] = transformedEgressPublicIps
+	}
+
+	return transformed, nil
+}
+
+func expandDatabaseMigrationServicePrivateConnectionReservedPublicIpConfigNatIpsCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDatabaseMigrationServicePrivateConnectionReservedPublicIpConfigEgressPublicIps(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
