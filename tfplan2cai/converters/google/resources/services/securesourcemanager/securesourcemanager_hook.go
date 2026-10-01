@@ -134,6 +134,12 @@ func GetSecureSourceManagerHookApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("sensitive_query_string"); !tpgresource.IsEmptyValue(reflect.ValueOf(sensitiveQueryStringProp)) && (ok || !reflect.DeepEqual(v, sensitiveQueryStringProp)) {
 		obj["sensitiveQueryString"] = sensitiveQueryStringProp
 	}
+	serviceAccountAuthProp, err := expandSecureSourceManagerHookServiceAccountAuth(d.Get("service_account_auth"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("service_account_auth"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceAccountAuthProp)) && (ok || !reflect.DeepEqual(v, serviceAccountAuthProp)) {
+		obj["serviceAccountAuth"] = serviceAccountAuthProp
+	}
 	pushOptionProp, err := expandSecureSourceManagerHookPushOption(d.Get("push_option"), d, config)
 	if err != nil {
 		return nil, err
@@ -157,6 +163,10 @@ func expandSecureSourceManagerHookEvents(v interface{}, d tpgresource.TerraformR
 }
 
 func expandSecureSourceManagerHookSensitiveQueryString(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecureSourceManagerHookServiceAccountAuth(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
