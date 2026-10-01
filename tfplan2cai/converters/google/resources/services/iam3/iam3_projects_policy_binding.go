@@ -183,10 +183,21 @@ func expandIAM3ProjectsPolicyBindingTarget(v interface{}, d tpgresource.Terrafor
 		transformed["principalSet"] = transformedPrincipalSet
 	}
 
+	transformedResource, err := expandIAM3ProjectsPolicyBindingTargetResource(original["resource"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resource"] = transformedResource
+	}
+
 	return transformed, nil
 }
 
 func expandIAM3ProjectsPolicyBindingTargetPrincipalSet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAM3ProjectsPolicyBindingTargetResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
