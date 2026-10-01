@@ -184,6 +184,7 @@ func (c *ComputeRegionBackendServiceCai2hclConverter) convertResourceData(asset 
 	hclData["network"] = flattenComputeRegionBackendServiceNetwork(res["network"], d, config)
 	hclData["ha_policy"] = flattenComputeRegionBackendServiceHaPolicy(res["haPolicy"], d, config)
 	hclData["params"] = flattenComputeRegionBackendServiceParams(res["params"], d, config)
+	hclData["service_lb_policy"] = flattenComputeRegionBackendServiceServiceLbPolicy(res["serviceLbPolicy"], d, config)
 	hclData["tls_settings"] = flattenComputeRegionBackendServiceTlsSettings(res["tlsSettings"], d, config)
 	hclData["region"] = flattenComputeRegionBackendServiceRegion(res["region"], d, config)
 
@@ -1736,6 +1737,16 @@ func flattenComputeRegionBackendServiceParams(v interface{}, d *schema.ResourceD
 }
 
 func flattenComputeRegionBackendServiceParamsResourceManagerTags(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeRegionBackendServiceServiceLbPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
 	return v
 }
 
