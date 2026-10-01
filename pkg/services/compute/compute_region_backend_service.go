@@ -1166,6 +1166,13 @@ If it is not provided, the provider region is used.`,
 				DiffSuppressFunc: tpgresource.CompareSelfLinkOrResourceName,
 				Description:      `The security policy associated with this backend service.`,
 			},
+			"service_lb_policy": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Description: `URL to networkservices.ServiceLbPolicy resource.
+Can only be set if load balancing scheme is EXTERNAL_MANAGED or INTERNAL_MANAGED.
+The service lb policy must be regional and in the same region as the backend service.`,
+			},
 			"session_affinity": {
 				Type:         schema.TypeString,
 				Computed:     true,

@@ -295,6 +295,12 @@ func GetComputeRegionBackendServiceCaiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("params"); !tpgresource.IsEmptyValue(reflect.ValueOf(paramsProp)) && (ok || !reflect.DeepEqual(v, paramsProp)) {
 		obj["params"] = paramsProp
 	}
+	serviceLbPolicyProp, err := expandComputeRegionBackendServiceServiceLbPolicy(d.Get("service_lb_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("service_lb_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceLbPolicyProp)) && (ok || !reflect.DeepEqual(v, serviceLbPolicyProp)) {
+		obj["serviceLbPolicy"] = serviceLbPolicyProp
+	}
 	tlsSettingsProp, err := expandComputeRegionBackendServiceTlsSettings(d.Get("tls_settings"), d, config)
 	if err != nil {
 		return nil, err
@@ -1851,6 +1857,10 @@ func expandComputeRegionBackendServiceParamsResourceManagerTags(v interface{}, d
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandComputeRegionBackendServiceServiceLbPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandComputeRegionBackendServiceTlsSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
