@@ -173,10 +173,21 @@ func expandIAM3FoldersPolicyBindingTarget(v interface{}, d tpgresource.Terraform
 		transformed["principalSet"] = transformedPrincipalSet
 	}
 
+	transformedResource, err := expandIAM3FoldersPolicyBindingTargetResource(original["resource"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedResource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["resource"] = transformedResource
+	}
+
 	return transformed, nil
 }
 
 func expandIAM3FoldersPolicyBindingTargetPrincipalSet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAM3FoldersPolicyBindingTargetResource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
