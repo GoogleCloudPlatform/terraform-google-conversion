@@ -116,10 +116,20 @@ func GetOracleDatabaseCloudExadataInfrastructureExascaleConfigApiObject(d tpgres
 	} else if v, ok := d.GetOkExists("total_storage_size_gb"); !tpgresource.IsEmptyValue(reflect.ValueOf(totalStorageSizeGbProp)) && (ok || !reflect.DeepEqual(v, totalStorageSizeGbProp)) {
 		obj["totalStorageSizeGb"] = totalStorageSizeGbProp
 	}
+	totalVmStorageSizeGbProp, err := expandOracleDatabaseCloudExadataInfrastructureExascaleConfigTotalVmStorageSizeGb(d.Get("total_vm_storage_size_gb"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("total_vm_storage_size_gb"); !tpgresource.IsEmptyValue(reflect.ValueOf(totalVmStorageSizeGbProp)) && (ok || !reflect.DeepEqual(v, totalVmStorageSizeGbProp)) {
+		obj["totalVmStorageSizeGb"] = totalVmStorageSizeGbProp
+	}
 
 	return obj, nil
 }
 
 func expandOracleDatabaseCloudExadataInfrastructureExascaleConfigTotalStorageSizeGb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseCloudExadataInfrastructureExascaleConfigTotalVmStorageSizeGb(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
