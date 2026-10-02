@@ -667,6 +667,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_nodePool_acceleratorNetworkProfile_Lifecycle",
 		},
 		{
+			Name: "TestAccContainerCluster_bestEffortProvisioning",
+		},
+		{
 			Name: "TestAccContainerCluster_withClusterBootDisk",
 		},
 		{
