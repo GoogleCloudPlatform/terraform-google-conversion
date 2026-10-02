@@ -115,32 +115,7 @@ func IpDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
 	if d.Id() == "" {
 		return false
 	}
-	if old == "" || new == "" {
-		return old == new
-	}
-	addr_equality := false
-	netmask_equality := false
-
-	addr_netmask_old := strings.Split(old, "/")
-	addr_netmask_new := strings.Split(new, "/")
-
-	if !((len(addr_netmask_old)) == 2 && (len(addr_netmask_new) == 2)) {
-		return false
-	}
-
-	var addr_old net.IP = net.ParseIP(addr_netmask_old[0])
-	if addr_old == nil {
-		return false
-	}
-	var addr_new net.IP = net.ParseIP(addr_netmask_new[0])
-	if addr_new == nil {
-		return false
-	}
-
-	addr_equality = net.IP.Equal(addr_old, addr_new)
-	netmask_equality = addr_netmask_old[1] == addr_netmask_new[1]
-
-	return addr_equality && netmask_equality
+	return ipEqual(old, new)
 }
 
 // CustomDiff function for secondary_ip_range.
@@ -153,6 +128,29 @@ func resourceComputeSubnetworkSecondaryIpRangeCustomDiff(_ context.Context, diff
 }
 
 func resourceComputeSubnetworkSecondaryIpRangeCustomDiffFunc(diff tpgresource.TerraformResourceDiff) error {
+	return nil
+}
+
+// Fields that are immutable except during the in-place upgrade of a subnetwork's stack_type from
+// IPV4_ONLY to IPV4_IPV6 (dual stack). Changing them at any other time requires recreating the subnetwork.
+var subnetworkIpv6ConditionallyImmutableFields = []string{
+	"ipv6_access_type",
+	"ip_collection",
+	"external_ipv6_prefix",
+}
+
+// CustomDiff function that forces recreation of the subnetwork when ipv6_access_type, ip_collection,
+// or external_ipv6_prefix change, unless the change is part of upgrading stack_type from IPV4_ONLY to
+// IPV4_IPV6.
+func resourceComputeSubnetworkIpv6ConditionalForceNew(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
+	// Nothing to force on create.
+	if diff.Id() == "" {
+		return nil
+	}
+	return resourceComputeSubnetworkIpv6ConditionalForceNewFunc(diff)
+}
+
+func resourceComputeSubnetworkIpv6ConditionalForceNewFunc(diff tpgresource.TerraformResourceDiff) error {
 	return nil
 }
 
