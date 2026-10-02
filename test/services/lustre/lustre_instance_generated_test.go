@@ -69,6 +69,7 @@ func TestAccLustreInstance(t *testing.T) {
 					"lifecycle",
 					"location",
 					"provider",
+					"target_version",
 					"timeouts",
 				},
 				"google_lustre_instance",

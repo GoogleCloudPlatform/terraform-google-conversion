@@ -40,6 +40,23 @@ import (
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/pkg/verify"
 )
 
+// lustreInstanceTargetVersionDiffSuppress suppresses target_version when the
+// requested upgrade is a no-op. The API clears the field once the upgrade
+// finishes, so the prior state value carries no information; compare the
+// request against effective_version/available_version instead.
+func lustreInstanceTargetVersionDiffSuppress(_, _, new string, d *schema.ResourceData) bool {
+	// "latest" resolves server-side to available_version; nothing available
+	// means there is nothing to upgrade to.
+	if strings.EqualFold(new, "latest") {
+		availableVersion, _ := d.Get("available_version").(string)
+		return availableVersion == ""
+	}
+	// Same-or-older than what is running is a no-op or a downgrade, both of
+	// which the API rejects. Lexicographic, matching the service's ordering.
+	effectiveVersion, _ := d.Get("effective_version").(string)
+	return effectiveVersion != "" && new <= effectiveVersion
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -479,6 +496,27 @@ must be set to zero.`,
 				Description: `The placement policy name for the instance in the format of
 projects/{project}/locations/{location}/resourcePolicies/{resource_policy}`,
 			},
+			"target_version": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				DiffSuppressFunc: lustreInstanceTargetVersionDiffSuppress,
+				Description: `The version to upgrade this instance to. Set this to the value reported in
+'availableVersion', or to 'latest' to move to the newest version available
+at the time of the upgrade.
+This field cannot be set when the instance is created; new instances are
+always provisioned from the current release. It also cannot be changed in
+the same operation as 'capacityGib' or 'maintenancePolicy', and the
+instance must be ACTIVE and outside of the hour preceding a scheduled
+maintenance window.
+The API clears this field once the upgrade finishes, so it always reads
+back as empty on an idle instance.`,
+			},
+			"available_version": {
+				Type:     schema.TypeString,
+				Computed: true,
+				Description: `The version this instance can be upgraded to, if one is available. Empty
+when the instance is already running the newest release.`,
+			},
 			"create_time": {
 				Type:        schema.TypeString,
 				Computed:    true,
@@ -489,6 +527,12 @@ projects/{project}/locations/{location}/resourcePolicies/{resource_policy}`,
 				Computed:    true,
 				Description: `All of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services.`,
 				Elem:        &schema.Schema{Type: schema.TypeString},
+			},
+			"effective_version": {
+				Type:     schema.TypeString,
+				Computed: true,
+				Description: `The version of Managed Lustre software that this instance is currently
+running.`,
 			},
 			"mount_point": {
 				Type:        schema.TypeString,

@@ -133,7 +133,7 @@ func (c *LustreInstanceCai2hclConverter) convertResourceData(asset caiasset.Asse
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_labels": struct{}{}, "mount_point": struct{}{}, "name": struct{}{}, "state": struct{}{}, "state_reason": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}, "upcoming_maintenance_schedule": struct{}{}, "update_time": struct{}{}}
+	outputFields := map[string]struct{}{"available_version": struct{}{}, "create_time": struct{}{}, "effective_labels": struct{}{}, "effective_version": struct{}{}, "mount_point": struct{}{}, "name": struct{}{}, "state": struct{}{}, "state_reason": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}, "upcoming_maintenance_schedule": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//lustre.googleapis.com/projects/{{project}}/locations/{{location}}/instances/{{instance_id}}", outputFields, hclData)
 
 	hclData["access_rules_options"] = flattenLustreInstanceAccessRulesOptions(res["accessRulesOptions"], d, config)
@@ -148,6 +148,7 @@ func (c *LustreInstanceCai2hclConverter) convertResourceData(asset caiasset.Asse
 	hclData["network"] = flattenLustreInstanceNetwork(res["network"], d, config)
 	hclData["per_unit_storage_throughput"] = flattenLustreInstancePerUnitStorageThroughput(res["perUnitStorageThroughput"], d, config)
 	hclData["placement_policy"] = flattenLustreInstancePlacementPolicy(res["placementPolicy"], d, config)
+	hclData["target_version"] = flattenLustreInstanceTargetVersion(res["targetVersion"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -750,6 +751,16 @@ func flattenLustreInstancePerUnitStorageThroughput(v interface{}, d *schema.Reso
 }
 
 func flattenLustreInstancePlacementPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenLustreInstanceTargetVersion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}

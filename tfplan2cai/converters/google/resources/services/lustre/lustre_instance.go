@@ -49,6 +49,23 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+// lustreInstanceTargetVersionDiffSuppress suppresses target_version when the
+// requested upgrade is a no-op. The API clears the field once the upgrade
+// finishes, so the prior state value carries no information; compare the
+// request against effective_version/available_version instead.
+func lustreInstanceTargetVersionDiffSuppress(_, _, new string, d *schema.ResourceData) bool {
+	// "latest" resolves server-side to available_version; nothing available
+	// means there is nothing to upgrade to.
+	if strings.EqualFold(new, "latest") {
+		availableVersion, _ := d.Get("available_version").(string)
+		return availableVersion == ""
+	}
+	// Same-or-older than what is running is a no-op or a downgrade, both of
+	// which the API rejects. Lexicographic, matching the service's ordering.
+	effectiveVersion, _ := d.Get("effective_version").(string)
+	return effectiveVersion != "" && new <= effectiveVersion
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -176,6 +193,12 @@ func GetLustreInstanceApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("placement_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(placementPolicyProp)) && (ok || !reflect.DeepEqual(v, placementPolicyProp)) {
 		obj["placementPolicy"] = placementPolicyProp
 	}
+	targetVersionProp, err := expandLustreInstanceTargetVersion(d.Get("target_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("target_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(targetVersionProp)) && (ok || !reflect.DeepEqual(v, targetVersionProp)) {
+		obj["targetVersion"] = targetVersionProp
+	}
 	effectiveLabelsProp, err := expandLustreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -183,6 +206,14 @@ func GetLustreInstanceApiObject(d tpgresource.TerraformResourceData, config *tra
 		obj["labels"] = effectiveLabelsProp
 	}
 
+	return resourceLustreInstanceEncoder(d, config, obj)
+}
+
+func resourceLustreInstanceEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	// The API rejects target_version at create, and Terraform sends every
+	// configured property on create, so drop it here. This also covers the create
+	// half of a recreate.
+	delete(obj, "targetVersion")
 	return obj, nil
 }
 
@@ -665,6 +696,10 @@ func expandLustreInstancePerUnitStorageThroughput(v interface{}, d tpgresource.T
 }
 
 func expandLustreInstancePlacementPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceTargetVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
