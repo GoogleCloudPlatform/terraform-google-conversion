@@ -122,6 +122,18 @@ func GetDialogflowGeneratorApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("summarization_context"); !tpgresource.IsEmptyValue(reflect.ValueOf(summarizationContextProp)) && (ok || !reflect.DeepEqual(v, summarizationContextProp)) {
 		obj["summarizationContext"] = summarizationContextProp
 	}
+	freeFormContextProp, err := expandDialogflowGeneratorFreeFormContext(d.Get("free_form_context"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("free_form_context"); !tpgresource.IsEmptyValue(reflect.ValueOf(freeFormContextProp)) && (ok || !reflect.DeepEqual(v, freeFormContextProp)) {
+		obj["freeFormContext"] = freeFormContextProp
+	}
+	agentCoachingContextProp, err := expandDialogflowGeneratorAgentCoachingContext(d.Get("agent_coaching_context"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("agent_coaching_context"); !tpgresource.IsEmptyValue(reflect.ValueOf(agentCoachingContextProp)) && (ok || !reflect.DeepEqual(v, agentCoachingContextProp)) {
+		obj["agentCoachingContext"] = agentCoachingContextProp
+	}
 	inferenceParameterProp, err := expandDialogflowGeneratorInferenceParameter(d.Get("inference_parameter"), d, config)
 	if err != nil {
 		return nil, err
@@ -139,6 +151,12 @@ func GetDialogflowGeneratorApiObject(d tpgresource.TerraformResourceData, config
 		return nil, err
 	} else if v, ok := d.GetOkExists("published_model"); !tpgresource.IsEmptyValue(reflect.ValueOf(publishedModelProp)) && (ok || !reflect.DeepEqual(v, publishedModelProp)) {
 		obj["publishedModel"] = publishedModelProp
+	}
+	toolsProp, err := expandDialogflowGeneratorTools(d.Get("tools"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("tools"); !tpgresource.IsEmptyValue(reflect.ValueOf(toolsProp)) && (ok || !reflect.DeepEqual(v, toolsProp)) {
+		obj["tools"] = toolsProp
 	}
 	generatorIdProp, err := expandDialogflowGeneratorGeneratorId(d.Get("generator_id"), d, config)
 	if err != nil {
@@ -700,6 +718,171 @@ func expandDialogflowGeneratorSummarizationContextOutputLanguageCode(v interface
 	return v, nil
 }
 
+func expandDialogflowGeneratorFreeFormContext(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedText, err := expandDialogflowGeneratorFreeFormContextText(original["text"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["text"] = transformedText
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowGeneratorFreeFormContextText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContext(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedOverarchingGuidance, err := expandDialogflowGeneratorAgentCoachingContextOverarchingGuidance(original["overarching_guidance"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOverarchingGuidance); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["overarchingGuidance"] = transformedOverarchingGuidance
+	}
+
+	transformedVersion, err := expandDialogflowGeneratorAgentCoachingContextVersion(original["version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["version"] = transformedVersion
+	}
+
+	transformedOutputLanguageCode, err := expandDialogflowGeneratorAgentCoachingContextOutputLanguageCode(original["output_language_code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOutputLanguageCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["outputLanguageCode"] = transformedOutputLanguageCode
+	}
+
+	transformedInstructions, err := expandDialogflowGeneratorAgentCoachingContextInstructions(original["instructions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInstructions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["instructions"] = transformedInstructions
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContextOverarchingGuidance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContextVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContextOutputLanguageCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContextInstructions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDisplayName, err := expandDialogflowGeneratorAgentCoachingContextInstructionsDisplayName(original["display_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDisplayName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["displayName"] = transformedDisplayName
+		}
+
+		transformedDisplayDetails, err := expandDialogflowGeneratorAgentCoachingContextInstructionsDisplayDetails(original["display_details"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDisplayDetails); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["displayDetails"] = transformedDisplayDetails
+		}
+
+		transformedCondition, err := expandDialogflowGeneratorAgentCoachingContextInstructionsCondition(original["condition"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCondition); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["condition"] = transformedCondition
+		}
+
+		transformedAgentAction, err := expandDialogflowGeneratorAgentCoachingContextInstructionsAgentAction(original["agent_action"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedAgentAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["agentAction"] = transformedAgentAction
+		}
+
+		transformedSystemAction, err := expandDialogflowGeneratorAgentCoachingContextInstructionsSystemAction(original["system_action"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSystemAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["systemAction"] = transformedSystemAction
+		}
+
+		transformedTriggeringEvent, err := expandDialogflowGeneratorAgentCoachingContextInstructionsTriggeringEvent(original["triggering_event"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTriggeringEvent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["triggeringEvent"] = transformedTriggeringEvent
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContextInstructionsDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContextInstructionsDisplayDetails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContextInstructionsCondition(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContextInstructionsAgentAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContextInstructionsSystemAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorAgentCoachingContextInstructionsTriggeringEvent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDialogflowGeneratorInferenceParameter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -764,6 +947,10 @@ func expandDialogflowGeneratorTriggerEvent(v interface{}, d tpgresource.Terrafor
 }
 
 func expandDialogflowGeneratorPublishedModel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorTools(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
