@@ -140,6 +140,12 @@ func GetNetworkSecuritySecurityProfileGroupApiObject(d tpgresource.TerraformReso
 	} else if v, ok := d.GetOkExists("custom_intercept_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(customInterceptProfileProp)) && (ok || !reflect.DeepEqual(v, customInterceptProfileProp)) {
 		obj["customInterceptProfile"] = customInterceptProfileProp
 	}
+	wildfireAnalysisProfileProp, err := expandNetworkSecuritySecurityProfileGroupWildfireAnalysisProfile(d.Get("wildfire_analysis_profile"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("wildfire_analysis_profile"); !tpgresource.IsEmptyValue(reflect.ValueOf(wildfireAnalysisProfileProp)) && (ok || !reflect.DeepEqual(v, wildfireAnalysisProfileProp)) {
+		obj["wildfireAnalysisProfile"] = wildfireAnalysisProfileProp
+	}
 	effectiveLabelsProp, err := expandNetworkSecuritySecurityProfileGroupEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -167,6 +173,10 @@ func expandNetworkSecuritySecurityProfileGroupCustomMirroringProfile(v interface
 }
 
 func expandNetworkSecuritySecurityProfileGroupCustomInterceptProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecuritySecurityProfileGroupWildfireAnalysisProfile(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
