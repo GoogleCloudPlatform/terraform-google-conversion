@@ -181,6 +181,12 @@ func GetLustreInstanceCaiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("placement_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(placementPolicyProp)) && (ok || !reflect.DeepEqual(v, placementPolicyProp)) {
 		obj["placementPolicy"] = placementPolicyProp
 	}
+	targetVersionProp, err := expandLustreInstanceTargetVersion(d.Get("target_version"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("target_version"); !tpgresource.IsEmptyValue(reflect.ValueOf(targetVersionProp)) && (ok || !reflect.DeepEqual(v, targetVersionProp)) {
+		obj["targetVersion"] = targetVersionProp
+	}
 	effectiveLabelsProp, err := expandLustreInstanceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -188,6 +194,21 @@ func GetLustreInstanceCaiObject(d tpgresource.TerraformResourceData, config *tra
 		obj["labels"] = effectiveLabelsProp
 	}
 
+	obj, err = resourceLustreInstanceEncoder(d, config, obj)
+	if err != nil {
+		return nil, err
+	}
+	if obj == nil {
+		obj = make(map[string]interface{})
+	}
+	return obj, nil
+}
+
+func resourceLustreInstanceEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	// The API rejects target_version at create, and Terraform sends every
+	// configured property on create, so drop it here. This also covers the create
+	// half of a recreate.
+	delete(obj, "targetVersion")
 	return obj, nil
 }
 
@@ -670,6 +691,10 @@ func expandLustreInstancePerUnitStorageThroughput(v interface{}, d tpgresource.T
 }
 
 func expandLustreInstancePlacementPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandLustreInstanceTargetVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
