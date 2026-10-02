@@ -477,6 +477,13 @@ func expandModelArmorTemplateTemplateMetadata(v interface{}, d tpgresource.Terra
 		transformed["enforcementType"] = transformedEnforcementType
 	}
 
+	transformedModalities, err := expandModelArmorTemplateTemplateMetadataModalities(original["modalities"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedModalities); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["modalities"] = transformedModalities
+	}
+
 	transformedFilterVersionSelector, err := expandModelArmorTemplateTemplateMetadataFilterVersionSelector(original["filter_version_selector"], d, config)
 	if err != nil {
 		return nil, err
@@ -542,6 +549,10 @@ func expandModelArmorTemplateTemplateMetadataCustomLlmResponseSafetyErrorMessage
 }
 
 func expandModelArmorTemplateTemplateMetadataEnforcementType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandModelArmorTemplateTemplateMetadataModalities(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
