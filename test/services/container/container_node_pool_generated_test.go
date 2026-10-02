@@ -303,6 +303,9 @@ func TestAccContainerNodePool(t *testing.T) {
 		{
 			Name: "TestAccContainerNodePool_additionalNodeNetworkConfigsStackType",
 		},
+		{
+			Name: "TestAccContainerNodePool_bestEffortProvisioning",
+		},
 	}
 
 	for _, tt := range tests {
