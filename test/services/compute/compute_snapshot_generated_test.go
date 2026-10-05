@@ -40,6 +40,12 @@ func TestAccComputeSnapshot(t *testing.T) {
 			Name: "TestAccComputeSnapshot_encryptionCMEK",
 		},
 		{
+			Name: "TestAccComputeSnapshot_encryptionCMEKUpdate",
+		},
+		{
+			Name: "TestAccComputeSnapshot_encryptionCMEKUpdateWithServiceAccount",
+		},
+		{
 			Name: "TestAccComputeSnapshot_snapshotType",
 		},
 		{
