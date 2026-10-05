@@ -151,14 +151,16 @@ the snapshot.
 
 If you do not provide an encryption key when creating the snapshot,
 then the snapshot will be encrypted using an automatically generated
-key and you do not need to provide a key to use the snapshot later.`,
+key and you do not need to provide a key to use the snapshot later.
+
+~>**NOTE** Only changing 'kms_key_self_link' between Cloud KMS keys is
+done in place; other changes to this block recreate the snapshot.`,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"kms_key_self_link": {
 							Type:        schema.TypeString,
 							Optional:    true,
-							ForceNew:    true,
 							Description: `The name of the encryption key that is stored in Google Cloud KMS.`,
 						},
 						"kms_key_service_account": {
