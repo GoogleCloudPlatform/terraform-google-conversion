@@ -501,6 +501,13 @@ func expandCloudSecurityComplianceCloudControlParameterSpecDefaultValueOneofValu
 		transformed["numberValue"] = transformedNumberValue
 	}
 
+	transformedOneofValue, err := expandCloudSecurityComplianceCloudControlParameterSpecDefaultValueOneofValueParameterValueOneofValueParameterValueOneofValue(original["oneof_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOneofValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oneofValue"] = transformedOneofValue
+	}
+
 	transformedStringListValue, err := expandCloudSecurityComplianceCloudControlParameterSpecDefaultValueOneofValueParameterValueOneofValueParameterValueStringListValue(original["string_list_value"], d, config)
 	if err != nil {
 		return nil, err
@@ -524,6 +531,18 @@ func expandCloudSecurityComplianceCloudControlParameterSpecDefaultValueOneofValu
 
 func expandCloudSecurityComplianceCloudControlParameterSpecDefaultValueOneofValueParameterValueOneofValueParameterValueNumberValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudSecurityComplianceCloudControlParameterSpecDefaultValueOneofValueParameterValueOneofValueParameterValueOneofValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandCloudSecurityComplianceCloudControlParameterSpecDefaultValueOneofValueParameterValueOneofValueParameterValueStringListValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1005,6 +1024,13 @@ func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersDefaultV
 		transformed["numberValue"] = transformedNumberValue
 	}
 
+	transformedOneofValue, err := expandCloudSecurityComplianceCloudControlParameterSpecSubParametersDefaultValueOneofValueParameterValueOneofValueParameterValueOneofValue(original["oneof_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOneofValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oneofValue"] = transformedOneofValue
+	}
+
 	transformedStringListValue, err := expandCloudSecurityComplianceCloudControlParameterSpecSubParametersDefaultValueOneofValueParameterValueOneofValueParameterValueStringListValue(original["string_list_value"], d, config)
 	if err != nil {
 		return nil, err
@@ -1028,6 +1054,18 @@ func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersDefaultV
 
 func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersDefaultValueOneofValueParameterValueOneofValueParameterValueNumberValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersDefaultValueOneofValueParameterValueOneofValueParameterValueOneofValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersDefaultValueOneofValueParameterValueOneofValueParameterValueStringListValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1489,6 +1527,13 @@ func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersValidati
 		transformed["numberValue"] = transformedNumberValue
 	}
 
+	transformedOneofValue, err := expandCloudSecurityComplianceCloudControlParameterSpecSubParametersValidationAllowedValuesValuesOneofValueParameterValueOneofValueParameterValueOneofValue(original["oneof_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOneofValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oneofValue"] = transformedOneofValue
+	}
+
 	transformedStringListValue, err := expandCloudSecurityComplianceCloudControlParameterSpecSubParametersValidationAllowedValuesValuesOneofValueParameterValueOneofValueParameterValueStringListValue(original["string_list_value"], d, config)
 	if err != nil {
 		return nil, err
@@ -1512,6 +1557,18 @@ func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersValidati
 
 func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersValidationAllowedValuesValuesOneofValueParameterValueOneofValueParameterValueNumberValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersValidationAllowedValuesValuesOneofValueParameterValueOneofValueParameterValueOneofValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersValidationAllowedValuesValuesOneofValueParameterValueOneofValueParameterValueStringListValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1722,6 +1779,13 @@ func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParam
 			transformed["substitutionRules"] = transformedSubstitutionRules
 		}
 
+		transformedSubParameters, err := expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersSubParameters(original["sub_parameters"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSubParameters); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["subParameters"] = transformedSubParameters
+		}
+
 		transformedValidation, err := expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersValidation(original["validation"], d, config)
 		if err != nil {
 			return nil, err
@@ -1858,6 +1922,13 @@ func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParam
 		transformed["numberValue"] = transformedNumberValue
 	}
 
+	transformedOneofValue, err := expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersDefaultValueOneofValueParameterValueOneofValue(original["oneof_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOneofValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oneofValue"] = transformedOneofValue
+	}
+
 	transformedStringListValue, err := expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersDefaultValueOneofValueParameterValueStringListValue(original["string_list_value"], d, config)
 	if err != nil {
 		return nil, err
@@ -1881,6 +1952,18 @@ func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParam
 
 func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersDefaultValueOneofValueParameterValueNumberValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersDefaultValueOneofValueParameterValueOneofValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersDefaultValueOneofValueParameterValueStringListValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -2041,6 +2124,18 @@ func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParam
 
 func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersSubstitutionRulesPlaceholderSubstitutionRuleAttribute(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersSubParameters(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -2221,6 +2316,13 @@ func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParam
 		transformed["numberValue"] = transformedNumberValue
 	}
 
+	transformedOneofValue, err := expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersValidationAllowedValuesValuesOneofValueParameterValueOneofValue(original["oneof_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOneofValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oneofValue"] = transformedOneofValue
+	}
+
 	transformedStringListValue, err := expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersValidationAllowedValuesValuesOneofValueParameterValueStringListValue(original["string_list_value"], d, config)
 	if err != nil {
 		return nil, err
@@ -2244,6 +2346,18 @@ func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParam
 
 func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersValidationAllowedValuesValuesOneofValueParameterValueNumberValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersValidationAllowedValuesValuesOneofValueParameterValueOneofValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandCloudSecurityComplianceCloudControlParameterSpecSubParametersSubParametersValidationAllowedValuesValuesOneofValueParameterValueStringListValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -2646,6 +2760,13 @@ func expandCloudSecurityComplianceCloudControlParameterSpecValidationAllowedValu
 		transformed["numberValue"] = transformedNumberValue
 	}
 
+	transformedOneofValue, err := expandCloudSecurityComplianceCloudControlParameterSpecValidationAllowedValuesValuesOneofValueParameterValueOneofValueParameterValueOneofValue(original["oneof_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOneofValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["oneofValue"] = transformedOneofValue
+	}
+
 	transformedStringListValue, err := expandCloudSecurityComplianceCloudControlParameterSpecValidationAllowedValuesValuesOneofValueParameterValueOneofValueParameterValueStringListValue(original["string_list_value"], d, config)
 	if err != nil {
 		return nil, err
@@ -2669,6 +2790,18 @@ func expandCloudSecurityComplianceCloudControlParameterSpecValidationAllowedValu
 
 func expandCloudSecurityComplianceCloudControlParameterSpecValidationAllowedValuesValuesOneofValueParameterValueOneofValueParameterValueNumberValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandCloudSecurityComplianceCloudControlParameterSpecValidationAllowedValuesValuesOneofValueParameterValueOneofValueParameterValueOneofValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b := []byte(v.(string))
+	if len(b) == 0 {
+		return nil, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandCloudSecurityComplianceCloudControlParameterSpecValidationAllowedValuesValuesOneofValueParameterValueOneofValueParameterValueStringListValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
