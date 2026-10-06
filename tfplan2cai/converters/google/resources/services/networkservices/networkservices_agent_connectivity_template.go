@@ -122,6 +122,18 @@ func GetNetworkServicesAgentConnectivityTemplateApiObject(d tpgresource.Terrafor
 	} else if v, ok := d.GetOkExists("etag"); !tpgresource.IsEmptyValue(reflect.ValueOf(etagProp)) && (ok || !reflect.DeepEqual(v, etagProp)) {
 		obj["etag"] = etagProp
 	}
+	agentComputeProp, err := expandNetworkServicesAgentConnectivityTemplateAgentCompute(d.Get("agent_compute"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("agent_compute"); !tpgresource.IsEmptyValue(reflect.ValueOf(agentComputeProp)) && (ok || !reflect.DeepEqual(v, agentComputeProp)) {
+		obj["agentCompute"] = agentComputeProp
+	}
+	deploymentModelProp, err := expandNetworkServicesAgentConnectivityTemplateDeploymentModel(d.Get("deployment_model"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("deployment_model"); !tpgresource.IsEmptyValue(reflect.ValueOf(deploymentModelProp)) && (ok || !reflect.DeepEqual(v, deploymentModelProp)) {
+		obj["deploymentModel"] = deploymentModelProp
+	}
 	accessTypesProp, err := expandNetworkServicesAgentConnectivityTemplateAccessTypes(d.Get("access_types"), d, config)
 	if err != nil {
 		return nil, err
@@ -155,6 +167,14 @@ func expandNetworkServicesAgentConnectivityTemplateDescription(v interface{}, d 
 }
 
 func expandNetworkServicesAgentConnectivityTemplateEtag(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesAgentConnectivityTemplateAgentCompute(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesAgentConnectivityTemplateDeploymentModel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
