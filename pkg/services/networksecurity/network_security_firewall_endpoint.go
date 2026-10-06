@@ -107,6 +107,7 @@ endpoint's project if specified.`,
 			},
 			"endpoint_settings": {
 				Type:        schema.TypeList,
+				Computed:    true,
 				Optional:    true,
 				Description: `Settings for the endpoint.`,
 				MaxItems:    1,

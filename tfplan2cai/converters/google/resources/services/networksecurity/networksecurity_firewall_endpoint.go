@@ -122,6 +122,12 @@ func GetNetworkSecurityFirewallEndpointApiObject(d tpgresource.TerraformResource
 	} else if v, ok := d.GetOkExists("endpoint_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(endpointSettingsProp)) && (ok || !reflect.DeepEqual(v, endpointSettingsProp)) {
 		obj["endpointSettings"] = endpointSettingsProp
 	}
+	wildfireSettingsProp, err := expandNetworkSecurityFirewallEndpointWildfireSettings(d.Get("wildfire_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("wildfire_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(wildfireSettingsProp)) && (ok || !reflect.DeepEqual(v, wildfireSettingsProp)) {
+		obj["wildfireSettings"] = wildfireSettingsProp
+	}
 	effectiveLabelsProp, err := expandNetworkSecurityFirewallEndpointEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -155,10 +161,146 @@ func expandNetworkSecurityFirewallEndpointEndpointSettings(v interface{}, d tpgr
 		transformed["jumboFramesEnabled"] = transformedJumboFramesEnabled
 	}
 
+	transformedContentCloudRegion, err := expandNetworkSecurityFirewallEndpointEndpointSettingsContentCloudRegion(original["content_cloud_region"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedContentCloudRegion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["contentCloudRegion"] = transformedContentCloudRegion
+	}
+
+	transformedHttpPartialResponseBlocked, err := expandNetworkSecurityFirewallEndpointEndpointSettingsHttpPartialResponseBlocked(original["http_partial_response_blocked"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["httpPartialResponseBlocked"] = transformedHttpPartialResponseBlocked
+	}
+
 	return transformed, nil
 }
 
 func expandNetworkSecurityFirewallEndpointEndpointSettingsJumboFramesEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointEndpointSettingsContentCloudRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointEndpointSettingsHttpPartialResponseBlocked(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointWildfireSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandNetworkSecurityFirewallEndpointWildfireSettingsEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	transformedWildfireRegion, err := expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireRegion(original["wildfire_region"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWildfireRegion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["wildfireRegion"] = transformedWildfireRegion
+	}
+
+	transformedWildfireRealtimeLookupDuration, err := expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireRealtimeLookupDuration(original["wildfire_realtime_lookup_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWildfireRealtimeLookupDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["wildfireRealtimeLookupDuration"] = transformedWildfireRealtimeLookupDuration
+	}
+
+	transformedWildfireRealtimeLookupTimeoutAction, err := expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireRealtimeLookupTimeoutAction(original["wildfire_realtime_lookup_timeout_action"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWildfireRealtimeLookupTimeoutAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["wildfireRealtimeLookupTimeoutAction"] = transformedWildfireRealtimeLookupTimeoutAction
+	}
+
+	transformedWildfireInlineCloudAnalysisSettings, err := expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings(original["wildfire_inline_cloud_analysis_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWildfireInlineCloudAnalysisSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["wildfireInlineCloudAnalysisSettings"] = transformedWildfireInlineCloudAnalysisSettings
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkSecurityFirewallEndpointWildfireSettingsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireRegion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireRealtimeLookupDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireRealtimeLookupTimeoutAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMaxAnalysisDuration, err := expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsMaxAnalysisDuration(original["max_analysis_duration"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxAnalysisDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxAnalysisDuration"] = transformedMaxAnalysisDuration
+	}
+
+	transformedTimeoutAction, err := expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsTimeoutAction(original["timeout_action"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTimeoutAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["timeoutAction"] = transformedTimeoutAction
+	}
+
+	transformedSubmissionTimeoutLoggingDisabled, err := expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsSubmissionTimeoutLoggingDisabled(original["submission_timeout_logging_disabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["submissionTimeoutLoggingDisabled"] = transformedSubmissionTimeoutLoggingDisabled
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsMaxAnalysisDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsTimeoutAction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsSubmissionTimeoutLoggingDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
