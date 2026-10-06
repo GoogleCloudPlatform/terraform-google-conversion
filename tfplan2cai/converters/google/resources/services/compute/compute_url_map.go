@@ -1037,6 +1037,13 @@ func expandComputeUrlMapPathMatcherPathRuleRouteAction(v interface{}, d tpgresou
 		transformed["cachePolicy"] = transformedCachePolicy
 	}
 
+	transformedDynamicCompressionPolicy, err := expandComputeUrlMapPathMatcherPathRuleRouteActionDynamicCompressionPolicy(original["dynamic_compression_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDynamicCompressionPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dynamicCompressionPolicy"] = transformedDynamicCompressionPolicy
+	}
+
 	return transformed, nil
 }
 
@@ -2178,6 +2185,32 @@ func expandComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicyI
 	return v, nil
 }
 
+func expandComputeUrlMapPathMatcherPathRuleRouteActionDynamicCompressionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCompressionMode, err := expandComputeUrlMapPathMatcherPathRuleRouteActionDynamicCompressionPolicyCompressionMode(original["compression_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCompressionMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["compressionMode"] = transformedCompressionMode
+	}
+
+	return transformed, nil
+}
+
+func expandComputeUrlMapPathMatcherPathRuleRouteActionDynamicCompressionPolicyCompressionMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeUrlMapPathMatcherPathRuleUrlRedirect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -2973,6 +3006,13 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteAction(v interface{}, d tpgres
 		return nil, err
 	} else if val := reflect.ValueOf(transformedCachePolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["cachePolicy"] = transformedCachePolicy
+	}
+
+	transformedDynamicCompressionPolicy, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionDynamicCompressionPolicy(original["dynamic_compression_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDynamicCompressionPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dynamicCompressionPolicy"] = transformedDynamicCompressionPolicy
 	}
 
 	return transformed, nil
@@ -4171,6 +4211,32 @@ func expandComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPolic
 	return v, nil
 }
 
+func expandComputeUrlMapPathMatcherRouteRulesRouteActionDynamicCompressionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCompressionMode, err := expandComputeUrlMapPathMatcherRouteRulesRouteActionDynamicCompressionPolicyCompressionMode(original["compression_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCompressionMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["compressionMode"] = transformedCompressionMode
+	}
+
+	return transformed, nil
+}
+
+func expandComputeUrlMapPathMatcherRouteRulesRouteActionDynamicCompressionPolicyCompressionMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeUrlMapPathMatcherRouteRulesUrlRedirect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -4592,6 +4658,13 @@ func expandComputeUrlMapPathMatcherDefaultRouteAction(v interface{}, d tpgresour
 		return nil, err
 	} else if val := reflect.ValueOf(transformedCachePolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["cachePolicy"] = transformedCachePolicy
+	}
+
+	transformedDynamicCompressionPolicy, err := expandComputeUrlMapPathMatcherDefaultRouteActionDynamicCompressionPolicy(original["dynamic_compression_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDynamicCompressionPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dynamicCompressionPolicy"] = transformedDynamicCompressionPolicy
 	}
 
 	return transformed, nil
@@ -5735,6 +5808,32 @@ func expandComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyIn
 	return v, nil
 }
 
+func expandComputeUrlMapPathMatcherDefaultRouteActionDynamicCompressionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCompressionMode, err := expandComputeUrlMapPathMatcherDefaultRouteActionDynamicCompressionPolicyCompressionMode(original["compression_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCompressionMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["compressionMode"] = transformedCompressionMode
+	}
+
+	return transformed, nil
+}
+
+func expandComputeUrlMapPathMatcherDefaultRouteActionDynamicCompressionPolicyCompressionMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandComputeUrlMapDefaultCustomErrorResponsePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -6132,6 +6231,13 @@ func expandComputeUrlMapDefaultRouteAction(v interface{}, d tpgresource.Terrafor
 		return nil, err
 	} else if val := reflect.ValueOf(transformedCachePolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["cachePolicy"] = transformedCachePolicy
+	}
+
+	transformedDynamicCompressionPolicy, err := expandComputeUrlMapDefaultRouteActionDynamicCompressionPolicy(original["dynamic_compression_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDynamicCompressionPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dynamicCompressionPolicy"] = transformedDynamicCompressionPolicy
 	}
 
 	return transformed, nil
@@ -7272,5 +7378,31 @@ func expandComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludedHeade
 }
 
 func expandComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludedCookieNames(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeUrlMapDefaultRouteActionDynamicCompressionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCompressionMode, err := expandComputeUrlMapDefaultRouteActionDynamicCompressionPolicyCompressionMode(original["compression_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCompressionMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["compressionMode"] = transformedCompressionMode
+	}
+
+	return transformed, nil
+}
+
+func expandComputeUrlMapDefaultRouteActionDynamicCompressionPolicyCompressionMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

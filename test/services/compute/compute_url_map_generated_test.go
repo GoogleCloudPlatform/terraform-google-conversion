@@ -110,6 +110,9 @@ func TestAccComputeUrlMap(t *testing.T) {
 			Name: "TestAccComputeUrlMap_routeRulesCustomErrorResponsePolicy",
 		},
 		{
+			Name: "TestAccComputeUrlMap_dynamicCompressionPolicyMultiLevelUpdate",
+		},
+		{
 			Name: "TestAccComputeUrlMap_regexRewrite",
 		},
 	}
