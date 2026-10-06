@@ -452,6 +452,9 @@ func TestAccComputeInstance(t *testing.T) {
 			Name: "TestAccComputeInstance_NetworkAttachment",
 		},
 		{
+			Name: "TestAccComputeInstance_NetworkAttachmentServiceClass",
+		},
+		{
 			Name: "TestAccComputeInstance_NetworkAttachmentUpdate",
 		},
 		{
