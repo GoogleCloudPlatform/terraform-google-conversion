@@ -140,6 +140,12 @@ func GetNetworkConnectivityHubApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("export_psc"); !tpgresource.IsEmptyValue(reflect.ValueOf(exportPscProp)) && (ok || !reflect.DeepEqual(v, exportPscProp)) {
 		obj["exportPsc"] = exportPscProp
 	}
+	exportPscConfigProp, err := expandNetworkConnectivityHubExportPscConfig(d.Get("export_psc_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("export_psc_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(exportPscConfigProp)) && (ok || !reflect.DeepEqual(v, exportPscConfigProp)) {
+		obj["exportPscConfig"] = exportPscConfigProp
+	}
 	effectiveLabelsProp, err := expandNetworkConnectivityHubEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -167,6 +173,43 @@ func expandNetworkConnectivityHubPolicyMode(v interface{}, d tpgresource.Terrafo
 }
 
 func expandNetworkConnectivityHubExportPsc(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityHubExportPscConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPublishedServicesAndRegionalGoogleApis, err := expandNetworkConnectivityHubExportPscConfigPublishedServicesAndRegionalGoogleApis(original["published_services_and_regional_google_apis"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["publishedServicesAndRegionalGoogleApis"] = transformedPublishedServicesAndRegionalGoogleApis
+	}
+
+	transformedGlobalGoogleApis, err := expandNetworkConnectivityHubExportPscConfigGlobalGoogleApis(original["global_google_apis"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["globalGoogleApis"] = transformedGlobalGoogleApis
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkConnectivityHubExportPscConfigPublishedServicesAndRegionalGoogleApis(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityHubExportPscConfigGlobalGoogleApis(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
