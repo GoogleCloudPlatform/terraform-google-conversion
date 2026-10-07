@@ -146,6 +146,12 @@ func GetCloudRunV2ServiceApiObject(d tpgresource.TerraformResourceData, config *
 	} else if v, ok := d.GetOkExists("launch_stage"); !tpgresource.IsEmptyValue(reflect.ValueOf(launchStageProp)) && (ok || !reflect.DeepEqual(v, launchStageProp)) {
 		obj["launchStage"] = launchStageProp
 	}
+	functionalTypeProp, err := expandCloudRunV2ServiceFunctionalType(d.Get("functional_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("functional_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(functionalTypeProp)) && (ok || !reflect.DeepEqual(v, functionalTypeProp)) {
+		obj["functionalType"] = functionalTypeProp
+	}
 	binaryAuthorizationProp, err := expandCloudRunV2ServiceBinaryAuthorization(d.Get("binary_authorization"), d, config)
 	if err != nil {
 		return nil, err
@@ -256,6 +262,10 @@ func expandCloudRunV2ServiceIngress(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandCloudRunV2ServiceLaunchStage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2ServiceFunctionalType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

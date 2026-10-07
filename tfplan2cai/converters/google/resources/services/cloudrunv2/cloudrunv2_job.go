@@ -128,6 +128,12 @@ func GetCloudRunV2JobApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("launch_stage"); !tpgresource.IsEmptyValue(reflect.ValueOf(launchStageProp)) && (ok || !reflect.DeepEqual(v, launchStageProp)) {
 		obj["launchStage"] = launchStageProp
 	}
+	functionalTypeProp, err := expandCloudRunV2JobFunctionalType(d.Get("functional_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("functional_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(functionalTypeProp)) && (ok || !reflect.DeepEqual(v, functionalTypeProp)) {
+		obj["functionalType"] = functionalTypeProp
+	}
 	binaryAuthorizationProp, err := expandCloudRunV2JobBinaryAuthorization(d.Get("binary_authorization"), d, config)
 	if err != nil {
 		return nil, err
@@ -183,6 +189,10 @@ func expandCloudRunV2JobClientVersion(v interface{}, d tpgresource.TerraformReso
 }
 
 func expandCloudRunV2JobLaunchStage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobFunctionalType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -371,6 +381,13 @@ func expandCloudRunV2JobTemplateTemplate(v interface{}, d tpgresource.TerraformR
 		return nil, err
 	} else if val := reflect.ValueOf(transformedServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["serviceAccount"] = transformedServiceAccount
+	}
+
+	transformedWorkloadIdentityConfig, err := expandCloudRunV2JobTemplateTemplateWorkloadIdentityConfig(original["workload_identity_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWorkloadIdentityConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["workloadIdentityConfig"] = transformedWorkloadIdentityConfig
 	}
 
 	transformedExecutionEnvironment, err := expandCloudRunV2JobTemplateTemplateExecutionEnvironment(original["execution_environment"], d, config)
@@ -1344,6 +1361,54 @@ func expandCloudRunV2JobTemplateTemplateTimeout(v interface{}, d tpgresource.Ter
 }
 
 func expandCloudRunV2JobTemplateTemplateServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateWorkloadIdentityConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIdentityType, err := expandCloudRunV2JobTemplateTemplateWorkloadIdentityConfigIdentityType(original["identity_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentityType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["identityType"] = transformedIdentityType
+	}
+
+	transformedIdentityCertificateEnabled, err := expandCloudRunV2JobTemplateTemplateWorkloadIdentityConfigIdentityCertificateEnabled(original["identity_certificate_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["identityCertificateEnabled"] = transformedIdentityCertificateEnabled
+	}
+
+	transformedIdentity, err := expandCloudRunV2JobTemplateTemplateWorkloadIdentityConfigIdentity(original["identity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["identity"] = transformedIdentity
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateWorkloadIdentityConfigIdentityType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateWorkloadIdentityConfigIdentityCertificateEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateWorkloadIdentityConfigIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
