@@ -156,14 +156,16 @@ the disk.
 
 If you do not provide an encryption key when creating the disk, then
 the disk will be encrypted using an automatically generated key and
-you do not need to provide a key to use the disk later.`,
+you do not need to provide a key to use the disk later.
+
+~>**NOTE** Only changing 'kms_key_name' between Cloud KMS keys is done
+in place; other changes to this block recreate the disk.`,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"kms_key_name": {
 							Type:        schema.TypeString,
 							Optional:    true,
-							ForceNew:    true,
 							Description: `The name of the encryption key that is stored in Google Cloud KMS.`,
 						},
 						"raw_key": {
