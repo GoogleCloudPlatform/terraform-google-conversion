@@ -74,6 +74,9 @@ func TestAccComputeForwardingRule(t *testing.T) {
 			Name: "TestAccComputeForwardingRule_forwardingRulePscTargetUpdateRecreate",
 		},
 		{
+			Name: "TestAccComputeForwardingRule_forwardingRulePscAddressUpdateRecreate",
+		},
+		{
 			Name: "TestAccComputeForwardingRule_forwardingRulePscRecreate",
 		},
 		{
