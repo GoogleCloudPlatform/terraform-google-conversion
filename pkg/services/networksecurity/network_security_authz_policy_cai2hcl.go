@@ -1578,6 +1578,7 @@ func flattenNetworkSecurityAuthzPolicyNetworkRules(v interface{}, d *schema.Reso
 		transformed = append(transformed, map[string]interface{}{
 			"from": flattenNetworkSecurityAuthzPolicyNetworkRulesFrom(original["from"], d, config),
 			"to":   flattenNetworkSecurityAuthzPolicyNetworkRulesTo(original["to"], d, config),
+			"when": flattenNetworkSecurityAuthzPolicyNetworkRulesWhen(original["when"], d, config),
 		})
 	}
 	return transformed
@@ -1614,6 +1615,7 @@ func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSources(v interface{}, d *
 		transformed = append(transformed, map[string]interface{}{
 			"ip_blocks":  flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesIpBlocks(original["ipBlocks"], d, config),
 			"principals": flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipals(original["principals"], d, config),
+			"resources":  flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResources(original["resources"], d, config),
 		})
 	}
 	return transformed
@@ -1700,6 +1702,8 @@ func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipal
 	}
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
+	transformed["ignore_case"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipalIgnoreCase(original["ignoreCase"], d, config)
 	transformed["exact"] =
 		flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipalExact(original["exact"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
@@ -1708,7 +1712,115 @@ func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipal
 	return []interface{}{transformed}
 }
 
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipalIgnoreCase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesPrincipalsPrincipalExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResources(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"tag_value_id_set":    flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesTagValueIdSet(original["tagValueIdSet"], d, config),
+			"iam_service_account": flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccount(original["iamServiceAccount"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesTagValueIdSet(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["ids"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesTagValueIdSetIds(original["ids"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesTagValueIdSetIds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["ignore_case"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccountIgnoreCase(original["ignoreCase"], d, config)
+	transformed["exact"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccountExact(original["exact"], d, config)
+	transformed["prefix"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccountPrefix(original["prefix"], d, config)
+	transformed["suffix"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccountSuffix(original["suffix"], d, config)
+	transformed["contains"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccountContains(original["contains"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccountIgnoreCase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccountExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccountPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccountSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromSourcesResourcesIamServiceAccountContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}
@@ -1733,6 +1845,7 @@ func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSources(v interface{}, 
 		transformed = append(transformed, map[string]interface{}{
 			"ip_blocks":  flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesIpBlocks(original["ipBlocks"], d, config),
 			"principals": flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipals(original["principals"], d, config),
+			"resources":  flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResources(original["resources"], d, config),
 		})
 	}
 	return transformed
@@ -1819,6 +1932,8 @@ func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrinci
 	}
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})
+	transformed["ignore_case"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrincipalIgnoreCase(original["ignoreCase"], d, config)
 	transformed["exact"] =
 		flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrincipalExact(original["exact"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
@@ -1827,7 +1942,115 @@ func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrinci
 	return []interface{}{transformed}
 }
 
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrincipalIgnoreCase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesPrincipalsPrincipalExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResources(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"tag_value_id_set":    flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesTagValueIdSet(original["tagValueIdSet"], d, config),
+			"iam_service_account": flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccount(original["iamServiceAccount"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesTagValueIdSet(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["ids"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesTagValueIdSetIds(original["ids"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesTagValueIdSetIds(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccount(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["ignore_case"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccountIgnoreCase(original["ignoreCase"], d, config)
+	transformed["exact"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccountExact(original["exact"], d, config)
+	transformed["prefix"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccountPrefix(original["prefix"], d, config)
+	transformed["suffix"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccountSuffix(original["suffix"], d, config)
+	transformed["contains"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccountContains(original["contains"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccountIgnoreCase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccountExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccountPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccountSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesFromNotSourcesResourcesIamServiceAccountContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}
@@ -1845,6 +2068,8 @@ func flattenNetworkSecurityAuthzPolicyNetworkRulesTo(v interface{}, d *schema.Re
 	transformed := make(map[string]interface{})
 	transformed["operations"] =
 		flattenNetworkSecurityAuthzPolicyNetworkRulesToOperations(original["operations"], d, config)
+	transformed["not_operations"] =
+		flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperations(original["notOperations"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -1883,13 +2108,147 @@ func flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnis(v interface{}
 			continue
 		}
 		transformed = append(transformed, map[string]interface{}{
-			"exact": flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisExact(original["exact"], d, config),
+			"ignore_case": flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisIgnoreCase(original["ignoreCase"], d, config),
+			"exact":       flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisExact(original["exact"], d, config),
+			"prefix":      flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisPrefix(original["prefix"], d, config),
+			"suffix":      flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisSuffix(original["suffix"], d, config),
+			"contains":    flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisContains(original["contains"], d, config),
 		})
 	}
 	return transformed
 }
 
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisIgnoreCase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToOperationsSnisContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperations(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"snis": flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnis(original["snis"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnis(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"ignore_case": flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnisIgnoreCase(original["ignoreCase"], d, config),
+			"exact":       flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnisExact(original["exact"], d, config),
+			"prefix":      flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnisPrefix(original["prefix"], d, config),
+			"suffix":      flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnisSuffix(original["suffix"], d, config),
+			"contains":    flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnisContains(original["contains"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnisIgnoreCase(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnisExact(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnisPrefix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnisSuffix(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesToNotOperationsSnisContains(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecurityAuthzPolicyNetworkRulesWhen(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}

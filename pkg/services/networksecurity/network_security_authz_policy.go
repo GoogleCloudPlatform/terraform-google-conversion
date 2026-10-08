@@ -1093,6 +1093,11 @@ Only exact match can be applied for CLIENT_CERT_URI_SAN, CLIENT_CERT_DNS_NAME_SA
 Examples:
 * abc only matches the value abc.`,
 																		},
+																		"ignore_case": {
+																			Type:        schema.TypeBool,
+																			Optional:    true,
+																			Description: `If true, indicates the exact/prefix/suffix/contains matching should be case insensitive. For example, the matcher data will match both input string Data and data if set to true.`,
+																		},
 																	},
 																},
 															},
@@ -1102,6 +1107,78 @@ Examples:
 																ValidateFunc: verify.ValidateEnum([]string{"PRINCIPAL_SELECTOR_UNSPECIFIED", "CLIENT_CERT_URI_SAN", "CLIENT_CERT_DNS_NAME_SAN", "CLIENT_CERT_COMMON_NAME", ""}),
 																Description:  `An enum to decide what principal value the principal rule will match against. If not specified, the PrincipalSelector is CLIENT_CERT_URI_SAN. Default value: "CLIENT_CERT_URI_SAN" Possible values: ["PRINCIPAL_SELECTOR_UNSPECIFIED", "CLIENT_CERT_URI_SAN", "CLIENT_CERT_DNS_NAME_SAN", "CLIENT_CERT_COMMON_NAME"]`,
 																Default:      "CLIENT_CERT_URI_SAN",
+															},
+														},
+													},
+												},
+												"resources": {
+													Type:     schema.TypeList,
+													Optional: true,
+													Description: `A list of resources to match against the resource of the source VM of a request.
+Limited to 5 resources.`,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"iam_service_account": {
+																Type:        schema.TypeList,
+																Optional:    true,
+																Description: `An IAM service account to match against the source service account of the VM sending the request.`,
+																MaxItems:    1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+																		"contains": {
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			Description: `The input string must have the substring specified here. Note: empty contains match is not allowed, please use regex instead.
+Examples:
+* abc matches the value xyz.abc.def`,
+																		},
+																		"exact": {
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			Description: `The input string must match exactly the string specified here.
+Examples:
+* abc only matches the value abc.`,
+																		},
+																		"ignore_case": {
+																			Type:        schema.TypeBool,
+																			Optional:    true,
+																			Description: `If true, indicates the exact/prefix/suffix/contains matching should be case insensitive. For example, the matcher data will match both input string Data and data if set to true.`,
+																		},
+																		"prefix": {
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			Description: `The input string must have the prefix specified here. Note: empty prefix is not allowed, please use regex instead.
+Examples:
+* abc matches the value abc.xyz`,
+																		},
+																		"suffix": {
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			Description: `The input string must have the suffix specified here. Note: empty prefix is not allowed, please use regex instead.
+Examples:
+* abc matches the value xyz.abc`,
+																		},
+																	},
+																},
+															},
+															"tag_value_id_set": {
+																Type:        schema.TypeList,
+																Optional:    true,
+																Description: `A list of resource tag value permanent IDs to match against the resource manager tags value associated with the source VM of a request.`,
+																MaxItems:    1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+																		"ids": {
+																			Type:     schema.TypeList,
+																			Optional: true,
+																			Description: `A list of resource tag value permanent IDs to match against the resource manager tags value associated with the source VM of a request. The match follows AND semantics which means all the ids must match.
+Limited to 5 matches.`,
+																			Elem: &schema.Schema{
+																				Type: schema.TypeString,
+																			},
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -1156,6 +1233,11 @@ Only exact match can be applied for CLIENT_CERT_URI_SAN, CLIENT_CERT_DNS_NAME_SA
 Examples:
 * abc only matches the value abc.`,
 																		},
+																		"ignore_case": {
+																			Type:        schema.TypeBool,
+																			Optional:    true,
+																			Description: `If true, indicates the exact/prefix/suffix/contains matching should be case insensitive. For example, the matcher data will match both input string Data and data if set to true.`,
+																		},
 																	},
 																},
 															},
@@ -1165,6 +1247,78 @@ Examples:
 																ValidateFunc: verify.ValidateEnum([]string{"PRINCIPAL_SELECTOR_UNSPECIFIED", "CLIENT_CERT_URI_SAN", "CLIENT_CERT_DNS_NAME_SAN", "CLIENT_CERT_COMMON_NAME", ""}),
 																Description:  `An enum to decide what principal value the principal rule will match against. If not specified, the PrincipalSelector is CLIENT_CERT_URI_SAN. Default value: "CLIENT_CERT_URI_SAN" Possible values: ["PRINCIPAL_SELECTOR_UNSPECIFIED", "CLIENT_CERT_URI_SAN", "CLIENT_CERT_DNS_NAME_SAN", "CLIENT_CERT_COMMON_NAME"]`,
 																Default:      "CLIENT_CERT_URI_SAN",
+															},
+														},
+													},
+												},
+												"resources": {
+													Type:     schema.TypeList,
+													Optional: true,
+													Description: `A list of resources to match against the resource of the source VM of a request.
+Limited to 5 resources.`,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"iam_service_account": {
+																Type:        schema.TypeList,
+																Optional:    true,
+																Description: `An IAM service account to match against the source service account of the VM sending the request.`,
+																MaxItems:    1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+																		"contains": {
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			Description: `The input string must have the substring specified here. Note: empty contains match is not allowed, please use regex instead.
+Examples:
+* abc matches the value xyz.abc.def`,
+																		},
+																		"exact": {
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			Description: `The input string must match exactly the string specified here.
+Examples:
+* abc only matches the value abc.`,
+																		},
+																		"ignore_case": {
+																			Type:        schema.TypeBool,
+																			Optional:    true,
+																			Description: `If true, indicates the exact/prefix/suffix/contains matching should be case insensitive. For example, the matcher data will match both input string Data and data if set to true.`,
+																		},
+																		"prefix": {
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			Description: `The input string must have the prefix specified here. Note: empty prefix is not allowed, please use regex instead.
+Examples:
+* abc matches the value abc.xyz`,
+																		},
+																		"suffix": {
+																			Type:     schema.TypeString,
+																			Optional: true,
+																			Description: `The input string must have the suffix specified here. Note: empty prefix is not allowed, please use regex instead.
+Examples:
+* abc matches the value xyz.abc`,
+																		},
+																	},
+																},
+															},
+															"tag_value_id_set": {
+																Type:        schema.TypeList,
+																Optional:    true,
+																Description: `A list of resource tag value permanent IDs to match against the resource manager tags value associated with the source VM of a request.`,
+																MaxItems:    1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+																		"ids": {
+																			Type:     schema.TypeList,
+																			Optional: true,
+																			Description: `A list of resource tag value permanent IDs to match against the resource manager tags value associated with the source VM of a request. The match follows AND semantics which means all the ids must match.
+Limited to 5 matches.`,
+																			Elem: &schema.Schema{
+																				Type: schema.TypeString,
+																			},
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -1182,6 +1336,57 @@ Examples:
 							MaxItems:    1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"not_operations": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Describes properties of one or more targets of a request. At least one of operations or notOperations must be specified. Limited to 1 operation.`,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"snis": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: ``,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"contains": {
+																Type:     schema.TypeString,
+																Optional: true,
+																Description: `The input string must have the substring specified here. Note: empty contains match is not allowed, please use regex instead.
+Examples:
+* abc matches the value xyz.abc.def`,
+															},
+															"exact": {
+																Type:     schema.TypeString,
+																Optional: true,
+																Description: `The input string must match exactly the string specified here.
+Examples:
+* abc only matches the value abc.`,
+															},
+															"ignore_case": {
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Description: `If true, indicates the exact/prefix/suffix/contains matching should be case insensitive. For example, the matcher data will match both input string Data and data if set to true.`,
+															},
+															"prefix": {
+																Type:     schema.TypeString,
+																Optional: true,
+																Description: `The input string must have the prefix specified here. Note: empty prefix is not allowed, please use regex instead.
+Examples:
+* abc matches the value abc.xyz`,
+															},
+															"suffix": {
+																Type:     schema.TypeString,
+																Optional: true,
+																Description: `The input string must have the suffix specified here. Note: empty suffix is not allowed, please use regex instead.
+Examples:
+* abc matches the value xyz.abc`,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
 									"operations": {
 										Type:        schema.TypeList,
 										Optional:    true,
@@ -1194,10 +1399,38 @@ Examples:
 													Description: ``,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
+															"contains": {
+																Type:     schema.TypeString,
+																Optional: true,
+																Description: `The input string must have the substring specified here. Note: empty contains match is not allowed, please use regex instead.
+Examples:
+* abc matches the value xyz.abc.def`,
+															},
 															"exact": {
-																Type:        schema.TypeString,
+																Type:     schema.TypeString,
+																Optional: true,
+																Description: `The input string must match exactly the string specified here.
+Examples:
+* abc only matches the value abc.`,
+															},
+															"ignore_case": {
+																Type:        schema.TypeBool,
 																Optional:    true,
-																Description: ``,
+																Description: `If true, indicates the exact/prefix/suffix/contains matching should be case insensitive. For example, the matcher data will match both input string Data and data if set to true.`,
+															},
+															"prefix": {
+																Type:     schema.TypeString,
+																Optional: true,
+																Description: `The input string must have the prefix specified here. Note: empty prefix is not allowed, please use regex instead.
+Examples:
+* abc matches the value abc.xyz`,
+															},
+															"suffix": {
+																Type:     schema.TypeString,
+																Optional: true,
+																Description: `The input string must have the suffix specified here. Note: empty suffix is not allowed, please use regex instead.
+Examples:
+* abc matches the value xyz.abc`,
 															},
 														},
 													},
@@ -1207,6 +1440,11 @@ Examples:
 									},
 								},
 							},
+						},
+						"when": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: `CEL expression that describes the conditions to be satisfied for the action. The result of the CEL expression is ANDed with the from and to. Refer to the CEL language reference for a list of available attributes.`,
 						},
 					},
 				},
