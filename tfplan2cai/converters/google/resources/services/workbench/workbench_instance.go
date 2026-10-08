@@ -52,6 +52,9 @@ import (
 var metadataDefaults = map[string]string{
 	"enable-jupyterlab4":      "true",
 	"new-proxy-agent-enabled": "true",
+	"enable-opencode":         "true",
+	"enable-opencode-web":     "true",
+	"enable-antigravity":      "true",
 }
 
 var WorkbenchInstanceSettableUnmodifiableDefaultMetadata = []string{
