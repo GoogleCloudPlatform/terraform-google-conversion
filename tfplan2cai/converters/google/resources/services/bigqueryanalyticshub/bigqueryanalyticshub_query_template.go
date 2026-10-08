@@ -154,6 +154,12 @@ func GetBigqueryAnalyticsHubQueryTemplateApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("routine"); !tpgresource.IsEmptyValue(reflect.ValueOf(routineProp)) && (ok || !reflect.DeepEqual(v, routineProp)) {
 		obj["routine"] = routineProp
 	}
+	encryptionConfigurationProp, err := expandBigqueryAnalyticsHubQueryTemplateEncryptionConfiguration(d.Get("encryption_configuration"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("encryption_configuration"); !tpgresource.IsEmptyValue(reflect.ValueOf(encryptionConfigurationProp)) && (ok || !reflect.DeepEqual(v, encryptionConfigurationProp)) {
+		obj["encryptionConfiguration"] = encryptionConfigurationProp
+	}
 
 	return obj, nil
 }
@@ -208,5 +214,31 @@ func expandBigqueryAnalyticsHubQueryTemplateRoutineRoutineType(v interface{}, d 
 }
 
 func expandBigqueryAnalyticsHubQueryTemplateRoutineDefinitionBody(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryAnalyticsHubQueryTemplateEncryptionConfiguration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKmsKeyName, err := expandBigqueryAnalyticsHubQueryTemplateEncryptionConfigurationKmsKeyName(original["kms_key_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKmsKeyName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kmsKeyName"] = transformedKmsKeyName
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryAnalyticsHubQueryTemplateEncryptionConfigurationKmsKeyName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
