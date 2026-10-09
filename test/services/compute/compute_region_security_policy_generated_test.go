@@ -45,6 +45,12 @@ func TestAccComputeRegionSecurityPolicy(t *testing.T) {
 			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyWithRulesExample",
 		},
 		{
+			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyWithBodyExcludeExample",
+		},
+		{
+			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyRequestBodyExpressionExample",
+		},
+		{
 			Name: "TestAccComputeRegionSecurityPolicy_regionSecurityPolicyBasicUpdateExample",
 		},
 		{
