@@ -488,6 +488,7 @@ func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusion(v in
 			"request_header":      flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestHeader(original["requestHeadersToExclude"], d, config),
 			"request_cookie":      flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestCookie(original["requestCookiesToExclude"], d, config),
 			"request_uri":         flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestUri(original["requestUrisToExclude"], d, config),
+			"request_body":        flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestBody(original["requestBodiesToExclude"], d, config),
 			"request_query_param": flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestQueryParam(original["requestQueryParamsToExclude"], d, config),
 		})
 	}
@@ -602,6 +603,47 @@ func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionReque
 }
 
 func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestUriValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestBody(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"operator": flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestBodyOperator(original["op"], d, config),
+			"value":    flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestBodyValue(original["val"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestBodyOperator(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenComputeRegionSecurityPolicyRulesPreconfiguredWafConfigExclusionRequestBodyValue(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}

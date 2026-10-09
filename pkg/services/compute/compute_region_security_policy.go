@@ -398,6 +398,33 @@ If the rule does not evaluate preconfigured WAF rules, i.e., if evaluatePreconfi
 													Required:    true,
 													Description: `Target WAF rule set to apply the preconfigured WAF exclusion.`,
 												},
+												"request_body": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `A list of request body fields to be excluded from inspection during preconfigured WAF evaluation.`,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"operator": {
+																Type:         schema.TypeString,
+																Required:     true,
+																ValidateFunc: validation.StringInSlice([]string{"EQUALS", "STARTS_WITH", "ENDS_WITH", "CONTAINS", "EQUALS_ANY"}, false),
+																Description: `You can specify an exact match or a partial match by using a field operator and a field value.
+Available options:
+EQUALS: The operator matches if the field value equals the specified value.
+STARTS_WITH: The operator matches if the field value starts with the specified value.
+ENDS_WITH: The operator matches if the field value ends with the specified value.
+CONTAINS: The operator matches if the field value contains the specified value.
+EQUALS_ANY: The operator matches if the field value is any value.`,
+															},
+															"value": {
+																Type:     schema.TypeString,
+																Optional: true,
+																Description: `A request field matching the specified value will be excluded from inspection during preconfigured WAF evaluation.
+The field value must be given if the field operator is not EQUALS_ANY, and cannot be given if the field operator is EQUALS_ANY.`,
+															},
+														},
+													},
+												},
 												"request_cookie": {
 													Type:        schema.TypeList,
 													Optional:    true,
