@@ -1601,6 +1601,20 @@ func expandDialogflowConversationProfileSttConfig(v interface{}, d tpgresource.T
 		transformed["useTimeoutBasedEndpointing"] = transformedUseTimeoutBasedEndpointing
 	}
 
+	transformedUseGeminiAsr, err := expandDialogflowConversationProfileSttConfigUseGeminiAsr(original["use_gemini_asr"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["useGeminiAsr"] = transformedUseGeminiAsr
+	}
+
+	transformedGeminiAsrConfig, err := expandDialogflowConversationProfileSttConfigGeminiAsrConfig(original["gemini_asr_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGeminiAsrConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["geminiAsrConfig"] = transformedGeminiAsrConfig
+	}
+
 	return transformed, nil
 }
 
@@ -1629,6 +1643,80 @@ func expandDialogflowConversationProfileSttConfigEnableWordInfo(v interface{}, d
 }
 
 func expandDialogflowConversationProfileSttConfigUseTimeoutBasedEndpointing(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSttConfigUseGeminiAsr(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSttConfigGeminiAsrConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedModelId, err := expandDialogflowConversationProfileSttConfigGeminiAsrConfigModelId(original["model_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedModelId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["modelId"] = transformedModelId
+	}
+
+	transformedSilenceDurationMs, err := expandDialogflowConversationProfileSttConfigGeminiAsrConfigSilenceDurationMs(original["silence_duration_ms"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSilenceDurationMs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["silenceDurationMs"] = transformedSilenceDurationMs
+	}
+
+	transformedPrefixPaddingMs, err := expandDialogflowConversationProfileSttConfigGeminiAsrConfigPrefixPaddingMs(original["prefix_padding_ms"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPrefixPaddingMs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["prefixPaddingMs"] = transformedPrefixPaddingMs
+	}
+
+	transformedStartOfSpeechSensitivity, err := expandDialogflowConversationProfileSttConfigGeminiAsrConfigStartOfSpeechSensitivity(original["start_of_speech_sensitivity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStartOfSpeechSensitivity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["startOfSpeechSensitivity"] = transformedStartOfSpeechSensitivity
+	}
+
+	transformedEndOfSpeechSensitivity, err := expandDialogflowConversationProfileSttConfigGeminiAsrConfigEndOfSpeechSensitivity(original["end_of_speech_sensitivity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEndOfSpeechSensitivity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["endOfSpeechSensitivity"] = transformedEndOfSpeechSensitivity
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowConversationProfileSttConfigGeminiAsrConfigModelId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSttConfigGeminiAsrConfigSilenceDurationMs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSttConfigGeminiAsrConfigPrefixPaddingMs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSttConfigGeminiAsrConfigStartOfSpeechSensitivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowConversationProfileSttConfigGeminiAsrConfigEndOfSpeechSensitivity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
