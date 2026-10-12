@@ -770,6 +770,13 @@ func expandCESGuardrailLlmPolicyModelSettings(v interface{}, d tpgresource.Terra
 		transformed["temperature"] = transformedTemperature
 	}
 
+	transformedThinkingLevel, err := expandCESGuardrailLlmPolicyModelSettingsThinkingLevel(original["thinking_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThinkingLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["thinkingLevel"] = transformedThinkingLevel
+	}
+
 	return transformed, nil
 }
 
@@ -778,6 +785,10 @@ func expandCESGuardrailLlmPolicyModelSettingsModel(v interface{}, d tpgresource.
 }
 
 func expandCESGuardrailLlmPolicyModelSettingsTemperature(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESGuardrailLlmPolicyModelSettingsThinkingLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -924,6 +935,13 @@ func expandCESGuardrailLlmPromptSecurityCustomPolicyModelSettings(v interface{},
 		transformed["temperature"] = transformedTemperature
 	}
 
+	transformedThinkingLevel, err := expandCESGuardrailLlmPromptSecurityCustomPolicyModelSettingsThinkingLevel(original["thinking_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThinkingLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["thinkingLevel"] = transformedThinkingLevel
+	}
+
 	return transformed, nil
 }
 
@@ -932,6 +950,10 @@ func expandCESGuardrailLlmPromptSecurityCustomPolicyModelSettingsModel(v interfa
 }
 
 func expandCESGuardrailLlmPromptSecurityCustomPolicyModelSettingsTemperature(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESGuardrailLlmPromptSecurityCustomPolicyModelSettingsThinkingLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
