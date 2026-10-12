@@ -1370,6 +1370,13 @@ func expandCESAppModelSettings(v interface{}, d tpgresource.TerraformResourceDat
 		transformed["temperature"] = transformedTemperature
 	}
 
+	transformedThinkingLevel, err := expandCESAppModelSettingsThinkingLevel(original["thinking_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThinkingLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["thinkingLevel"] = transformedThinkingLevel
+	}
+
 	return transformed, nil
 }
 
@@ -1378,6 +1385,10 @@ func expandCESAppModelSettingsModel(v interface{}, d tpgresource.TerraformResour
 }
 
 func expandCESAppModelSettingsTemperature(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppModelSettingsThinkingLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
