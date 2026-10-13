@@ -54,9 +54,7 @@ import "errors"
 type ApiError = string
 
 const (
-	ApiErrorSuConflictingConcurrentModification   = "SU_CONFLICTING_CONCURRENT_MODIFICATION"
-	ApiErrorCommonSuServicesHaveUsage             = "COMMON_SU_SERVICES_HAVE_USAGE"
-	ApiErrorCommonSuServicesHaveHierarchicalUsage = "COMMON_SU_SERVICES_HAVE_HIERARCHICAL_USAGE"
+	ApiErrorSuConflictingConcurrentModification = "SU_CONFLICTING_CONCURRENT_MODIFICATION"
 )
 
 type ImpactType = string
@@ -74,9 +72,15 @@ type ProposedPolicy struct {
 	EnableRules []map[string][]string `json:"enableRules"`
 }
 
-func NewAnalysisRequest(name string, services []string) map[string]any {
+func NewAnalysisRequest(name string, services []string, catalogs []string) map[string]any {
+	rule := map[string][]string{
+		"services": services,
+	}
+	if len(catalogs) > 0 {
+		rule["catalogs"] = catalogs
+	}
 	enableRules := []map[string][]string{
-		{"services": services},
+		rule,
 	}
 	return map[string]any{
 		"proposedPolicy": ProposedPolicy{Name: name, EnableRules: enableRules},
@@ -100,8 +104,6 @@ type AnalysisReportDetails struct {
 type AnalysisResponse struct {
 	Analysis []AnalysisReportDetails
 }
-
-var servicesRegexp = regexp.MustCompile(`([^(\s|,)]+\.googleapis\.com)`)
 
 func parseObject(obj any, resp interface{}) error {
 	b, err := json.Marshal(obj)
@@ -141,8 +143,30 @@ func getServices(rules interface{}) []string {
 	return output
 }
 
+func getCatalogs(rules interface{}) []string {
+	var output []string
+	for _, enableRules := range rules.([]interface{}) {
+		if enableRules == nil {
+			continue
+		}
+		if catalogs, ok := enableRules.(map[string]interface{})["catalogs"]; ok {
+			if catalogsSet, ok := catalogs.(*schema.Set); ok {
+				for _, catalog := range catalogsSet.List() {
+					output = append(output, catalog.(string))
+				}
+			} else if catalogsSlice, ok := catalogs.([]interface{}); ok {
+				for _, catalog := range catalogsSlice {
+					output = append(output, catalog.(string))
+				}
+			}
+		}
+	}
+	return output
+}
+
 func isCommonOpError(err error, apiError ApiError) (bool, string) {
-	if opError, ok := errors.Unwrap(err).(*tpgresource.CommonOpError); ok {
+	var opError *tpgresource.CommonOpError
+	if errors.As(err, &opError) {
 		for _, detail := range opError.Details {
 			errInfo := make(map[string]interface{})
 			if err := json.Unmarshal(detail, &errInfo); err != nil {
@@ -157,17 +181,8 @@ func isCommonOpError(err error, apiError ApiError) (bool, string) {
 }
 
 func isTimeoutError(err error) bool {
-	_, ok := errors.Unwrap(err).(*retry.TimeoutError)
-	return ok
-}
-
-func getServicesFromString(msg string) []string {
-	return servicesRegexp.FindAllString(msg, -1)
-}
-
-func getErrorMessageForServicesInUse(msg string) string {
-	services := getServicesFromString(msg)
-	return fmt.Sprintf("The service{s} %v has been used in the last 30 days or was enabled in the past 3 days. If you still wish to remove the service{s}, please set the check_usage_on_remove flag to false to proceed.", strings.Join(services, ", "))
+	var timeoutErr *retry.TimeoutError
+	return errors.As(err, &timeoutErr)
 }
 
 var (
@@ -267,12 +282,24 @@ func expandServiceUsageV2ConsumerPolicyEnableRules(v interface{}, d tpgresource.
 			transformed["services"] = transformedServices
 		}
 
+		transformedCatalogs, err := expandServiceUsageV2ConsumerPolicyEnableRulesCatalogs(original["catalogs"], d, config)
+		if err != nil {
+			return nil, err
+		} else {
+			transformed["catalogs"] = transformedCatalogs
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
 }
 
 func expandServiceUsageV2ConsumerPolicyEnableRulesServices(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	return v, nil
+}
+
+func expandServiceUsageV2ConsumerPolicyEnableRulesCatalogs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	v = v.(*schema.Set).List()
 	return v, nil
 }
