@@ -1626,6 +1626,13 @@ func expandCESToolDataStoreToolModalityConfigsRewriterConfigModelSettings(v inte
 		transformed["temperature"] = transformedTemperature
 	}
 
+	transformedThinkingLevel, err := expandCESToolDataStoreToolModalityConfigsRewriterConfigModelSettingsThinkingLevel(original["thinking_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThinkingLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["thinkingLevel"] = transformedThinkingLevel
+	}
+
 	return transformed, nil
 }
 
@@ -1634,6 +1641,10 @@ func expandCESToolDataStoreToolModalityConfigsRewriterConfigModelSettingsModel(v
 }
 
 func expandCESToolDataStoreToolModalityConfigsRewriterConfigModelSettingsTemperature(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolModalityConfigsRewriterConfigModelSettingsThinkingLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1733,6 +1744,13 @@ func expandCESToolDataStoreToolModalityConfigsSummarizationConfigModelSettings(v
 		transformed["temperature"] = transformedTemperature
 	}
 
+	transformedThinkingLevel, err := expandCESToolDataStoreToolModalityConfigsSummarizationConfigModelSettingsThinkingLevel(original["thinking_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThinkingLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["thinkingLevel"] = transformedThinkingLevel
+	}
+
 	return transformed, nil
 }
 
@@ -1741,6 +1759,10 @@ func expandCESToolDataStoreToolModalityConfigsSummarizationConfigModelSettingsMo
 }
 
 func expandCESToolDataStoreToolModalityConfigsSummarizationConfigModelSettingsTemperature(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolModalityConfigsSummarizationConfigModelSettingsThinkingLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
