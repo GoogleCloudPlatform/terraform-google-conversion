@@ -130,6 +130,9 @@ func TestAccComputeRegionBackendService(t *testing.T) {
 			Name: "TestAccComputeRegionBackendService_withSecurityPolicy",
 		},
 		{
+			Name: "TestAccComputeRegionBackendService_withSecurityPolicyUdp",
+		},
+		{
 			Name: "TestAccComputeRegionBackendService_withNetworkPassThroughLbTrafficPolicy",
 		},
 		{
