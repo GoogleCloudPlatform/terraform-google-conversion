@@ -99,6 +99,11 @@ Config lives in.`,
 Its format is "projects/[projectId]/datasets/[bigquery_dataset_id]".
 BigQuery Dataset unique ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_).`,
 			},
+			"deletion_notifications_enabled": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: `Indicates whether the notifications will be sent for deleted findings.`,
+			},
 			"description": {
 				Type:         schema.TypeString,
 				Optional:     true,

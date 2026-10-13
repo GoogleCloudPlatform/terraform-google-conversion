@@ -139,6 +139,7 @@ func (c *SecurityCenterV2OrganizationNotificationConfigCai2hclConverter) convert
 	hclData["description"] = flattenSecurityCenterV2OrganizationNotificationConfigDescription(res["description"], d, config)
 	hclData["pubsub_topic"] = flattenSecurityCenterV2OrganizationNotificationConfigPubsubTopic(res["pubsubTopic"], d, config)
 	hclData["streaming_config"] = flattenSecurityCenterV2OrganizationNotificationConfigStreamingConfig(res["streamingConfig"], d, config)
+	hclData["deletion_notifications_enabled"] = flattenSecurityCenterV2OrganizationNotificationConfigDeletionNotificationsEnabled(res["deletionNotificationsEnabled"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -190,5 +191,9 @@ func flattenSecurityCenterV2OrganizationNotificationConfigStreamingConfigFilter(
 	if transformed == "" {
 		return "unknown"
 	}
+	return v
+}
+
+func flattenSecurityCenterV2OrganizationNotificationConfigDeletionNotificationsEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

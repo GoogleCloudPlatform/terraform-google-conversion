@@ -120,6 +120,11 @@ for information on how to write a filter.`,
 					},
 				},
 			},
+			"deletion_notifications_enabled": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: `Indicates whether the notifications will be sent for deleted findings.`,
+			},
 			"description": {
 				Type:         schema.TypeString,
 				Optional:     true,
