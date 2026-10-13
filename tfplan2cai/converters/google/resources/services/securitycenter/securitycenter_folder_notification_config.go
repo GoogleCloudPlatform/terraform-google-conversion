@@ -128,6 +128,12 @@ func GetSecurityCenterFolderNotificationConfigApiObject(d tpgresource.TerraformR
 	} else if v, ok := d.GetOkExists("streaming_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(streamingConfigProp)) && (ok || !reflect.DeepEqual(v, streamingConfigProp)) {
 		obj["streamingConfig"] = streamingConfigProp
 	}
+	deletionNotificationsEnabledProp, err := expandSecurityCenterFolderNotificationConfigDeletionNotificationsEnabled(d.Get("deletion_notifications_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("deletion_notifications_enabled"); ok || (v != nil && !reflect.DeepEqual(v, deletionNotificationsEnabledProp)) {
+		obj["deletionNotificationsEnabled"] = deletionNotificationsEnabledProp
+	}
 
 	return obj, nil
 }
@@ -163,5 +169,9 @@ func expandSecurityCenterFolderNotificationConfigStreamingConfig(v interface{}, 
 }
 
 func expandSecurityCenterFolderNotificationConfigStreamingConfigFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecurityCenterFolderNotificationConfigDeletionNotificationsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

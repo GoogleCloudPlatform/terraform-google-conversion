@@ -140,6 +140,7 @@ func (c *SecurityCenterV2OrganizationSccBigQueryExportCai2hclConverter) convertR
 	hclData["description"] = flattenSecurityCenterV2OrganizationSccBigQueryExportDescription(res["description"], d, config)
 	hclData["dataset"] = flattenSecurityCenterV2OrganizationSccBigQueryExportDataset(res["dataset"], d, config)
 	hclData["filter"] = flattenSecurityCenterV2OrganizationSccBigQueryExportFilter(res["filter"], d, config)
+	hclData["deletion_notifications_enabled"] = flattenSecurityCenterV2OrganizationSccBigQueryExportDeletionNotificationsEnabled(res["deletionNotificationsEnabled"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -188,5 +189,9 @@ func flattenSecurityCenterV2OrganizationSccBigQueryExportFilter(v interface{}, d
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenSecurityCenterV2OrganizationSccBigQueryExportDeletionNotificationsEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

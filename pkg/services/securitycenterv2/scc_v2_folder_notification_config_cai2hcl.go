@@ -139,6 +139,7 @@ func (c *SecurityCenterV2FolderNotificationConfigCai2hclConverter) convertResour
 	hclData["description"] = flattenSecurityCenterV2FolderNotificationConfigDescription(res["description"], d, config)
 	hclData["pubsub_topic"] = flattenSecurityCenterV2FolderNotificationConfigPubsubTopic(res["pubsubTopic"], d, config)
 	hclData["streaming_config"] = flattenSecurityCenterV2FolderNotificationConfigStreamingConfig(res["streamingConfig"], d, config)
+	hclData["deletion_notifications_enabled"] = flattenSecurityCenterV2FolderNotificationConfigDeletionNotificationsEnabled(res["deletionNotificationsEnabled"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -193,5 +194,9 @@ func flattenSecurityCenterV2FolderNotificationConfigStreamingConfigFilter(v inte
 	if transformed == "" {
 		return "unknown"
 	}
+	return v
+}
+
+func flattenSecurityCenterV2FolderNotificationConfigDeletionNotificationsEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

@@ -133,6 +133,12 @@ func GetSecurityCenterV2OrganizationNotificationConfigCaiObject(d tpgresource.Te
 	} else if v, ok := d.GetOkExists("streaming_config"); ok || (v != nil && !reflect.DeepEqual(v, streamingConfigProp)) {
 		obj["streamingConfig"] = streamingConfigProp
 	}
+	deletionNotificationsEnabledProp, err := expandSecurityCenterV2OrganizationNotificationConfigDeletionNotificationsEnabled(d.Get("deletion_notifications_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("deletion_notifications_enabled"); ok || (v != nil && !reflect.DeepEqual(v, deletionNotificationsEnabledProp)) {
+		obj["deletionNotificationsEnabled"] = deletionNotificationsEnabledProp
+	}
 
 	return obj, nil
 }
@@ -173,5 +179,9 @@ func expandSecurityCenterV2OrganizationNotificationConfigStreamingConfig(v inter
 }
 
 func expandSecurityCenterV2OrganizationNotificationConfigStreamingConfigFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecurityCenterV2OrganizationNotificationConfigDeletionNotificationsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

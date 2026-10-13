@@ -134,6 +134,12 @@ func GetSecurityCenterV2OrganizationSccBigQueryExportsApiObject(d tpgresource.Te
 	} else if v, ok := d.GetOkExists("filter"); !tpgresource.IsEmptyValue(reflect.ValueOf(filterProp)) && (ok || !reflect.DeepEqual(v, filterProp)) {
 		obj["filter"] = filterProp
 	}
+	deletionNotificationsEnabledProp, err := expandSecurityCenterV2OrganizationSccBigQueryExportsDeletionNotificationsEnabled(d.Get("deletion_notifications_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("deletion_notifications_enabled"); ok || (v != nil && !reflect.DeepEqual(v, deletionNotificationsEnabledProp)) {
+		obj["deletionNotificationsEnabled"] = deletionNotificationsEnabledProp
+	}
 
 	return obj, nil
 }
@@ -151,5 +157,9 @@ func expandSecurityCenterV2OrganizationSccBigQueryExportsDataset(v interface{}, 
 }
 
 func expandSecurityCenterV2OrganizationSccBigQueryExportsFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecurityCenterV2OrganizationSccBigQueryExportsDeletionNotificationsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
