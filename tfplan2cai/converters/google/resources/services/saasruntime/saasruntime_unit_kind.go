@@ -110,6 +110,18 @@ func GetSaasRuntimeUnitKindCaiObject(d tpgresource.TerraformResourceData, config
 
 func GetSaasRuntimeUnitKindApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	appParamsProp, err := expandSaasRuntimeUnitKindAppParams(d.Get("app_params"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("app_params"); !tpgresource.IsEmptyValue(reflect.ValueOf(appParamsProp)) && (ok || !reflect.DeepEqual(v, appParamsProp)) {
+		obj["appParams"] = appParamsProp
+	}
+	applicationTemplateComponentProp, err := expandSaasRuntimeUnitKindApplicationTemplateComponent(d.Get("application_template_component"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("application_template_component"); !tpgresource.IsEmptyValue(reflect.ValueOf(applicationTemplateComponentProp)) && (ok || !reflect.DeepEqual(v, applicationTemplateComponentProp)) {
+		obj["applicationTemplateComponent"] = applicationTemplateComponentProp
+	}
 	defaultReleaseProp, err := expandSaasRuntimeUnitKindDefaultRelease(d.Get("default_release"), d, config)
 	if err != nil {
 		return nil, err
@@ -154,6 +166,157 @@ func GetSaasRuntimeUnitKindApiObject(d tpgresource.TerraformResourceData, config
 	}
 
 	return obj, nil
+}
+
+func expandSaasRuntimeUnitKindAppParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedGroup, err := expandSaasRuntimeUnitKindAppParamsGroup(original["group"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGroup); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["group"] = transformedGroup
+	}
+
+	transformedScope, err := expandSaasRuntimeUnitKindAppParamsScope(original["scope"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScope); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scope"] = transformedScope
+	}
+
+	return transformed, nil
+}
+
+func expandSaasRuntimeUnitKindAppParamsGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSaasRuntimeUnitKindAppParamsScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedType, err := expandSaasRuntimeUnitKindAppParamsScopeType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
+	return transformed, nil
+}
+
+func expandSaasRuntimeUnitKindAppParamsScopeType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSaasRuntimeUnitKindApplicationTemplateComponent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCompositeRef, err := expandSaasRuntimeUnitKindApplicationTemplateComponentCompositeRef(original["composite_ref"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCompositeRef); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["compositeRef"] = transformedCompositeRef
+	}
+
+	transformedComponent, err := expandSaasRuntimeUnitKindApplicationTemplateComponentComponent(original["component"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedComponent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["component"] = transformedComponent
+	}
+
+	transformedRevision, err := expandSaasRuntimeUnitKindApplicationTemplateComponentRevision(original["revision"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRevision); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["revision"] = transformedRevision
+	}
+
+	return transformed, nil
+}
+
+func expandSaasRuntimeUnitKindApplicationTemplateComponentCompositeRef(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedApplicationTemplate, err := expandSaasRuntimeUnitKindApplicationTemplateComponentCompositeRefApplicationTemplate(original["application_template"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApplicationTemplate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["applicationTemplate"] = transformedApplicationTemplate
+	}
+
+	transformedRevision, err := expandSaasRuntimeUnitKindApplicationTemplateComponentCompositeRefRevision(original["revision"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRevision); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["revision"] = transformedRevision
+	}
+
+	transformedSyncOperation, err := expandSaasRuntimeUnitKindApplicationTemplateComponentCompositeRefSyncOperation(original["sync_operation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSyncOperation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["syncOperation"] = transformedSyncOperation
+	}
+
+	return transformed, nil
+}
+
+func expandSaasRuntimeUnitKindApplicationTemplateComponentCompositeRefApplicationTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSaasRuntimeUnitKindApplicationTemplateComponentCompositeRefRevision(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSaasRuntimeUnitKindApplicationTemplateComponentCompositeRefSyncOperation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSaasRuntimeUnitKindApplicationTemplateComponentComponent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSaasRuntimeUnitKindApplicationTemplateComponentRevision(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandSaasRuntimeUnitKindDefaultRelease(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
