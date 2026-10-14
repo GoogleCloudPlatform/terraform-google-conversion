@@ -1671,10 +1671,21 @@ func expandCESToolDataStoreToolModalityConfigsSnippetsConfig(v interface{}, d tp
 		transformed["enableSnippets"] = transformedEnableSnippets
 	}
 
+	transformedMaxSnippets, err := expandCESToolDataStoreToolModalityConfigsSnippetsConfigMaxSnippets(original["max_snippets"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxSnippets); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxSnippets"] = transformedMaxSnippets
+	}
+
 	return transformed, nil
 }
 
 func expandCESToolDataStoreToolModalityConfigsSnippetsConfigEnableSnippets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESToolDataStoreToolModalityConfigsSnippetsConfigMaxSnippets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
