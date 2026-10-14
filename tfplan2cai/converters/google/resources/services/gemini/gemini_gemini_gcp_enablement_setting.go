@@ -134,6 +134,18 @@ func GetGeminiGeminiGcpEnablementSettingApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("mutations_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(mutationsEnabledProp)) && (ok || !reflect.DeepEqual(v, mutationsEnabledProp)) {
 		obj["mutationsEnabled"] = mutationsEnabledProp
 	}
+	geminiEnterpriseProjectProp, err := expandGeminiGeminiGcpEnablementSettingGeminiEnterpriseProject(d.Get("gemini_enterprise_project"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gemini_enterprise_project"); !tpgresource.IsEmptyValue(reflect.ValueOf(geminiEnterpriseProjectProp)) && (ok || !reflect.DeepEqual(v, geminiEnterpriseProjectProp)) {
+		obj["geminiEnterpriseProject"] = geminiEnterpriseProjectProp
+	}
+	releaseChannelProp, err := expandGeminiGeminiGcpEnablementSettingReleaseChannel(d.Get("release_channel"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("release_channel"); !tpgresource.IsEmptyValue(reflect.ValueOf(releaseChannelProp)) && (ok || !reflect.DeepEqual(v, releaseChannelProp)) {
+		obj["releaseChannel"] = releaseChannelProp
+	}
 	effectiveLabelsProp, err := expandGeminiGeminiGcpEnablementSettingEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -157,6 +169,14 @@ func expandGeminiGeminiGcpEnablementSettingWebGroundingType(v interface{}, d tpg
 }
 
 func expandGeminiGeminiGcpEnablementSettingMutationsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGeminiGeminiGcpEnablementSettingGeminiEnterpriseProject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGeminiGeminiGcpEnablementSettingReleaseChannel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
