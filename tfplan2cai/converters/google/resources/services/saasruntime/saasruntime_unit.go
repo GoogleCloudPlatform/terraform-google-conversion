@@ -110,6 +110,12 @@ func GetSaasRuntimeUnitCaiObject(d tpgresource.TerraformResourceData, config *tr
 
 func GetSaasRuntimeUnitApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	applicationProp, err := expandSaasRuntimeUnitApplication(d.Get("application"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("application"); !tpgresource.IsEmptyValue(reflect.ValueOf(applicationProp)) && (ok || !reflect.DeepEqual(v, applicationProp)) {
+		obj["application"] = applicationProp
+	}
 	maintenanceProp, err := expandSaasRuntimeUnitMaintenance(d.Get("maintenance"), d, config)
 	if err != nil {
 		return nil, err
@@ -148,6 +154,10 @@ func GetSaasRuntimeUnitApiObject(d tpgresource.TerraformResourceData, config *tr
 	}
 
 	return obj, nil
+}
+
+func expandSaasRuntimeUnitApplication(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandSaasRuntimeUnitMaintenance(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
