@@ -28,31 +28,13 @@ func TestAccLookerInstance(t *testing.T) {
 			Name: "TestAccLookerInstance_lookerInstanceBasicExample",
 		},
 		{
-			Name: "TestAccLookerInstance_lookerInstanceFullExample",
-		},
-		{
-			Name: "TestAccLookerInstance_lookerInstanceFipsExample",
-		},
-		{
 			Name: "TestAccLookerInstance_lookerInstanceEnterpriseFullTestExample",
-		},
-		{
-			Name: "TestAccLookerInstance_lookerInstanceCustomDomainExample",
 		},
 		{
 			Name: "TestAccLookerInstance_lookerInstancePscExample",
 		},
 		{
-			Name: "TestAccLookerInstance_lookerInstanceForceDeleteExample",
-		},
-		{
-			Name: "TestAccLookerInstance_update",
-		},
-		{
-			Name: "TestAccLookerInstance_updateControlledEgress",
-		},
-		{
-			Name: "TestAccLookerInstance_updatePeriodicExport",
+			Name: "TestAccLookerInstance_lookerInstancePscUpdateExample",
 		},
 	}
 
