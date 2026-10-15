@@ -116,6 +116,12 @@ func GetPrivatecaCertificateApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("lifetime"); !tpgresource.IsEmptyValue(reflect.ValueOf(lifetimeProp)) && (ok || !reflect.DeepEqual(v, lifetimeProp)) {
 		obj["lifetime"] = lifetimeProp
 	}
+	requestedNotBeforeTimeProp, err := expandPrivatecaCertificateRequestedNotBeforeTime(d.Get("requested_not_before_time"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("requested_not_before_time"); !tpgresource.IsEmptyValue(reflect.ValueOf(requestedNotBeforeTimeProp)) && (ok || !reflect.DeepEqual(v, requestedNotBeforeTimeProp)) {
+		obj["requestedNotBeforeTime"] = requestedNotBeforeTimeProp
+	}
 	certificateTemplateProp, err := expandPrivatecaCertificateCertificateTemplate(d.Get("certificate_template"), d, config)
 	if err != nil {
 		return nil, err
@@ -145,6 +151,10 @@ func GetPrivatecaCertificateApiObject(d tpgresource.TerraformResourceData, confi
 }
 
 func expandPrivatecaCertificateLifetime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPrivatecaCertificateRequestedNotBeforeTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

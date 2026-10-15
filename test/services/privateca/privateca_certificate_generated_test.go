@@ -43,6 +43,9 @@ func TestAccPrivatecaCertificate(t *testing.T) {
 			Name: "TestAccPrivatecaCertificate_privatecaCertificateSubjectConfigOrgOptionalExample",
 		},
 		{
+			Name: "TestAccPrivatecaCertificate_privatecaCertificateWithRequestedNotBeforeTimeExample",
+		},
+		{
 			Name: "TestAccPrivatecaCertificate_privatecaCertificateUpdate",
 		},
 	}

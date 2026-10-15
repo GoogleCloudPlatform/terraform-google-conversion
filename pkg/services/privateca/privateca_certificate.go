@@ -693,6 +693,14 @@ fractional digits, terminated by 's'. Example: "3.5s".`,
 				Description:  `Immutable. A pem-encoded X.509 certificate signing request (CSR).`,
 				ExactlyOneOf: []string{"config", "pem_csr"},
 			},
+			"requested_not_before_time": {
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+				Description: `The requested not_before_time of this Certificate. This field may only be set
+if the allow_requester_specified_not_before_time field is set to true for the
+issuing CaPool.`,
+			},
 			"certificate_description": {
 				Type:        schema.TypeList,
 				Computed:    true,
