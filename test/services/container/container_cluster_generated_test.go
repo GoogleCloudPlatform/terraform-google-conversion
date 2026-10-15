@@ -40,9 +40,6 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_basic",
 		},
 		{
-			Name: "TestAccContainerCluster_basic_noCpaUpgrade",
-		},
-		{
 			Name: "TestAccContainerCluster_resourceManagerTags",
 		},
 		{
@@ -616,15 +613,6 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withDnsEndpoint",
 		},
 		{
-			Name: "TestAccContainerCluster_withDnsEndpointAndEnableK8sTokensViaDns",
-		},
-		{
-			Name: "TestAccContainerCluster_withDnsEndpointAndEnableK8sCertsViaDns",
-		},
-		{
-			Name: "TestAccContainerCluster_withCgroupMode",
-		},
-		{
 			Name: "TestAccContainerCluster_withCgroupModeUpdate",
 		},
 		{
@@ -640,16 +628,10 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withAdvancedMachineFeaturesPMU_Architectural",
 		},
 		{
-			Name: "TestAccContainerCluster_additional_ip_ranges_config_on_create",
-		},
-		{
 			Name: "TestAccContainerCluster_additional_ip_ranges_config_on_update",
 		},
 		{
 			Name: "TestAccContainerCluster_auto_ipam_config_enabled",
-		},
-		{
-			Name: "TestAccContainerCluster_auto_ipam_config_none",
 		},
 		{
 			Name: "TestAccContainerCluster_withAnonymousAuthenticationConfig",
@@ -662,9 +644,6 @@ func TestAccContainerCluster(t *testing.T) {
 		},
 		{
 			Name: "TestAccContainerCluster_withKubeletResourceManagerConfig",
-		},
-		{
-			Name: "TestAccContainerCluster_nodePool_acceleratorNetworkProfile",
 		},
 		{
 			Name: "TestAccContainerCluster_nodePool_acceleratorNetworkProfile_Lifecycle",
