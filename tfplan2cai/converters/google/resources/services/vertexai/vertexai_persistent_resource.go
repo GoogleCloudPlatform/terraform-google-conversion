@@ -503,6 +503,13 @@ func expandVertexAIPersistentResourceResourceRuntimeSpec(v interface{}, d tpgres
 		transformed["serviceAccountSpec"] = transformedServiceAccountSpec
 	}
 
+	transformedRaySpec, err := expandVertexAIPersistentResourceResourceRuntimeSpecRaySpec(original["ray_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRaySpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["raySpec"] = transformedRaySpec
+	}
+
 	return transformed, nil
 }
 
@@ -529,6 +536,32 @@ func expandVertexAIPersistentResourceResourceRuntimeSpecServiceAccountSpec(v int
 }
 
 func expandVertexAIPersistentResourceResourceRuntimeSpecServiceAccountSpecEnableCustomServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIPersistentResourceResourceRuntimeSpecRaySpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedImageUri, err := expandVertexAIPersistentResourceResourceRuntimeSpecRaySpecImageUri(original["image_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedImageUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["imageUri"] = transformedImageUri
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIPersistentResourceResourceRuntimeSpecRaySpecImageUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
