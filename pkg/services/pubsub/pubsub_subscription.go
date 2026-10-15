@@ -153,8 +153,8 @@ will eventually redeliver the message.`,
 				Type:     schema.TypeList,
 				Optional: true,
 				Description: `If delivery to BigQuery is used with this subscription, this field is used to configure it.
-Either pushConfig, bigQueryConfig or cloudStorageConfig can be set, but not combined.
-If all three are empty, then the subscriber will pull and ack messages using API methods.`,
+Only one of pushConfig, bigqueryConfig, cloudStorageConfig, or bigtableConfig can be set.
+If none of them are set, then the subscriber will pull and ack messages using API methods.`,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -197,14 +197,115 @@ The subscription name, messageId, and publishTime fields are put in their own co
 						},
 					},
 				},
-				ConflictsWith: []string{"cloud_storage_config", "push_config"},
+				ConflictsWith: []string{"bigtable_config", "cloud_storage_config", "push_config"},
+			},
+			"bigtable_config": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Description: `If delivery to Bigtable is used with this subscription, this field is used to configure it.
+Only one of pushConfig, bigqueryConfig, cloudStorageConfig, or bigtableConfig can be set.
+If none of them are set, then the subscriber will pull and ack messages using API methods.`,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"table": {
+							Type:     schema.TypeString,
+							Required: true,
+							Description: `The unique name of the table to write messages to, of the form
+'projects/{project}/instances/{instance}/tables/{table}'.`,
+						},
+						"app_profile_id": {
+							Type:     schema.TypeString,
+							Optional: true,
+							Description: `The app profile to use for the Bigtable writes. If not specified, the "default" application
+profile will be used. The app profile must use single-cluster routing.`,
+						},
+						"column_family_mapping": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Description: `Configuration that allows writing row keys and/or columns based on fields in the input message.
+The input message format must be JSON if this field is set.
+
+If this field is set, top-level message fields are written to the 'data' column family with
+the field name as the column qualifier by default, or to an existing column family whose name
+matches the field name. The cell timestamp is the message publish time.
+
+If this field is not set, the row key is constructed from the subscription name, message ID hash,
+and message ID delimited by '#', and the message bytes are written to the 'data' column family
+with an empty-string column qualifier.`,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"delimited_key": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Description: `If set, the row key is constructed from the given key fields and delimiter. All key fields
+must be present in the message; otherwise, the message remains in the subscription backlog.`,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"key_fields": {
+													Type:     schema.TypeList,
+													Required: true,
+													Description: `The key fields to construct the row key from. The fields must be present in the message
+as top-level fields; JSON path expressions will not traverse into nested objects.`,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"delimiter": {
+													Type:     schema.TypeString,
+													Optional: true,
+													Description: `The byte sequence used to delimit concatenated key fields, as a base64-encoded string
+(for example, 'Iw==' for '#'). Must be specified if multiple key fields are used. The
+delimiter must contain at least 1 character and at most 50 characters.`,
+												},
+											},
+										},
+										ConflictsWith: []string{"bigtable_config.0.column_family_mapping.0.row_key_schema"},
+									},
+									"row_key_schema": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Description: `If set, the row key is constructed from the field names of the table's
+[structured row key](https://cloud.google.com/bigtable/docs/manage-row-key-schemas).
+If a field is nullable in the structured row key, it need not be present in the message;
+null will be used instead.`,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{},
+										},
+										ConflictsWith: []string{"bigtable_config.0.column_family_mapping.0.delimited_key"},
+									},
+								},
+							},
+						},
+						"service_account_email": {
+							Type:     schema.TypeString,
+							Optional: true,
+							Description: `The service account to use to write to Bigtable. The subscription creator or updater that
+specifies this field must have 'iam.serviceAccounts.actAs' permission on the service account.
+If not specified, the Pub/Sub [service agent](https://cloud.google.com/iam/docs/service-agents),
+service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.`,
+						},
+						"write_metadata": {
+							Type:     schema.TypeBool,
+							Optional: true,
+							Description: `When true, write the subscription name, messageId, publishTime, attributes, and orderingKey to
+additional columns in the table under the 'pubsub_metadata' column family. The subscription name,
+messageId, and publishTime fields are put in their own columns while all other message properties
+(other than data) are written to a JSON object in the attributes column.`,
+						},
+					},
+				},
+				ConflictsWith: []string{"bigquery_config", "cloud_storage_config", "push_config"},
 			},
 			"cloud_storage_config": {
 				Type:     schema.TypeList,
 				Optional: true,
 				Description: `If delivery to Cloud Storage is used with this subscription, this field is used to configure it.
-Either pushConfig, bigQueryConfig or cloudStorageConfig can be set, but not combined.
-If all three are empty, then the subscriber will pull and ack messages using API methods.`,
+Only one of pushConfig, bigqueryConfig, cloudStorageConfig, or bigtableConfig can be set.
+If none of them are set, then the subscriber will pull and ack messages using API methods.`,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -286,7 +387,7 @@ service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.`,
 						},
 					},
 				},
-				ConflictsWith: []string{"bigquery_config", "push_config"},
+				ConflictsWith: []string{"bigquery_config", "bigtable_config", "push_config"},
 			},
 			"dead_letter_policy": {
 				Type:     schema.TypeList,
@@ -621,7 +722,7 @@ Note: if not specified, the Push endpoint URL will be used.`,
 						},
 					},
 				},
-				ConflictsWith: []string{"bigquery_config", "cloud_storage_config"},
+				ConflictsWith: []string{"bigquery_config", "bigtable_config", "cloud_storage_config"},
 			},
 			"retain_acked_messages": {
 				Type:     schema.TypeBool,

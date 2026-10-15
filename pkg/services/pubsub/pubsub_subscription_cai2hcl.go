@@ -141,6 +141,7 @@ func (c *PubsubSubscriptionCai2hclConverter) convertResourceData(asset caiasset.
 	hclData["labels"] = flattenPubsubSubscriptionLabels(res["labels"], d, config)
 	hclData["bigquery_config"] = flattenPubsubSubscriptionBigqueryConfig(res["bigqueryConfig"], d, config)
 	hclData["cloud_storage_config"] = flattenPubsubSubscriptionCloudStorageConfig(res["cloudStorageConfig"], d, config)
+	hclData["bigtable_config"] = flattenPubsubSubscriptionBigtableConfig(res["bigtableConfig"], d, config)
 	hclData["push_config"] = flattenPubsubSubscriptionPushConfig(res["pushConfig"], d, config)
 	hclData["ack_deadline_seconds"] = flattenPubsubSubscriptionAckDeadlineSeconds(res["ackDeadlineSeconds"], d, config)
 	hclData["message_retention_duration"] = flattenPubsubSubscriptionMessageRetentionDuration(res["messageRetentionDuration"], d, config)
@@ -388,6 +389,114 @@ func flattenPubsubSubscriptionCloudStorageConfigTextConfig(v interface{}, d *sch
 }
 
 func flattenPubsubSubscriptionCloudStorageConfigServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenPubsubSubscriptionBigtableConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["table"] =
+		flattenPubsubSubscriptionBigtableConfigTable(original["table"], d, config)
+	transformed["app_profile_id"] =
+		flattenPubsubSubscriptionBigtableConfigAppProfileId(original["appProfileId"], d, config)
+	transformed["service_account_email"] =
+		flattenPubsubSubscriptionBigtableConfigServiceAccountEmail(original["serviceAccountEmail"], d, config)
+	transformed["write_metadata"] =
+		flattenPubsubSubscriptionBigtableConfigWriteMetadata(original["writeMetadata"], d, config)
+	transformed["column_family_mapping"] =
+		flattenPubsubSubscriptionBigtableConfigColumnFamilyMapping(original["columnFamilyMapping"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenPubsubSubscriptionBigtableConfigTable(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenPubsubSubscriptionBigtableConfigAppProfileId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenPubsubSubscriptionBigtableConfigServiceAccountEmail(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenPubsubSubscriptionBigtableConfigWriteMetadata(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenPubsubSubscriptionBigtableConfigColumnFamilyMapping(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["row_key_schema"] =
+		flattenPubsubSubscriptionBigtableConfigColumnFamilyMappingRowKeySchema(original["rowKeySchema"], d, config)
+	transformed["delimited_key"] =
+		flattenPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKey(original["delimitedKey"], d, config)
+	return []interface{}{transformed}
+}
+
+func flattenPubsubSubscriptionBigtableConfigColumnFamilyMappingRowKeySchema(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	return []interface{}{transformed}
+}
+
+func flattenPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKey(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["key_fields"] =
+		flattenPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKeyKeyFields(original["keyFields"], d, config)
+	transformed["delimiter"] =
+		flattenPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKeyDelimiter(original["delimiter"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKeyKeyFields(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKeyDelimiter(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}
