@@ -58,6 +58,9 @@ func TestAccPubsubSubscription(t *testing.T) {
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushCloudstorageServiceAccountExample",
 		},
 		{
+			Name: "TestAccPubsubSubscription_pubsubSubscriptionPushBigtableExample",
+		},
+		{
 			Name: "TestAccPubsubSubscription_pubsubSubscriptionSingleSmtExample",
 		},
 		{
@@ -108,6 +111,9 @@ func TestAccPubsubSubscription(t *testing.T) {
 		},
 		{
 			Name: "TestAccPubsubSubscriptionCloudStorage_serviceAccount",
+		},
+		{
+			Name: "TestAccPubsubSubscriptionBigtable_update",
 		},
 		{
 			Name: "TestAccPubsubSubscription_pollOnCreate",

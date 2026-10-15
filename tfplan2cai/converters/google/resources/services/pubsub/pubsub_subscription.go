@@ -168,6 +168,12 @@ func GetPubsubSubscriptionApiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("cloud_storage_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(cloudStorageConfigProp)) && (ok || !reflect.DeepEqual(v, cloudStorageConfigProp)) {
 		obj["cloudStorageConfig"] = cloudStorageConfigProp
 	}
+	bigtableConfigProp, err := expandPubsubSubscriptionBigtableConfig(d.Get("bigtable_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("bigtable_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(bigtableConfigProp)) && (ok || !reflect.DeepEqual(v, bigtableConfigProp)) {
+		obj["bigtableConfig"] = bigtableConfigProp
+	}
 	pushConfigProp, err := expandPubsubSubscriptionPushConfig(d.Get("push_config"), d, config)
 	if err != nil {
 		return nil, err
@@ -560,6 +566,172 @@ func expandPubsubSubscriptionCloudStorageConfigTextConfigState(v interface{}, d 
 }
 
 func expandPubsubSubscriptionCloudStorageConfigServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionBigtableConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTable, err := expandPubsubSubscriptionBigtableConfigTable(original["table"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["table"] = transformedTable
+	}
+
+	transformedAppProfileId, err := expandPubsubSubscriptionBigtableConfigAppProfileId(original["app_profile_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAppProfileId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["appProfileId"] = transformedAppProfileId
+	}
+
+	transformedServiceAccountEmail, err := expandPubsubSubscriptionBigtableConfigServiceAccountEmail(original["service_account_email"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServiceAccountEmail); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serviceAccountEmail"] = transformedServiceAccountEmail
+	}
+
+	transformedWriteMetadata, err := expandPubsubSubscriptionBigtableConfigWriteMetadata(original["write_metadata"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWriteMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["writeMetadata"] = transformedWriteMetadata
+	}
+
+	transformedColumnFamilyMapping, err := expandPubsubSubscriptionBigtableConfigColumnFamilyMapping(original["column_family_mapping"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["columnFamilyMapping"] = transformedColumnFamilyMapping
+	}
+
+	transformedState, err := expandPubsubSubscriptionBigtableConfigState(original["state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["state"] = transformedState
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionBigtableConfigTable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionBigtableConfigAppProfileId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionBigtableConfigServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionBigtableConfigWriteMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionBigtableConfigColumnFamilyMapping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRowKeySchema, err := expandPubsubSubscriptionBigtableConfigColumnFamilyMappingRowKeySchema(original["row_key_schema"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["rowKeySchema"] = transformedRowKeySchema
+	}
+
+	transformedDelimitedKey, err := expandPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKey(original["delimited_key"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDelimitedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["delimitedKey"] = transformedDelimitedKey
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionBigtableConfigColumnFamilyMappingRowKeySchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKeyFields, err := expandPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKeyKeyFields(original["key_fields"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKeyFields); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["keyFields"] = transformedKeyFields
+	}
+
+	transformedDelimiter, err := expandPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKeyDelimiter(original["delimiter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDelimiter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["delimiter"] = transformedDelimiter
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKeyKeyFields(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionBigtableConfigColumnFamilyMappingDelimitedKeyDelimiter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionBigtableConfigState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
