@@ -137,6 +137,7 @@ func (c *PrivatecaCertificateCai2hclConverter) convertResourceData(asset caiasse
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//privateca.googleapis.com/projects/{{project}}/locations/{{location}}/caPools/{{pool}}/certificates/{{name}}", outputFields, hclData)
 
 	hclData["lifetime"] = flattenPrivatecaCertificateLifetime(res["lifetime"], d, config)
+	hclData["requested_not_before_time"] = flattenPrivatecaCertificateRequestedNotBeforeTime(res["requestedNotBeforeTime"], d, config)
 	hclData["certificate_template"] = flattenPrivatecaCertificateCertificateTemplate(res["certificateTemplate"], d, config)
 	hclData["labels"] = flattenPrivatecaCertificateLabels(res["labels"], d, config)
 	hclData["pem_csr"] = flattenPrivatecaCertificatePemCsr(res["pemCsr"], d, config)
@@ -153,6 +154,10 @@ func (c *PrivatecaCertificateCai2hclConverter) convertResourceData(asset caiasse
 }
 
 func flattenPrivatecaCertificateLifetime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenPrivatecaCertificateRequestedNotBeforeTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
@@ -202,7 +207,7 @@ func flattenPrivatecaCertificateConfig(v interface{}, d *schema.ResourceData, co
 
 func flattenPrivatecaCertificateConfigX509Config(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
-		v = make(map[string]interface{})
+		return nil
 	}
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})

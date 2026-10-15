@@ -171,6 +171,8 @@ func flattenPrivatecaCaPoolIssuancePolicy(v interface{}, d *schema.ResourceData,
 		flattenPrivatecaCaPoolIssuancePolicyAllowedKeyTypes(original["allowedKeyTypes"], d, config)
 	transformed["backdate_duration"] =
 		flattenPrivatecaCaPoolIssuancePolicyBackdateDuration(original["backdateDuration"], d, config)
+	transformed["allow_requester_specified_not_before_time"] =
+		flattenPrivatecaCaPoolIssuancePolicyAllowRequesterSpecifiedNotBeforeTime(original["allowRequesterSpecifiedNotBeforeTime"], d, config)
 	transformed["maximum_lifetime"] =
 		flattenPrivatecaCaPoolIssuancePolicyMaximumLifetime(original["maximumLifetime"], d, config)
 	transformed["allowed_issuance_modes"] =
@@ -266,6 +268,10 @@ func flattenPrivatecaCaPoolIssuancePolicyBackdateDuration(v interface{}, d *sche
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenPrivatecaCaPoolIssuancePolicyAllowRequesterSpecifiedNotBeforeTime(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
@@ -404,7 +410,7 @@ func flattenPrivatecaCaPoolIssuancePolicyIdentityConstraintsCelExpressionLocatio
 
 func flattenPrivatecaCaPoolIssuancePolicyBaselineValues(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
-		v = make(map[string]interface{})
+		return nil
 	}
 	original := v.(map[string]interface{})
 	transformed := make(map[string]interface{})

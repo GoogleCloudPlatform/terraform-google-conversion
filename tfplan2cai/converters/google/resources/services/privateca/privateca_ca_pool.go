@@ -174,6 +174,13 @@ func expandPrivatecaCaPoolIssuancePolicy(v interface{}, d tpgresource.TerraformR
 		transformed["backdateDuration"] = transformedBackdateDuration
 	}
 
+	transformedAllowRequesterSpecifiedNotBeforeTime, err := expandPrivatecaCaPoolIssuancePolicyAllowRequesterSpecifiedNotBeforeTime(original["allow_requester_specified_not_before_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowRequesterSpecifiedNotBeforeTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowRequesterSpecifiedNotBeforeTime"] = transformedAllowRequesterSpecifiedNotBeforeTime
+	}
+
 	transformedMaximumLifetime, err := expandPrivatecaCaPoolIssuancePolicyMaximumLifetime(original["maximum_lifetime"], d, config)
 	if err != nil {
 		return nil, err
@@ -301,6 +308,10 @@ func expandPrivatecaCaPoolIssuancePolicyAllowedKeyTypesEllipticCurveSignatureAlg
 }
 
 func expandPrivatecaCaPoolIssuancePolicyBackdateDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPrivatecaCaPoolIssuancePolicyAllowRequesterSpecifiedNotBeforeTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
