@@ -547,6 +547,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_cloudDns_nil_scope",
 		},
 		{
+			Name: "TestAccContainerCluster_dnsConfig_providerUnspecified",
+		},
+		{
 			Name: "TestAccContainerCluster_autopilot_withAdditiveVPCMutation",
 		},
 		{
