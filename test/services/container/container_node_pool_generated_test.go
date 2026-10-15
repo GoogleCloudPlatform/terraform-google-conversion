@@ -286,9 +286,6 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_withMachineDiskStoragePoolsUpdate",
 		},
 		{
-			Name: "TestAccContainerNodePool_acceleratorNetworkProfile",
-		},
-		{
 			Name: "TestAccContainerNodePool_acceleratorNetworkProfile_Lifecycle",
 		},
 		{
