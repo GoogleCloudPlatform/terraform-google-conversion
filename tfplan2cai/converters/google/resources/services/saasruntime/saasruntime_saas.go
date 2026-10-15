@@ -49,6 +49,23 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+// IsSaasRuntimeSaasImportRunningError retries requests that the service rejects
+// because an application template import is running. A PATCH on a FAILED Saas
+// (even labels-only) restarts the import, and the service then rejects
+// template/revision updates and DELETE until the import reaches ACTIVE or
+// FAILED. Both rejections are HTTP 400, so match on the message.
+func IsSaasRuntimeSaasImportRunningError(err error) (bool, string) {
+	if err == nil {
+		return false, ""
+	}
+	msg := err.Error()
+	if strings.Contains(msg, "because it is in RUNNING state") ||
+		strings.Contains(msg, "Cannot update application template or revision when state is RUNNING") {
+		return true, "waiting for Saas application template import to finish"
+	}
+	return false, ""
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -110,6 +127,12 @@ func GetSaasRuntimeSaasCaiObject(d tpgresource.TerraformResourceData, config *tr
 
 func GetSaasRuntimeSaasApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	applicationTemplateProp, err := expandSaasRuntimeSaasApplicationTemplate(d.Get("application_template"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("application_template"); !tpgresource.IsEmptyValue(reflect.ValueOf(applicationTemplateProp)) && (ok || !reflect.DeepEqual(v, applicationTemplateProp)) {
+		obj["applicationTemplate"] = applicationTemplateProp
+	}
 	locationsProp, err := expandSaasRuntimeSaasLocations(d.Get("locations"), d, config)
 	if err != nil {
 		return nil, err
@@ -130,6 +153,54 @@ func GetSaasRuntimeSaasApiObject(d tpgresource.TerraformResourceData, config *tr
 	}
 
 	return obj, nil
+}
+
+func expandSaasRuntimeSaasApplicationTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedApplicationTemplate, err := expandSaasRuntimeSaasApplicationTemplateApplicationTemplate(original["application_template"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApplicationTemplate); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["applicationTemplate"] = transformedApplicationTemplate
+	}
+
+	transformedRevision, err := expandSaasRuntimeSaasApplicationTemplateRevision(original["revision"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRevision); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["revision"] = transformedRevision
+	}
+
+	transformedSyncOperation, err := expandSaasRuntimeSaasApplicationTemplateSyncOperation(original["sync_operation"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSyncOperation); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["syncOperation"] = transformedSyncOperation
+	}
+
+	return transformed, nil
+}
+
+func expandSaasRuntimeSaasApplicationTemplateApplicationTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSaasRuntimeSaasApplicationTemplateRevision(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSaasRuntimeSaasApplicationTemplateSyncOperation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandSaasRuntimeSaasLocations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
