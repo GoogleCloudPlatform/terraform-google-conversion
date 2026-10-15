@@ -434,6 +434,13 @@ func expandDNSManagedZoneForwardingConfig(v interface{}, d tpgresource.Terraform
 		transformed["targetNameServers"] = transformedTargetNameServers
 	}
 
+	transformedOutboundEndpoints, err := expandDNSManagedZoneForwardingConfigOutboundEndpoints(original["outbound_endpoints"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOutboundEndpoints); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["outboundEndpoints"] = transformedOutboundEndpoints
+	}
+
 	return transformed, nil
 }
 
@@ -497,6 +504,35 @@ func expandDNSManagedZoneForwardingConfigTargetNameServersDomainName(v interface
 }
 
 func expandDNSManagedZoneForwardingConfigTargetNameServersForwardingPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDNSManagedZoneForwardingConfigOutboundEndpoints(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandDNSManagedZoneForwardingConfigOutboundEndpointsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDNSManagedZoneForwardingConfigOutboundEndpointsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

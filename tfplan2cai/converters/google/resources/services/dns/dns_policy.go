@@ -175,6 +175,13 @@ func expandDNSPolicyAlternativeNameServerConfig(v interface{}, d tpgresource.Ter
 		transformed["targetNameServers"] = transformedTargetNameServers
 	}
 
+	transformedOutboundEndpoints, err := expandDNSPolicyAlternativeNameServerConfigOutboundEndpoints(original["outbound_endpoints"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedOutboundEndpoints); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["outboundEndpoints"] = transformedOutboundEndpoints
+	}
+
 	return transformed, nil
 }
 
@@ -216,6 +223,35 @@ func expandDNSPolicyAlternativeNameServerConfigTargetNameServersIpv4Address(v in
 }
 
 func expandDNSPolicyAlternativeNameServerConfigTargetNameServersForwardingPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDNSPolicyAlternativeNameServerConfigOutboundEndpoints(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandDNSPolicyAlternativeNameServerConfigOutboundEndpointsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDNSPolicyAlternativeNameServerConfigOutboundEndpointsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
