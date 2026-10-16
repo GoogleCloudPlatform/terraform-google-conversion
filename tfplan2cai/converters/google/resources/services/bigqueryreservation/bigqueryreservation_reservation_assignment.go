@@ -128,6 +128,12 @@ func GetBigqueryReservationReservationAssignmentApiObject(d tpgresource.Terrafor
 	} else if v, ok := d.GetOkExists("principal"); !tpgresource.IsEmptyValue(reflect.ValueOf(principalProp)) && (ok || !reflect.DeepEqual(v, principalProp)) {
 		obj["principal"] = principalProp
 	}
+	schedulingPolicyProp, err := expandBigqueryReservationReservationAssignmentSchedulingPolicy(d.Get("scheduling_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scheduling_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(schedulingPolicyProp)) && (ok || !reflect.DeepEqual(v, schedulingPolicyProp)) {
+		obj["schedulingPolicy"] = schedulingPolicyProp
+	}
 
 	return obj, nil
 }
@@ -141,5 +147,42 @@ func expandBigqueryReservationReservationAssignmentJobType(v interface{}, d tpgr
 }
 
 func expandBigqueryReservationReservationAssignmentPrincipal(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryReservationReservationAssignmentSchedulingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedConcurrency, err := expandBigqueryReservationReservationAssignmentSchedulingPolicyConcurrency(original["concurrency"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConcurrency); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["concurrency"] = transformedConcurrency
+	}
+
+	transformedMaxSlots, err := expandBigqueryReservationReservationAssignmentSchedulingPolicyMaxSlots(original["max_slots"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxSlots); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxSlots"] = transformedMaxSlots
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryReservationReservationAssignmentSchedulingPolicyConcurrency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryReservationReservationAssignmentSchedulingPolicyMaxSlots(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
