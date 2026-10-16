@@ -63,6 +63,9 @@ func TestAccComputeRegionDisk(t *testing.T) {
 			Name: "TestAccComputeRegionDisk_encryptionKMSUpdate",
 		},
 		{
+			Name: "TestAccComputeRegionDisk_encryptionKMSAdd",
+		},
+		{
 			Name: "TestAccComputeRegionDisk_deleteDetach",
 		},
 		{

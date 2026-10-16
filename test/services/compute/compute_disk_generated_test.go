@@ -72,6 +72,9 @@ func TestAccComputeDisk(t *testing.T) {
 			Name: "TestAccComputeDisk_encryptionKMSUpdate",
 		},
 		{
+			Name: "TestAccComputeDisk_encryptionKMSAdd",
+		},
+		{
 			Name: "TestAccComputeDisk_encryptionKMSUpdateWithServiceAccount",
 		},
 		{

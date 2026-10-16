@@ -144,7 +144,6 @@ you create the resource.`,
 			"disk_encryption_key": {
 				Type:     schema.TypeList,
 				Optional: true,
-				ForceNew: true,
 				Description: `Encrypts the disk using a customer-supplied encryption key.
 
 After you encrypt a disk with a customer-supplied key, you must
@@ -158,8 +157,8 @@ If you do not provide an encryption key when creating the disk, then
 the disk will be encrypted using an automatically generated key and
 you do not need to provide a key to use the disk later.
 
-~>**NOTE** Only changing 'kms_key_name' between Cloud KMS keys is done
-in place; other changes to this block recreate the disk.`,
+~>**NOTE** 'kms_key_name' can be added or changed in place. Removing it
+fails at plan time. Other changes to this block recreate the disk.`,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
