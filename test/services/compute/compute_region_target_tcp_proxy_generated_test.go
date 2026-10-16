@@ -57,6 +57,7 @@ func TestAccComputeRegionTargetTcpProxy(t *testing.T) {
 					"dynamic",
 					"for_each",
 					"lifecycle",
+					"load_balancing_scheme",
 					"provider",
 					"timeouts",
 				},

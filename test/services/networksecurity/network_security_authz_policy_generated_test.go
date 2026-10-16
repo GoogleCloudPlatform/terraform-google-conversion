@@ -32,6 +32,7 @@ func TestAccNetworkSecurityAuthzPolicy(t *testing.T) {
 		},
 		{
 			Name: "TestAccNetworkSecurityAuthzPolicy_networkSecurityAuthzPolicyNetworkRulesExample",
+			Skip: "Multi-step update test fails due to CAI asset propagation lag between steps",
 		},
 		{
 			Name: "TestAccNetworkSecurityAuthzPolicy_networkServicesAuthzPolicyHttpRules",

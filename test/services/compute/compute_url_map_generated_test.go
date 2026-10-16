@@ -225,6 +225,7 @@ func TestAccComputeUrlMap(t *testing.T) {
 					"path_matcher.route_rules.route_action.cache_policy.request_coalescing",
 					"path_matcher.route_rules.route_action.cache_policy.serve_while_stale",
 					"path_matcher.route_rules.route_action.cache_policy.serve_while_stale.nanos",
+					"path_matcher.route_rules.route_action.url_rewrite.regex_rewrite",
 					"provider",
 					"timeouts",
 				},

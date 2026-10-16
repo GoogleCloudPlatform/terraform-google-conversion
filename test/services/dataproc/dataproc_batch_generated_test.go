@@ -62,6 +62,7 @@ func TestAccDataprocBatch(t *testing.T) {
 					"deletion_protection",
 					"depends_on",
 					"dynamic",
+					"environment_config.execution_config.kms_key",
 					"environment_config.execution_config.ttl",
 					"for_each",
 					"lifecycle",

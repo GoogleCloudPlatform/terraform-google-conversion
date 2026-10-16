@@ -133,6 +133,11 @@ func (c *ComputeRegionTargetTcpProxyCai2hclConverter) convertResourceData(asset 
 	}
 	hclData := make(map[string]interface{})
 
+	res, hclData, err = resourceComputeRegionTargetTcpProxyTgcDecoder(d, config, res, hclData)
+	if err != nil {
+		return nil, err
+	}
+
 	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "proxy_id": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/targetTcpProxies/{{name}}", outputFields, hclData)
 
@@ -203,4 +208,15 @@ func flattenComputeRegionTargetTcpProxyRegion(v interface{}, d *schema.ResourceD
 		return v
 	}
 	return tpgresource.GetResourceNameFromSelfLink(v.(string))
+}
+
+func resourceComputeRegionTargetTcpProxyTgcDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}, hclData map[string]interface{}) (map[string]interface{}, map[string]interface{}, error) {
+	// loadBalancingScheme is not returned in CAI assets. When service (backend_service)
+	// is also absent (backendless TCP proxy), default loadBalancingScheme to INTERNAL_MANAGED
+	// to satisfy at_least_one_of(backend_service, load_balancing_scheme).
+	if res["service"] == nil && res["loadBalancingScheme"] == nil {
+		res["loadBalancingScheme"] = "INTERNAL_MANAGED"
+	}
+
+	return res, hclData, nil
 }

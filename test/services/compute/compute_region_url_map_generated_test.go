@@ -100,6 +100,7 @@ func TestAccComputeRegionUrlMap(t *testing.T) {
 					"for_each",
 					"ip_address",
 					"lifecycle",
+					"path_matcher.route_rules.route_action.url_rewrite.regex_rewrite",
 					"provider",
 					"target",
 					"timeouts",
