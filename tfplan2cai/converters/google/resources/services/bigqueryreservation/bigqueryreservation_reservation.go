@@ -164,6 +164,12 @@ func GetBigqueryReservationReservationApiObject(d tpgresource.TerraformResourceD
 	} else if v, ok := d.GetOkExists("reservation_group"); !tpgresource.IsEmptyValue(reflect.ValueOf(reservationGroupProp)) && (ok || !reflect.DeepEqual(v, reservationGroupProp)) {
 		obj["reservationGroup"] = reservationGroupProp
 	}
+	schedulingPolicyProp, err := expandBigqueryReservationReservationSchedulingPolicy(d.Get("scheduling_policy"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("scheduling_policy"); !tpgresource.IsEmptyValue(reflect.ValueOf(schedulingPolicyProp)) && (ok || !reflect.DeepEqual(v, schedulingPolicyProp)) {
+		obj["schedulingPolicy"] = schedulingPolicyProp
+	}
 	effectiveLabelsProp, err := expandBigqueryReservationReservationEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -240,6 +246,43 @@ func expandBigqueryReservationReservationMaxSlots(v interface{}, d tpgresource.T
 }
 
 func expandBigqueryReservationReservationReservationGroup(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryReservationReservationSchedulingPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedConcurrency, err := expandBigqueryReservationReservationSchedulingPolicyConcurrency(original["concurrency"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConcurrency); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["concurrency"] = transformedConcurrency
+	}
+
+	transformedMaxSlots, err := expandBigqueryReservationReservationSchedulingPolicyMaxSlots(original["max_slots"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaxSlots); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maxSlots"] = transformedMaxSlots
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryReservationReservationSchedulingPolicyConcurrency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryReservationReservationSchedulingPolicyMaxSlots(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
