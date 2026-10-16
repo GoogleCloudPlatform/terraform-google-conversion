@@ -86,6 +86,7 @@ func TestAccComputeRouter(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"md5_authentication_keys",
+					"ncc_gateway",
 					"params",
 					"params.resource_manager_tags",
 					"provider",

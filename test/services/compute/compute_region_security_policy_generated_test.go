@@ -96,6 +96,7 @@ func TestAccComputeRegionSecurityPolicy(t *testing.T) {
 					"for_each",
 					"lifecycle",
 					"provider",
+					"rules.preconfigured_waf_config.exclusion.request_body",
 					"timeouts",
 				},
 				"google_compute_region_security_policy",

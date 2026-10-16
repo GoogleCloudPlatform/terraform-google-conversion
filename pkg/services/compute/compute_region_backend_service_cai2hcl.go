@@ -1858,6 +1858,14 @@ func resourceComputeRegionBackendServiceTgcDecoder(d *schema.ResourceData, meta 
 		delete(res, "healthChecks")
 	}
 
+	// When tlsSettings.identity is set, GCE auto-populates authenticationConfig,
+	// which conflicts with identity in the Terraform schema.
+	if tlsSettings, ok := res["tlsSettings"].(map[string]interface{}); ok {
+		if id, ok := tlsSettings["identity"].(string); ok && id != "" {
+			delete(tlsSettings, "authenticationConfig")
+		}
+	}
+
 	return res, hclData, nil
 }
 func resourceComputeRegionBackendServiceDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {

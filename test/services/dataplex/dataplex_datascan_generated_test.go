@@ -95,6 +95,8 @@ func TestAccDataplexDatascan(t *testing.T) {
 				t,
 				[]string{
 					"count",
+					"data_documentation_spec.catalog_publishing_enabled",
+					"data_documentation_spec.sql_dialect",
 					"data_quality_spec.enable_catalog_based_rules",
 					"data_quality_spec.filter",
 					"data_scan_id",

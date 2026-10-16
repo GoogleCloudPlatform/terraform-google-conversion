@@ -128,6 +128,7 @@ func TestAccWorkbenchInstance(t *testing.T) {
 					"for_each",
 					"gce_setup.boot_disk.disk_type",
 					"gce_setup.data_disks.disk_type",
+					"gce_setup.data_disks.resource_policies",
 					"gce_setup.vm_image",
 					"instance_id",
 					"instance_owners",
