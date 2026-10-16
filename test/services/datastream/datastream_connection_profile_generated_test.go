@@ -78,6 +78,7 @@ func TestAccDatastreamConnectionProfile(t *testing.T) {
 					"lifecycle",
 					"location",
 					"mongodb_profile.password",
+					"mongodb_profile.secret_manager_stored_password",
 					"mongodb_profile.ssl_config.ca_certificate",
 					"mongodb_profile.ssl_config.client_certificate",
 					"mongodb_profile.ssl_config.client_key",

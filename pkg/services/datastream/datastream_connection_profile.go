@@ -251,6 +251,7 @@ secretManagerStoredPassword.`,
 							Optional: true,
 							Description: `A reference to a Secret Manager resource name storing the MongoDB
 connection password. Mutually exclusive with password.`,
+							Sensitive: true,
 						},
 						"srv_connection_format": {
 							Type:     schema.TypeList,
