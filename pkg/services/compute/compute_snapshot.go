@@ -138,7 +138,6 @@ and values are in the format tagValues/456.`,
 			"snapshot_encryption_key": {
 				Type:     schema.TypeList,
 				Optional: true,
-				ForceNew: true,
 				Description: `Encrypts the snapshot using a customer-supplied encryption key.
 
 After you encrypt a snapshot using a customer-supplied key, you must
@@ -153,8 +152,9 @@ If you do not provide an encryption key when creating the snapshot,
 then the snapshot will be encrypted using an automatically generated
 key and you do not need to provide a key to use the snapshot later.
 
-~>**NOTE** Only changing 'kms_key_self_link' between Cloud KMS keys is
-done in place; other changes to this block recreate the snapshot.`,
+~>**NOTE** 'kms_key_self_link' can be added or changed in place.
+Removing it, or changing it while 'kms_key_service_account' is set,
+fails at plan time. Other changes to this block recreate the snapshot.`,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
