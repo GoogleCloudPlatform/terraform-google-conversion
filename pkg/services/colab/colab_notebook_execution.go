@@ -299,6 +299,12 @@ func ResourceColabNotebookExecution() *schema.Resource {
 				},
 				ExactlyOneOf: []string{"dataform_repository_source", "direct_notebook_source", "gcs_notebook_source"},
 			},
+			"kernel_name": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				ForceNew:    true,
+				Description: `The name of the kernel to use during notebook execution. If unset, the default kernel is used.`,
+			},
 			"notebook_execution_job_id": {
 				Type:        schema.TypeString,
 				Computed:    true,
@@ -328,9 +334,34 @@ func ResourceColabNotebookExecution() *schema.Resource {
 				MaxItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"custom_container_image": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							ForceNew:    true,
+							Description: `Use a container image to start the workbench instance.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"repository": {
+										Type:     schema.TypeString,
+										Required: true,
+										ForceNew: true,
+										Description: `The path to the container image repository.
+For example: gcr.io/{project_id}/{imageName}`,
+									},
+									"tag": {
+										Type:        schema.TypeString,
+										Optional:    true,
+										ForceNew:    true,
+										Description: `The tag of the container image. If not specified, this defaults to the latest tag.`,
+									},
+								},
+							},
+							ExactlyOneOf: []string{"workbench_runtime.0.custom_container_image", "workbench_runtime.0.vm_image"},
+						},
 						"vm_image": {
 							Type:        schema.TypeList,
-							Required:    true,
+							Optional:    true,
 							ForceNew:    true,
 							Description: `Custom Compute Engine VM image for the Workbench instance.`,
 							MaxItems:    1,
@@ -358,6 +389,7 @@ func ResourceColabNotebookExecution() *schema.Resource {
 									},
 								},
 							},
+							ExactlyOneOf: []string{"workbench_runtime.0.custom_container_image", "workbench_runtime.0.vm_image"},
 						},
 					},
 				},
