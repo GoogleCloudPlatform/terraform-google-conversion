@@ -31,6 +31,12 @@ func TestAccColabNotebookExecution(t *testing.T) {
 			Name: "TestAccColabNotebookExecution_colabNotebookExecutionCustomEnvExample",
 		},
 		{
+			Name: "TestAccColabNotebookExecution_colabNotebookExecutionWorkbenchRuntimeCustomContainerExample",
+		},
+		{
+			Name: "TestAccColabNotebookExecution_colabNotebookExecutionWorkbenchRuntimeCustomContainerNoTagExample",
+		},
+		{
 			Name: "TestAccColabNotebookExecution_colabNotebookExecutionWorkbenchRuntimeVmExample",
 		},
 		{
