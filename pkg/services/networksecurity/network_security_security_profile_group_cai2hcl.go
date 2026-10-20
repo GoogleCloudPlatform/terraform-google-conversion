@@ -142,6 +142,7 @@ func (c *NetworkSecuritySecurityProfileGroupCai2hclConverter) convertResourceDat
 	hclData["url_filtering_profile"] = flattenNetworkSecuritySecurityProfileGroupUrlFilteringProfile(res["urlFilteringProfile"], d, config)
 	hclData["custom_mirroring_profile"] = flattenNetworkSecuritySecurityProfileGroupCustomMirroringProfile(res["customMirroringProfile"], d, config)
 	hclData["custom_intercept_profile"] = flattenNetworkSecuritySecurityProfileGroupCustomInterceptProfile(res["customInterceptProfile"], d, config)
+	hclData["wildfire_analysis_profile"] = flattenNetworkSecuritySecurityProfileGroupWildfireAnalysisProfile(res["wildfireAnalysisProfile"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -198,6 +199,16 @@ func flattenNetworkSecuritySecurityProfileGroupCustomMirroringProfile(v interfac
 }
 
 func flattenNetworkSecuritySecurityProfileGroupCustomInterceptProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileGroupWildfireAnalysisProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
 	}

@@ -139,6 +139,7 @@ func (c *NetworkSecurityFirewallEndpointCai2hclConverter) convertResourceData(as
 	hclData["labels"] = flattenNetworkSecurityFirewallEndpointLabels(res["labels"], d, config)
 	hclData["billing_project_id"] = flattenNetworkSecurityFirewallEndpointBillingProjectId(res["billingProjectId"], d, config)
 	hclData["endpoint_settings"] = flattenNetworkSecurityFirewallEndpointEndpointSettings(res["endpointSettings"], d, config)
+	hclData["wildfire_settings"] = flattenNetworkSecurityFirewallEndpointWildfireSettings(res["wildfireSettings"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -166,6 +167,10 @@ func flattenNetworkSecurityFirewallEndpointEndpointSettings(v interface{}, d *sc
 	transformed := make(map[string]interface{})
 	transformed["jumbo_frames_enabled"] =
 		flattenNetworkSecurityFirewallEndpointEndpointSettingsJumboFramesEnabled(original["jumboFramesEnabled"], d, config)
+	transformed["content_cloud_region"] =
+		flattenNetworkSecurityFirewallEndpointEndpointSettingsContentCloudRegion(original["contentCloudRegion"], d, config)
+	transformed["http_partial_response_blocked"] =
+		flattenNetworkSecurityFirewallEndpointEndpointSettingsHttpPartialResponseBlocked(original["httpPartialResponseBlocked"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -173,5 +178,81 @@ func flattenNetworkSecurityFirewallEndpointEndpointSettings(v interface{}, d *sc
 }
 
 func flattenNetworkSecurityFirewallEndpointEndpointSettingsJumboFramesEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityFirewallEndpointEndpointSettingsContentCloudRegion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityFirewallEndpointEndpointSettingsHttpPartialResponseBlocked(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityFirewallEndpointWildfireSettings(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["enabled"] =
+		flattenNetworkSecurityFirewallEndpointWildfireSettingsEnabled(original["enabled"], d, config)
+	transformed["wildfire_region"] =
+		flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireRegion(original["wildfireRegion"], d, config)
+	transformed["wildfire_realtime_lookup_duration"] =
+		flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireRealtimeLookupDuration(original["wildfireRealtimeLookupDuration"], d, config)
+	transformed["wildfire_realtime_lookup_timeout_action"] =
+		flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireRealtimeLookupTimeoutAction(original["wildfireRealtimeLookupTimeoutAction"], d, config)
+	transformed["wildfire_inline_cloud_analysis_settings"] =
+		flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings(original["wildfireInlineCloudAnalysisSettings"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecurityFirewallEndpointWildfireSettingsEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireRegion(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireRealtimeLookupDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireRealtimeLookupTimeoutAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["max_analysis_duration"] =
+		flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsMaxAnalysisDuration(original["maxAnalysisDuration"], d, config)
+	transformed["timeout_action"] =
+		flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsTimeoutAction(original["timeoutAction"], d, config)
+	transformed["submission_timeout_logging_disabled"] =
+		flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsSubmissionTimeoutLoggingDisabled(original["submissionTimeoutLoggingDisabled"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsMaxAnalysisDuration(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsTimeoutAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityFirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettingsSubmissionTimeoutLoggingDisabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

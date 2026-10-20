@@ -113,6 +113,23 @@ endpoint's project if specified.`,
 				MaxItems:    1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"content_cloud_region": {
+							Type:     schema.TypeString,
+							Computed: true,
+							Optional: true,
+							Description: `The Palo Alto Networks content cloud region of the firewall endpoint,
+for example 'US_CENTRAL' or 'CANADA'. See
+[API docs](https://docs.cloud.google.com/firewall/docs/reference/network-security/rest/v1beta1/organizations.locations.firewallEndpoints#contentcloudregion)
+for the list of supported regions.`,
+						},
+						"http_partial_response_blocked": {
+							Type:     schema.TypeBool,
+							Optional: true,
+							Description: `Whether to block HTTP partial responses for the firewall endpoint.
+When 'true', resumption of blocked malicious HTTP file downloads is
+blocked by the firewall. 'false' provides maximum availability, 'true'
+provides maximum security.`,
+						},
 						"jumbo_frames_enabled": {
 							Type:        schema.TypeBool,
 							Optional:    true,
@@ -131,6 +148,87 @@ endpoint's project if specified.`,
 **Note**: This field is non-authoritative, and will only manage the labels present in your configuration.
 Please refer to the field 'effective_labels' for all of the labels present on the resource.`,
 				Elem: &schema.Schema{Type: schema.TypeString},
+			},
+			"wildfire_settings": {
+				Type:        schema.TypeList,
+				Computed:    true,
+				Optional:    true,
+				Description: `Settings for WildFire analysis on the firewall endpoint.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"enabled": {
+							Type:     schema.TypeBool,
+							Optional: true,
+							Description: `Indicates whether WildFire is enabled for the firewall endpoint.
+Enabling WildFire requires accepting the WildFire end-user license
+agreement (EULA) for the endpoint's billing project; see
+[Configure WildFire](https://docs.cloud.google.com/firewall/docs/configure-wildfire).`,
+						},
+						"wildfire_inline_cloud_analysis_settings": {
+							Type:        schema.TypeList,
+							Computed:    true,
+							Optional:    true,
+							Description: `Settings for WildFire inline cloud analysis.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"max_analysis_duration": {
+										Type:             schema.TypeString,
+										Computed:         true,
+										Optional:         true,
+										DiffSuppressFunc: tpgresource.DurationDiffSuppress,
+										Description: `The maximum duration for which the firewall endpoint holds a file
+while waiting for an inline cloud analysis verdict before taking
+the configured timeout action (1ms to 240000ms, default 30000ms).
+A duration in seconds with up to nine fractional digits, ending with 's'.
+Example: "30s".`,
+									},
+									"submission_timeout_logging_disabled": {
+										Type:     schema.TypeBool,
+										Optional: true,
+										Description: `Indicates whether logging is disabled when a WildFire inline cloud
+analysis submission times out.`,
+									},
+									"timeout_action": {
+										Type:         schema.TypeString,
+										Computed:     true,
+										Optional:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"ALLOW", "DENY", ""}),
+										Description:  `The action to take when WildFire inline cloud analysis times out. Possible values: ["ALLOW", "DENY"]`,
+									},
+								},
+							},
+						},
+						"wildfire_realtime_lookup_duration": {
+							Type:             schema.TypeString,
+							Computed:         true,
+							Optional:         true,
+							DiffSuppressFunc: tpgresource.DurationDiffSuppress,
+							Description: `The duration for which the firewall endpoint waits for a real-time
+signature lookup response from the WildFire cloud before taking the
+configured timeout action (1ms to 5000ms, default 1000ms).
+A duration in seconds with up to nine fractional digits, ending with 's'.
+Example: "1s".`,
+						},
+						"wildfire_realtime_lookup_timeout_action": {
+							Type:         schema.TypeString,
+							Computed:     true,
+							Optional:     true,
+							ValidateFunc: verify.ValidateEnum([]string{"ALLOW", "DENY", ""}),
+							Description:  `The action to take when a WildFire real-time signature lookup times out. Possible values: ["ALLOW", "DENY"]`,
+						},
+						"wildfire_region": {
+							Type:     schema.TypeString,
+							Computed: true,
+							Optional: true,
+							Description: `The WildFire region for the firewall endpoint, for example
+'UNITED_STATES' or 'CANADA'. See
+[API docs](https://docs.cloud.google.com/firewall/docs/reference/network-security/rest/v1beta1/organizations.locations.firewallEndpoints#wildfireregion)
+for the list of supported regions.`,
+						},
+					},
+				},
 			},
 			"associated_networks": {
 				Type:     schema.TypeList,
