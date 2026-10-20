@@ -41,6 +41,12 @@ func TestAccNetworkSecuritySecurityProfile(t *testing.T) {
 			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileBrokerExample",
 		},
 		{
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileWildfireExample",
+		},
+		{
+			Name: "TestAccNetworkSecuritySecurityProfile_networkSecuritySecurityProfileWildfireMinimalExample",
+		},
+		{
 			Name: "TestAccNetworkSecuritySecurityProfiles_update",
 		},
 		{

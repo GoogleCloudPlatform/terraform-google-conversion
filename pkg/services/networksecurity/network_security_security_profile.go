@@ -88,7 +88,7 @@ func ResourceNetworkSecuritySecurityProfile() *schema.Resource {
 				Required:     true,
 				ForceNew:     true,
 				ValidateFunc: verify.ValidateEnum([]string{"THREAT_PREVENTION", "URL_FILTERING", "CUSTOM_MIRRORING", "CUSTOM_INTERCEPT", "WILDFIRE_ANALYSIS"}),
-				Description:  `The type of security profile. 'WILDFIRE_ANALYSIS' is beta-only. Possible values: ["THREAT_PREVENTION", "URL_FILTERING", "CUSTOM_MIRRORING", "CUSTOM_INTERCEPT", "WILDFIRE_ANALYSIS"]`,
+				Description:  `The type of security profile. Possible values: ["THREAT_PREVENTION", "URL_FILTERING", "CUSTOM_MIRRORING", "CUSTOM_INTERCEPT", "WILDFIRE_ANALYSIS"]`,
 			},
 			"custom_intercept_profile": {
 				Type:     schema.TypeList,
@@ -106,7 +106,7 @@ Format: projects/{project_id}/locations/global/interceptEndpointGroups/{endpoint
 						},
 					},
 				},
-				ConflictsWith: []string{"custom_mirroring_profile", "threat_prevention_profile", "url_filtering_profile"},
+				ConflictsWith: []string{"custom_mirroring_profile", "threat_prevention_profile", "url_filtering_profile", "wildfire_analysis_profile"},
 			},
 			"custom_mirroring_profile": {
 				Type:     schema.TypeList,
@@ -137,7 +137,7 @@ Format: projects/{project_id}/locations/global/mirroringDeploymentGroups/{deploy
 						},
 					},
 				},
-				ConflictsWith: []string{"custom_intercept_profile", "threat_prevention_profile", "url_filtering_profile"},
+				ConflictsWith: []string{"custom_intercept_profile", "threat_prevention_profile", "url_filtering_profile", "wildfire_analysis_profile"},
 			},
 			"description": {
 				Type:        schema.TypeString,
@@ -201,7 +201,7 @@ and threat overrides, the threat overrides action is applied.`,
 						},
 					},
 				},
-				ConflictsWith: []string{"custom_intercept_profile", "custom_mirroring_profile", "url_filtering_profile"},
+				ConflictsWith: []string{"custom_intercept_profile", "custom_mirroring_profile", "url_filtering_profile", "wildfire_analysis_profile"},
 			},
 			"url_filtering_profile": {
 				Type:        schema.TypeList,
@@ -221,7 +221,154 @@ and the first filter that a domain name matches with is the one whose actions ge
 						},
 					},
 				},
-				ConflictsWith: []string{"custom_intercept_profile", "custom_mirroring_profile", "threat_prevention_profile"},
+				ConflictsWith: []string{"custom_intercept_profile", "custom_mirroring_profile", "threat_prevention_profile", "wildfire_analysis_profile"},
+			},
+			"wildfire_analysis_profile": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				Description: `The wildfire analysis configuration for the security profile.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"wildfire_inline_cloud_analysis_rules": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `The configuration for inline cloud analysis of files.`,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"action": {
+										Type:         schema.TypeString,
+										Required:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"ALLOW", "DENY", "ALERT"}),
+										Description:  `The action to take when a rule is matched. Possible values: ["ALLOW", "DENY", "ALERT"]`,
+									},
+									"direction": {
+										Type:         schema.TypeString,
+										Required:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"UPLOAD", "DOWNLOAD", "BOTH"}),
+										Description:  `Direction of traffic to match for a rule. Possible values: ["UPLOAD", "DOWNLOAD", "BOTH"]`,
+									},
+									"file_selection_mode": {
+										Type:         schema.TypeString,
+										Required:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"ALL_FILE_TYPES", "CUSTOM_FILE_TYPES"}),
+										Description:  `Defines the file selection mode for a rule. Possible values: ["ALL_FILE_TYPES", "CUSTOM_FILE_TYPES"]`,
+									},
+									"custom_file_types": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Defines the custom file types to match for a rule. The API will only accept this if 'file_selection_mode' is set to 'CUSTOM_FILE_TYPES'`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"file_types": {
+													Type:        schema.TypeSet,
+													Required:    true,
+													Description: `The file types to match for a rule. For allowed values, see [API docs](https://docs.cloud.google.com/firewall/docs/reference/network-security/rest/v1beta1/organizations.locations.securityProfiles#wildfireinlinecloudanalysisrule).`,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+													Set: schema.HashString,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"wildfire_inline_ml_overrides": {
+							Type:        schema.TypeSet,
+							Optional:    true,
+							Description: `Defines what action to take for WildFire inline ML threats per protocol.`,
+							Elem:        networksecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlOverridesSchema(),
+							// Default schema.HashSchema is used.
+						},
+						"wildfire_inline_ml_setting": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `WildFire inline Machine Learning setting for the Security Profile.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"file_exceptions": {
+										Type:        schema.TypeSet,
+										Optional:    true,
+										Description: `File exceptions to exclude from WildFire inline ML.`,
+										Elem:        networksecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingFileExceptionsSchema(),
+										// Default schema.HashSchema is used.
+									},
+									"inline_ml_configs": {
+										Type:        schema.TypeSet,
+										Optional:    true,
+										Description: `Defines what action to take for a specific file type in WildFire inline ML.`,
+										Elem:        networksecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingInlineMlConfigsSchema(),
+										// Default schema.HashSchema is used.
+									},
+								},
+							},
+						},
+						"wildfire_overrides": {
+							Type:        schema.TypeSet,
+							Optional:    true,
+							Description: `Defines what action to take for WildFire threats per protocol.`,
+							Elem:        networksecuritySecurityProfileWildfireAnalysisProfileWildfireOverridesSchema(),
+							// Default schema.HashSchema is used.
+						},
+						"wildfire_realtime_lookup": {
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Description: `Whether to hold the transfer of a file while the WildFire real-time signature cloud performs a signature lookup. Default value is false.`,
+						},
+						"wildfire_submission_rules": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `The configuration for file submission to WildFire in cloud.`,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"direction": {
+										Type:         schema.TypeString,
+										Required:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"UPLOAD", "DOWNLOAD", "BOTH"}),
+										Description:  `Direction of traffic to match for a rule. Possible values: ["UPLOAD", "DOWNLOAD", "BOTH"]`,
+									},
+									"file_selection_mode": {
+										Type:         schema.TypeString,
+										Required:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"ALL_FILE_TYPES", "CUSTOM_FILE_TYPES"}),
+										Description:  `Defines the file selection mode for a rule. Possible values: ["ALL_FILE_TYPES", "CUSTOM_FILE_TYPES"]`,
+									},
+									"custom_file_types": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Defines the custom file types to match for a rule. The API will only accept this if 'file_selection_mode' is set to 'CUSTOM_FILE_TYPES'`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"file_types": {
+													Type:        schema.TypeSet,
+													Required:    true,
+													Description: `The file types to match for a rule. For allowed values, see [API docs](https://docs.cloud.google.com/firewall/docs/reference/network-security/rest/v1beta1/organizations.locations.securityProfiles#wildfiresubmissionrule)`,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+													Set: schema.HashString,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"wildfire_threat_overrides": {
+							Type:        schema.TypeSet,
+							Optional:    true,
+							Description: `The configuration for overriding threats actions by threat id match.`,
+							Elem:        networksecuritySecurityProfileWildfireAnalysisProfileWildfireThreatOverridesSchema(),
+							// Default schema.HashSchema is used.
+						},
+					},
+				},
+				ConflictsWith: []string{"custom_intercept_profile", "custom_mirroring_profile", "threat_prevention_profile", "url_filtering_profile"},
 			},
 			"create_time": {
 				Type:        schema.TypeString,
@@ -343,6 +490,97 @@ A domain name must match with at least one of the strings in the list for a filt
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
+			},
+		},
+	}
+}
+
+func networksecuritySecurityProfileWildfireAnalysisProfileWildfireOverridesSchema() *schema.Resource {
+	return &schema.Resource{
+		Schema: map[string]*schema.Schema{
+			"action": {
+				Type:         schema.TypeString,
+				Required:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"WILDFIRE_DEFAULT_ACTION", "WILDFIRE_ALLOW", "WILDFIRE_ALERT", "WILDFIRE_DENY"}),
+				Description:  `Threat action override. Possible values: ["WILDFIRE_DEFAULT_ACTION", "WILDFIRE_ALLOW", "WILDFIRE_ALERT", "WILDFIRE_DENY"]`,
+			},
+			"protocol": {
+				Type:         schema.TypeString,
+				Required:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"WILDFIRE_SMTP", "WILDFIRE_SMB", "WILDFIRE_POP3", "WILDFIRE_IMAP", "WILDFIRE_HTTP2", "WILDFIRE_HTTP", "WILDFIRE_FTP"}),
+				Description:  `Required protocol to match. Possible values: ["WILDFIRE_SMTP", "WILDFIRE_SMB", "WILDFIRE_POP3", "WILDFIRE_IMAP", "WILDFIRE_HTTP2", "WILDFIRE_HTTP", "WILDFIRE_FTP"]`,
+			},
+		},
+	}
+}
+
+func networksecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlOverridesSchema() *schema.Resource {
+	return &schema.Resource{
+		Schema: map[string]*schema.Schema{
+			"action": {
+				Type:         schema.TypeString,
+				Required:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"WILDFIRE_DEFAULT_ACTION", "WILDFIRE_ALLOW", "WILDFIRE_ALERT", "WILDFIRE_DENY"}),
+				Description:  `Threat action override. Possible values: ["WILDFIRE_DEFAULT_ACTION", "WILDFIRE_ALLOW", "WILDFIRE_ALERT", "WILDFIRE_DENY"]`,
+			},
+			"protocol": {
+				Type:         schema.TypeString,
+				Required:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"WILDFIRE_SMTP", "WILDFIRE_SMB", "WILDFIRE_POP3", "WILDFIRE_IMAP", "WILDFIRE_HTTP2", "WILDFIRE_HTTP", "WILDFIRE_FTP"}),
+				Description:  `Required protocol to match. Possible values: ["WILDFIRE_SMTP", "WILDFIRE_SMB", "WILDFIRE_POP3", "WILDFIRE_IMAP", "WILDFIRE_HTTP2", "WILDFIRE_HTTP", "WILDFIRE_FTP"]`,
+			},
+		},
+	}
+}
+
+func networksecuritySecurityProfileWildfireAnalysisProfileWildfireThreatOverridesSchema() *schema.Resource {
+	return &schema.Resource{
+		Schema: map[string]*schema.Schema{
+			"action": {
+				Type:         schema.TypeString,
+				Required:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"WILDFIRE_DEFAULT_ACTION", "WILDFIRE_ALLOW"}),
+				Description:  `Threat action override. Possible values: ["WILDFIRE_DEFAULT_ACTION", "WILDFIRE_ALLOW"]`,
+			},
+			"threat_id": {
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: `Vendor-specific ID of a threat to override.`,
+			},
+		},
+	}
+}
+
+func networksecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingInlineMlConfigsSchema() *schema.Resource {
+	return &schema.Resource{
+		Schema: map[string]*schema.Schema{
+			"action": {
+				Type:         schema.TypeString,
+				Required:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"DISABLE", "ALERT", "ENABLE"}),
+				Description:  `The action to take for a file type. Possible values: ["DISABLE", "ALERT", "ENABLE"]`,
+			},
+			"file_type": {
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: `The file type to match. For allowed values, see [API docs](https://docs.cloud.google.com/firewall/docs/reference/network-security/rest/v1beta1/organizations.locations.securityProfiles#inlinemlfiletype)`,
+			},
+		},
+	}
+}
+
+func networksecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingFileExceptionsSchema() *schema.Resource {
+	return &schema.Resource{
+		Schema: map[string]*schema.Schema{
+			"partial_hash": {
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: `Machine learning partial hash of the file to exclude from WildFire Inline ML analysis.`,
+			},
+			"filename": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: `The file name associated with the partial hash.`,
 			},
 		},
 	}

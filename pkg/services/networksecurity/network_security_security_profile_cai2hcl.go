@@ -152,6 +152,7 @@ func (c *NetworkSecuritySecurityProfileCai2hclConverter) convertResourceData(ass
 	hclData["url_filtering_profile"] = flattenNetworkSecuritySecurityProfileUrlFilteringProfile(res["urlFilteringProfile"], d, config)
 	hclData["custom_mirroring_profile"] = flattenNetworkSecuritySecurityProfileCustomMirroringProfile(res["customMirroringProfile"], d, config)
 	hclData["custom_intercept_profile"] = flattenNetworkSecuritySecurityProfileCustomInterceptProfile(res["customInterceptProfile"], d, config)
+	hclData["wildfire_analysis_profile"] = flattenNetworkSecuritySecurityProfileWildfireAnalysisProfile(res["wildfireAnalysisProfile"], d, config)
 	hclData["type"] = flattenNetworkSecuritySecurityProfileType(res["type"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -426,11 +427,365 @@ func flattenNetworkSecuritySecurityProfileCustomInterceptProfileInterceptEndpoin
 	return v
 }
 
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfile(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["wildfire_realtime_lookup"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireRealtimeLookup(original["wildfireRealtimeLookup"], d, config)
+	transformed["wildfire_submission_rules"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireSubmissionRules(original["wildfireSubmissionRules"], d, config)
+	transformed["wildfire_inline_cloud_analysis_rules"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRules(original["wildfireInlineCloudAnalysisRules"], d, config)
+	transformed["wildfire_overrides"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireOverrides(original["wildfireOverrides"], d, config)
+	transformed["wildfire_inline_ml_overrides"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlOverrides(original["wildfireInlineMlOverrides"], d, config)
+	transformed["wildfire_threat_overrides"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireThreatOverrides(original["wildfireThreatOverrides"], d, config)
+	transformed["wildfire_inline_ml_setting"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSetting(original["wildfireInlineMlSetting"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireRealtimeLookup(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireSubmissionRules(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"file_selection_mode": flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireSubmissionRulesFileSelectionMode(original["fileSelectionMode"], d, config),
+			"custom_file_types":   flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireSubmissionRulesCustomFileTypes(original["customFileTypes"], d, config),
+			"direction":           flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireSubmissionRulesDirection(original["direction"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireSubmissionRulesFileSelectionMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireSubmissionRulesCustomFileTypes(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["file_types"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireSubmissionRulesCustomFileTypesFileTypes(original["fileTypes"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireSubmissionRulesCustomFileTypesFileTypes(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	return schema.NewSet(schema.HashString, v.([]interface{}))
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireSubmissionRulesDirection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRules(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"file_selection_mode": flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRulesFileSelectionMode(original["fileSelectionMode"], d, config),
+			"custom_file_types":   flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRulesCustomFileTypes(original["customFileTypes"], d, config),
+			"direction":           flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRulesDirection(original["direction"], d, config),
+			"action":              flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRulesAction(original["action"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRulesFileSelectionMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRulesCustomFileTypes(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["file_types"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRulesCustomFileTypesFileTypes(original["fileTypes"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRulesCustomFileTypesFileTypes(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	return schema.NewSet(schema.HashString, v.([]interface{}))
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRulesDirection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineCloudAnalysisRulesAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireOverrides(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := schema.NewSet(schema.HashResource(networksecuritySecurityProfileWildfireAnalysisProfileWildfireOverridesSchema()), []interface{}{})
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed.Add(map[string]interface{}{
+			"protocol": flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireOverridesProtocol(original["protocol"], d, config),
+			"action":   flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireOverridesAction(original["action"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireOverridesProtocol(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireOverridesAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlOverrides(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := schema.NewSet(schema.HashResource(networksecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlOverridesSchema()), []interface{}{})
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed.Add(map[string]interface{}{
+			"protocol": flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlOverridesProtocol(original["protocol"], d, config),
+			"action":   flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlOverridesAction(original["action"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlOverridesProtocol(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlOverridesAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireThreatOverrides(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := schema.NewSet(schema.HashResource(networksecuritySecurityProfileWildfireAnalysisProfileWildfireThreatOverridesSchema()), []interface{}{})
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed.Add(map[string]interface{}{
+			"threat_id": flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireThreatOverridesThreatId(original["threatId"], d, config),
+			"action":    flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireThreatOverridesAction(original["action"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireThreatOverridesThreatId(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireThreatOverridesAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSetting(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["inline_ml_configs"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingInlineMlConfigs(original["inlineMlConfigs"], d, config)
+	transformed["file_exceptions"] =
+		flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingFileExceptions(original["fileExceptions"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingInlineMlConfigs(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := schema.NewSet(schema.HashResource(networksecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingInlineMlConfigsSchema()), []interface{}{})
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed.Add(map[string]interface{}{
+			"file_type": flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingInlineMlConfigsFileType(original["fileType"], d, config),
+			"action":    flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingInlineMlConfigsAction(original["action"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingInlineMlConfigsFileType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingInlineMlConfigsAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingFileExceptions(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := schema.NewSet(schema.HashResource(networksecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingFileExceptionsSchema()), []interface{}{})
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed.Add(map[string]interface{}{
+			"partial_hash": flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingFileExceptionsPartialHash(original["partialHash"], d, config),
+			"filename":     flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingFileExceptionsFilename(original["filename"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingFileExceptionsPartialHash(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenNetworkSecuritySecurityProfileWildfireAnalysisProfileWildfireInlineMlSettingFileExceptionsFilename(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
 func flattenNetworkSecuritySecurityProfileType(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
 func resourceNetworkSecuritySecurityProfileDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
-
+	// Once a wildfireAnalysisProfile has been set, the API keeps returning it
+	// (with only default values, e.g. {"wildfireRealtimeLookup": false}) even
+	// after it is cleared. If it carries no data and the user hasn't configured
+	// the block, drop it so it doesn't cause a permadiff.
+	var isEmptyValue func(v interface{}) bool
+	isEmptyValue = func(v interface{}) bool {
+		switch t := v.(type) {
+		case nil:
+			return true
+		case bool:
+			return !t
+		case string:
+			return t == ""
+		case float64:
+			return t == 0
+		case []interface{}:
+			for _, e := range t {
+				if !isEmptyValue(e) {
+					return false
+				}
+			}
+			return true
+		case map[string]interface{}:
+			for _, e := range t {
+				if !isEmptyValue(e) {
+					return false
+				}
+			}
+			return true
+		}
+		return false
+	}
+	if profile, ok := res["wildfireAnalysisProfile"]; ok {
+		if _, configured := d.GetOk("wildfire_analysis_profile"); !configured && isEmptyValue(profile) {
+			delete(res, "wildfireAnalysisProfile")
+		}
+	}
 	return res, nil
 }

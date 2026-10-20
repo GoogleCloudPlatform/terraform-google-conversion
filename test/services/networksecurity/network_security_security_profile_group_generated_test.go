@@ -31,6 +31,9 @@ func TestAccNetworkSecuritySecurityProfileGroup(t *testing.T) {
 			Name: "TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGroupUrlFilteringExample",
 		},
 		{
+			Name: "TestAccNetworkSecuritySecurityProfileGroup_networkSecuritySecurityProfileGroupWildfireExample",
+		},
+		{
 			Name: "TestAccNetworkSecuritySecurityProfileGroups_update",
 		},
 	}
