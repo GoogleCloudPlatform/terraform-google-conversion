@@ -991,6 +991,8 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicy(v int
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
+	transformed["mirror_percent"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -1006,6 +1008,10 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyBacken
 		return v
 	}
 	return relative
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeUrlMapPathMatcherPathRuleRouteActionRetryPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -2569,6 +2575,8 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicy(v i
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
+	transformed["mirror_percent"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -2584,6 +2592,10 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyBack
 		return v
 	}
 	return relative
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeUrlMapPathMatcherRouteRulesRouteActionRetryPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -4011,6 +4023,8 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicy(v inte
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
+	transformed["mirror_percent"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -4026,6 +4040,10 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyBackend
 		return v
 	}
 	return relative
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeUrlMapPathMatcherDefaultRouteActionCorsPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -5271,6 +5289,8 @@ func flattenComputeUrlMapDefaultRouteActionRequestMirrorPolicy(v interface{}, d 
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeUrlMapDefaultRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
+	transformed["mirror_percent"] =
+		flattenComputeUrlMapDefaultRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -5286,6 +5306,10 @@ func flattenComputeUrlMapDefaultRouteActionRequestMirrorPolicyBackendService(v i
 		return v
 	}
 	return relative
+}
+
+func flattenComputeUrlMapDefaultRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeUrlMapDefaultRouteActionCorsPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

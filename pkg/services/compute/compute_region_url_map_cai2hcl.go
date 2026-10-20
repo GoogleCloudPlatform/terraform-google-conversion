@@ -1155,6 +1155,8 @@ func flattenComputeRegionUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPoli
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeRegionUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
+	transformed["mirror_percent"] =
+		flattenComputeRegionUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -1170,6 +1172,10 @@ func flattenComputeRegionUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPoli
 		return v
 	}
 	return relative
+}
+
+func flattenComputeRegionUrlMapPathMatcherRouteRulesRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeRegionUrlMapPathMatcherRouteRulesRouteActionRetryPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -1906,6 +1912,8 @@ func flattenComputeRegionUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicy
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeRegionUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
+	transformed["mirror_percent"] =
+		flattenComputeRegionUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -1921,6 +1929,10 @@ func flattenComputeRegionUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicy
 		return v
 	}
 	return relative
+}
+
+func flattenComputeRegionUrlMapPathMatcherPathRuleRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeRegionUrlMapPathMatcherPathRuleRouteActionRetryPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -2824,6 +2836,8 @@ func flattenComputeRegionUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicy(
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeRegionUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
+	transformed["mirror_percent"] =
+		flattenComputeRegionUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -2839,6 +2853,10 @@ func flattenComputeRegionUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyB
 		return v
 	}
 	return relative
+}
+
+func flattenComputeRegionUrlMapPathMatcherDefaultRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeRegionUrlMapPathMatcherDefaultRouteActionCorsPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -3526,6 +3544,8 @@ func flattenComputeRegionUrlMapDefaultRouteActionRequestMirrorPolicy(v interface
 	transformed := make(map[string]interface{})
 	transformed["backend_service"] =
 		flattenComputeRegionUrlMapDefaultRouteActionRequestMirrorPolicyBackendService(original["backendService"], d, config)
+	transformed["mirror_percent"] =
+		flattenComputeRegionUrlMapDefaultRouteActionRequestMirrorPolicyMirrorPercent(original["mirrorPercent"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -3541,6 +3561,10 @@ func flattenComputeRegionUrlMapDefaultRouteActionRequestMirrorPolicyBackendServi
 		return v
 	}
 	return relative
+}
+
+func flattenComputeRegionUrlMapDefaultRouteActionRequestMirrorPolicyMirrorPercent(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeRegionUrlMapDefaultRouteActionCorsPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

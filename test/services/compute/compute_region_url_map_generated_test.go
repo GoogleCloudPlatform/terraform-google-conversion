@@ -49,6 +49,18 @@ func TestAccComputeRegionUrlMap(t *testing.T) {
 			Name: "TestAccComputeRegionUrlMap_regionUrlMapPathMatcherDefaultRouteActionExample",
 		},
 		{
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapDefaultMirrorPercentExample",
+		},
+		{
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapPathMatcherDefaultMirrorPercentExample",
+		},
+		{
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapPathRuleMirrorPercentExample",
+		},
+		{
+			Name: "TestAccComputeRegionUrlMap_regionUrlMapRouteRuleMirrorPercentExample",
+		},
+		{
 			Name: "TestAccComputeRegionUrlMap_headerAction",
 		},
 		{
