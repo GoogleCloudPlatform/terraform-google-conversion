@@ -50,10 +50,22 @@ func TestAccComputeUrlMap(t *testing.T) {
 			Name: "TestAccComputeUrlMap_urlMapParameterBasedRoutingExample",
 		},
 		{
+			Name: "TestAccComputeUrlMap_urlMapDefaultMirrorPercentExample",
+		},
+		{
+			Name: "TestAccComputeUrlMap_urlMapPathMatcherDefaultMirrorPercentExample",
+		},
+		{
 			Name: "TestAccComputeUrlMap_urlMapCachePolicyBasicExample",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapCachePolicyMultiLevelExample",
+		},
+		{
+			Name: "TestAccComputeUrlMap_urlMapPathRuleMirrorPercentExample",
+		},
+		{
+			Name: "TestAccComputeUrlMap_urlMapRouteRuleMirrorPercentExample",
 		},
 		{
 			Name: "TestAccComputeUrlMap_urlMapTestHeadersExample",
@@ -153,6 +165,7 @@ func TestAccComputeUrlMap(t *testing.T) {
 					"default_route_action.cache_policy.request_coalescing",
 					"default_route_action.cache_policy.serve_while_stale",
 					"default_route_action.cache_policy.serve_while_stale.nanos",
+					"default_route_action.request_mirror_policy.mirror_percent",
 					"deletion_protection",
 					"depends_on",
 					"dynamic",
@@ -182,6 +195,7 @@ func TestAccComputeUrlMap(t *testing.T) {
 					"path_matcher.default_route_action.cache_policy.request_coalescing",
 					"path_matcher.default_route_action.cache_policy.serve_while_stale",
 					"path_matcher.default_route_action.cache_policy.serve_while_stale.nanos",
+					"path_matcher.default_route_action.request_mirror_policy.mirror_percent",
 					"path_matcher.path_rule.custom_error_response_policy.error_response_rule",
 					"path_matcher.path_rule.route_action.cache_policy.cache_bypass_request_header_names",
 					"path_matcher.path_rule.route_action.cache_policy.cache_key_policy.excluded_query_parameters",
@@ -204,6 +218,7 @@ func TestAccComputeUrlMap(t *testing.T) {
 					"path_matcher.path_rule.route_action.cache_policy.request_coalescing",
 					"path_matcher.path_rule.route_action.cache_policy.serve_while_stale",
 					"path_matcher.path_rule.route_action.cache_policy.serve_while_stale.nanos",
+					"path_matcher.path_rule.route_action.request_mirror_policy.mirror_percent",
 					"path_matcher.route_rules.route_action.cache_policy.cache_bypass_request_header_names",
 					"path_matcher.route_rules.route_action.cache_policy.cache_key_policy.excluded_query_parameters",
 					"path_matcher.route_rules.route_action.cache_policy.cache_key_policy.include_host",
