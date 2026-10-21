@@ -253,6 +253,13 @@ func expandHypercomputeclusterClusterComputeResourcesConfigNewFlexStartInstances
 		transformed["maxDuration"] = transformedMaxDuration
 	}
 
+	transformedNetworkTags, err := expandHypercomputeclusterClusterComputeResourcesConfigNewFlexStartInstancesNetworkTags(original["network_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkTags"] = transformedNetworkTags
+	}
+
 	transformedZone, err := expandHypercomputeclusterClusterComputeResourcesConfigNewFlexStartInstancesZone(original["zone"], d, config)
 	if err != nil {
 		return nil, err
@@ -268,6 +275,10 @@ func expandHypercomputeclusterClusterComputeResourcesConfigNewFlexStartInstances
 }
 
 func expandHypercomputeclusterClusterComputeResourcesConfigNewFlexStartInstancesMaxDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHypercomputeclusterClusterComputeResourcesConfigNewFlexStartInstancesNetworkTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -294,6 +305,13 @@ func expandHypercomputeclusterClusterComputeResourcesConfigNewOnDemandInstances(
 		transformed["machineType"] = transformedMachineType
 	}
 
+	transformedNetworkTags, err := expandHypercomputeclusterClusterComputeResourcesConfigNewOnDemandInstancesNetworkTags(original["network_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkTags"] = transformedNetworkTags
+	}
+
 	transformedZone, err := expandHypercomputeclusterClusterComputeResourcesConfigNewOnDemandInstancesZone(original["zone"], d, config)
 	if err != nil {
 		return nil, err
@@ -305,6 +323,10 @@ func expandHypercomputeclusterClusterComputeResourcesConfigNewOnDemandInstances(
 }
 
 func expandHypercomputeclusterClusterComputeResourcesConfigNewOnDemandInstancesMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHypercomputeclusterClusterComputeResourcesConfigNewOnDemandInstancesNetworkTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -324,6 +346,13 @@ func expandHypercomputeclusterClusterComputeResourcesConfigNewReservedInstances(
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedNetworkTags, err := expandHypercomputeclusterClusterComputeResourcesConfigNewReservedInstancesNetworkTags(original["network_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkTags"] = transformedNetworkTags
+	}
+
 	transformedReservation, err := expandHypercomputeclusterClusterComputeResourcesConfigNewReservedInstancesReservation(original["reservation"], d, config)
 	if err != nil {
 		return nil, err
@@ -332,6 +361,10 @@ func expandHypercomputeclusterClusterComputeResourcesConfigNewReservedInstances(
 	}
 
 	return transformed, nil
+}
+
+func expandHypercomputeclusterClusterComputeResourcesConfigNewReservedInstancesNetworkTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandHypercomputeclusterClusterComputeResourcesConfigNewReservedInstancesReservation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -357,6 +390,13 @@ func expandHypercomputeclusterClusterComputeResourcesConfigNewSpotInstances(v in
 		transformed["machineType"] = transformedMachineType
 	}
 
+	transformedNetworkTags, err := expandHypercomputeclusterClusterComputeResourcesConfigNewSpotInstancesNetworkTags(original["network_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkTags"] = transformedNetworkTags
+	}
+
 	transformedTerminationAction, err := expandHypercomputeclusterClusterComputeResourcesConfigNewSpotInstancesTerminationAction(original["termination_action"], d, config)
 	if err != nil {
 		return nil, err
@@ -375,6 +415,10 @@ func expandHypercomputeclusterClusterComputeResourcesConfigNewSpotInstances(v in
 }
 
 func expandHypercomputeclusterClusterComputeResourcesConfigNewSpotInstancesMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHypercomputeclusterClusterComputeResourcesConfigNewSpotInstancesNetworkTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -710,6 +754,13 @@ func expandHypercomputeclusterClusterOrchestratorSlurmLoginNodes(v interface{}, 
 		transformed["machineType"] = transformedMachineType
 	}
 
+	transformedNetworkTags, err := expandHypercomputeclusterClusterOrchestratorSlurmLoginNodesNetworkTags(original["network_tags"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkTags); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkTags"] = transformedNetworkTags
+	}
+
 	transformedStartupScript, err := expandHypercomputeclusterClusterOrchestratorSlurmLoginNodesStartupScript(original["startup_script"], d, config)
 	if err != nil {
 		return nil, err
@@ -824,6 +875,10 @@ func expandHypercomputeclusterClusterOrchestratorSlurmLoginNodesLabels(v interfa
 }
 
 func expandHypercomputeclusterClusterOrchestratorSlurmLoginNodesMachineType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHypercomputeclusterClusterOrchestratorSlurmLoginNodesNetworkTags(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1228,6 +1283,13 @@ func expandHypercomputeclusterClusterStorageResourcesConfig(v interface{}, d tpg
 		transformed["existingLustre"] = transformedExistingLustre
 	}
 
+	transformedExistingNfs, err := expandHypercomputeclusterClusterStorageResourcesConfigExistingNfs(original["existing_nfs"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExistingNfs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["existingNfs"] = transformedExistingNfs
+	}
+
 	transformedNewBucket, err := expandHypercomputeclusterClusterStorageResourcesConfigNewBucket(original["new_bucket"], d, config)
 	if err != nil {
 		return nil, err
@@ -1327,6 +1389,54 @@ func expandHypercomputeclusterClusterStorageResourcesConfigExistingLustre(v inte
 }
 
 func expandHypercomputeclusterClusterStorageResourcesConfigExistingLustreLustre(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHypercomputeclusterClusterStorageResourcesConfigExistingNfs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMountOptions, err := expandHypercomputeclusterClusterStorageResourcesConfigExistingNfsMountOptions(original["mount_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMountOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mountOptions"] = transformedMountOptions
+	}
+
+	transformedRemoteMount, err := expandHypercomputeclusterClusterStorageResourcesConfigExistingNfsRemoteMount(original["remote_mount"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRemoteMount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["remoteMount"] = transformedRemoteMount
+	}
+
+	transformedServerIpAddress, err := expandHypercomputeclusterClusterStorageResourcesConfigExistingNfsServerIpAddress(original["server_ip_address"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServerIpAddress); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["serverIpAddress"] = transformedServerIpAddress
+	}
+
+	return transformed, nil
+}
+
+func expandHypercomputeclusterClusterStorageResourcesConfigExistingNfsMountOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHypercomputeclusterClusterStorageResourcesConfigExistingNfsRemoteMount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHypercomputeclusterClusterStorageResourcesConfigExistingNfsServerIpAddress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
