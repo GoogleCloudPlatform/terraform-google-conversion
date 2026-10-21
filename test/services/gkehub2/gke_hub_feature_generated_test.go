@@ -51,6 +51,9 @@ func TestAccGKEHub2Feature(t *testing.T) {
 		{
 			Name: "TestAccGKEHubFeature_Rbacrolebindingactuation",
 		},
+		{
+			Name: "TestAccGKEHubFeature_EmptySpecSubBlock",
+		},
 	}
 
 	for _, tt := range tests {

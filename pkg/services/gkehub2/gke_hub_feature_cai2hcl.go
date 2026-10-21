@@ -214,9 +214,6 @@ func flattenGKEHub2FeatureSpecFleetobservability(v interface{}, d *schema.Resour
 	transformed := make(map[string]interface{})
 	transformed["logging_config"] =
 		flattenGKEHub2FeatureSpecFleetobservabilityLoggingConfig(original["loggingConfig"], d, config)
-	if tgcresource.AllValuesAreNil(transformed) {
-		return nil
-	}
 	return []interface{}{transformed}
 }
 
@@ -428,9 +425,6 @@ func flattenGKEHub2FeatureSpecWorkloadidentity(v interface{}, d *schema.Resource
 	transformed := make(map[string]interface{})
 	transformed["scope_tenancy_pool"] =
 		flattenGKEHub2FeatureSpecWorkloadidentityScopeTenancyPool(original["scopeTenancyPool"], d, config)
-	if tgcresource.AllValuesAreNil(transformed) {
-		return nil
-	}
 	return []interface{}{transformed}
 }
 
