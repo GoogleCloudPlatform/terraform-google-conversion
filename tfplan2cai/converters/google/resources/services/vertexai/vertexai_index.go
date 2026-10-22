@@ -334,6 +334,13 @@ func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfig(v interface{},
 		transformed["leafNodesToSearchPercent"] = transformedLeafNodesToSearchPercent
 	}
 
+	transformedFractionLeafNodesToSearch, err := expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfigFractionLeafNodesToSearch(original["fraction_leaf_nodes_to_search"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFractionLeafNodesToSearch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["fractionLeafNodesToSearch"] = transformedFractionLeafNodesToSearch
+	}
+
 	return transformed, nil
 }
 
@@ -342,6 +349,10 @@ func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfigLeafNodeEmbeddi
 }
 
 func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfigLeafNodesToSearchPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIIndexMetadataConfigAlgorithmConfigTreeAhConfigFractionLeafNodesToSearch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
