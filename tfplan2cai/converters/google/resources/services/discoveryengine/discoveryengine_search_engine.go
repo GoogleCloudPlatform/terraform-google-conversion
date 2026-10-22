@@ -176,6 +176,12 @@ func GetDiscoveryEngineSearchEngineApiObject(d tpgresource.TerraformResourceData
 	} else if v, ok := d.GetOkExists("procurement_contact_emails"); !tpgresource.IsEmptyValue(reflect.ValueOf(procurementContactEmailsProp)) && (ok || !reflect.DeepEqual(v, procurementContactEmailsProp)) {
 		obj["procurementContactEmails"] = procurementContactEmailsProp
 	}
+	modelConfigsProp, err := expandDiscoveryEngineSearchEngineModelConfigs(d.Get("model_configs"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("model_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(modelConfigsProp)) && (ok || !reflect.DeepEqual(v, modelConfigsProp)) {
+		obj["modelConfigs"] = modelConfigsProp
+	}
 
 	return resourceDiscoveryEngineSearchEngineEncoder(d, config, obj)
 }
@@ -411,4 +417,15 @@ func expandDiscoveryEngineSearchEngineKnowledgeGraphConfigFeatureConfigDisablePr
 
 func expandDiscoveryEngineSearchEngineProcurementContactEmails(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDiscoveryEngineSearchEngineModelConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
