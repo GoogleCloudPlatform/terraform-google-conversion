@@ -590,6 +590,13 @@ func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigs(v interface{
 			transformed["poolSize"] = transformedPoolSize
 		}
 
+		transformedEnableAutomaticFailover, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsEnableAutomaticFailover(original["enable_automatic_failover"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEnableAutomaticFailover); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["enableAutomaticFailover"] = transformedEnableAutomaticFailover
+		}
+
 		transformedAccelerators, err := expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsAccelerators(original["accelerators"], d, config)
 		if err != nil {
 			return nil, err
@@ -619,6 +626,10 @@ func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsEnableNestedV
 }
 
 func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsPoolSize(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandWorkstationsWorkstationConfigHostGceInstanceBoostConfigsEnableAutomaticFailover(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
