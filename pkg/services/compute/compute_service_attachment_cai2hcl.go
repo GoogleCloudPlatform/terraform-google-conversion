@@ -133,7 +133,7 @@ func (c *ComputeServiceAttachmentCai2hclConverter) convertResourceData(asset cai
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"connected_endpoints": struct{}{}, "fingerprint": struct{}{}, "psc_service_attachment_id": struct{}{}}
+	outputFields := map[string]struct{}{"connected_endpoints": struct{}{}, "fingerprint": struct{}{}, "psc_service_attachment_id": struct{}{}, "service_attachment_id": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/serviceAttachments/{{name}}", outputFields, hclData)
 
 	hclData["name"] = flattenComputeServiceAttachmentName(res["name"], d, config)

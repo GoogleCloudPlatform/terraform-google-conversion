@@ -261,6 +261,11 @@ updates of this resource.`,
 					Schema: map[string]*schema.Schema{},
 				},
 			},
+			"service_attachment_id": {
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: `The unique identifier number for the resource. This identifier is defined by the server.`,
+			},
 			"send_propagated_connection_limit_if_zero": {
 				Type:     schema.TypeBool,
 				Optional: true,
