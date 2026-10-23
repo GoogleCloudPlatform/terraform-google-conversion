@@ -133,7 +133,7 @@ func (c *ComputeFirewallCai2hclConverter) convertResourceData(asset caiasset.Ass
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}}
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "firewall_id": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/firewalls/{{name}}", outputFields, hclData)
 
 	hclData["allow"] = flattenComputeFirewallAllow(res["allowed"], d, config)

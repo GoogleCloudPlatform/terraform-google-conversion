@@ -133,7 +133,7 @@ func (c *ComputeRouterCai2hclConverter) convertResourceData(asset caiasset.Asset
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}}
+	outputFields := map[string]struct{}{"creation_timestamp": struct{}{}, "router_id": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/routers/{{name}}", outputFields, hclData)
 
 	hclData["name"] = flattenComputeRouterName(res["name"], d, config)

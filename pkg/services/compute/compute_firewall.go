@@ -398,6 +398,11 @@ instances on the specified network.`,
 				Computed:    true,
 				Description: `Creation timestamp in RFC3339 text format.`,
 			},
+			"firewall_id": {
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: `The unique identifier number for the resource. This identifier is defined by the server.`,
+			},
 			"enable_logging": {
 				Type:        schema.TypeBool,
 				Optional:    true,
