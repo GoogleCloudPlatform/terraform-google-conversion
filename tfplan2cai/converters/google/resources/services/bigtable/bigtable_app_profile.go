@@ -216,11 +216,36 @@ func expandBigtableAppProfileStandardIsolation(v interface{}, d tpgresource.Terr
 		transformed["priority"] = transformedPriority
 	}
 
+	transformedMemoryConfig, err := expandBigtableAppProfileStandardIsolationMemoryConfig(original["memory_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["memoryConfig"] = transformedMemoryConfig
+	}
+
 	return transformed, nil
 }
 
 func expandBigtableAppProfileStandardIsolationPriority(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandBigtableAppProfileStandardIsolationMemoryConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
 
 func expandBigtableAppProfileDataBoostIsolationReadOnly(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
