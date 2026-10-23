@@ -170,6 +170,12 @@ func GetBigqueryConnectionConnectionApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("spark"); ok || (v != nil && !reflect.DeepEqual(v, sparkProp)) {
 		obj["spark"] = sparkProp
 	}
+	salesforceDataCloudProp, err := expandBigqueryConnectionConnectionSalesforceDataCloud(d.Get("salesforce_data_cloud"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("salesforce_data_cloud"); !tpgresource.IsEmptyValue(reflect.ValueOf(salesforceDataCloudProp)) && (ok || !reflect.DeepEqual(v, salesforceDataCloudProp)) {
+		obj["salesforceDataCloud"] = salesforceDataCloudProp
+	}
 	configurationProp, err := expandBigqueryConnectionConnectionConfiguration(d.Get("configuration"), d, config)
 	if err != nil {
 		return nil, err
@@ -652,6 +658,87 @@ func expandBigqueryConnectionConnectionSparkSparkHistoryServerConfig(v interface
 }
 
 func expandBigqueryConnectionConnectionSparkSparkHistoryServerConfigDataprocCluster(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryConnectionConnectionSalesforceDataCloud(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedInstanceUri, err := expandBigqueryConnectionConnectionSalesforceDataCloudInstanceUri(original["instance_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInstanceUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["instanceUri"] = transformedInstanceUri
+	}
+
+	transformedTenantId, err := expandBigqueryConnectionConnectionSalesforceDataCloudTenantId(original["tenant_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTenantId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tenantId"] = transformedTenantId
+	}
+
+	transformedIdentity, err := expandBigqueryConnectionConnectionSalesforceDataCloudIdentity(original["identity"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdentity); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["identity"] = transformedIdentity
+	}
+
+	transformedCrossCloudCacheOptions, err := expandBigqueryConnectionConnectionSalesforceDataCloudCrossCloudCacheOptions(original["cross_cloud_cache_options"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCrossCloudCacheOptions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["crossCloudCacheOptions"] = transformedCrossCloudCacheOptions
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryConnectionConnectionSalesforceDataCloudInstanceUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryConnectionConnectionSalesforceDataCloudTenantId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryConnectionConnectionSalesforceDataCloudIdentity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryConnectionConnectionSalesforceDataCloudCrossCloudCacheOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandBigqueryConnectionConnectionSalesforceDataCloudCrossCloudCacheOptionsEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryConnectionConnectionSalesforceDataCloudCrossCloudCacheOptionsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
