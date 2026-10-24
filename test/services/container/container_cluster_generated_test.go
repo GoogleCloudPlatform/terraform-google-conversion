@@ -40,6 +40,15 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_basic",
 		},
 		{
+			Name: "TestAccContainerCluster_noDefaultNodePool",
+		},
+		{
+			Name: "TestAccContainerCluster_noDefaultNodePool_omittedInitialNodeCount",
+		},
+		{
+			Name: "TestAccContainerCluster_removeDefaultNodePool_migration",
+		},
+		{
 			Name: "TestAccContainerCluster_resourceManagerTags",
 		},
 		{
