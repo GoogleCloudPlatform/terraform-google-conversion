@@ -314,6 +314,13 @@ func expandNetworkServicesGrpcRouteRulesMatchesMethod(v interface{}, d tpgresour
 		transformed["caseSensitive"] = transformedCaseSensitive
 	}
 
+	transformedType, err := expandNetworkServicesGrpcRouteRulesMatchesMethodType(original["type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["type"] = transformedType
+	}
+
 	return transformed, nil
 }
 
@@ -326,6 +333,10 @@ func expandNetworkServicesGrpcRouteRulesMatchesMethodGrpcMethod(v interface{}, d
 }
 
 func expandNetworkServicesGrpcRouteRulesMatchesMethodCaseSensitive(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesGrpcRouteRulesMatchesMethodType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -360,6 +371,13 @@ func expandNetworkServicesGrpcRouteRulesAction(v interface{}, d tpgresource.Terr
 		return nil, err
 	} else if val := reflect.ValueOf(transformedTimeout); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["timeout"] = transformedTimeout
+	}
+
+	transformedIdleTimeout, err := expandNetworkServicesGrpcRouteRulesActionIdleTimeout(original["idle_timeout"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdleTimeout); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idleTimeout"] = transformedIdleTimeout
 	}
 
 	transformedRetryPolicy, err := expandNetworkServicesGrpcRouteRulesActionRetryPolicy(original["retry_policy"], d, config)
@@ -516,6 +534,10 @@ func expandNetworkServicesGrpcRouteRulesActionFaultInjectionPolicyAbortPercentag
 }
 
 func expandNetworkServicesGrpcRouteRulesActionTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesGrpcRouteRulesActionIdleTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
