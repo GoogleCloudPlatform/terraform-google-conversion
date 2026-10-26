@@ -146,6 +146,18 @@ func GetStorageBatchOperationsJobApiObject(d tpgresource.TerraformResourceData, 
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	loggingConfigProp, err := expandStorageBatchOperationsJobLoggingConfig(d.Get("logging_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("logging_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(loggingConfigProp)) && (ok || !reflect.DeepEqual(v, loggingConfigProp)) {
+		obj["loggingConfig"] = loggingConfigProp
+	}
+	dryRunProp, err := expandStorageBatchOperationsJobDryRun(d.Get("dry_run"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("dry_run"); !tpgresource.IsEmptyValue(reflect.ValueOf(dryRunProp)) && (ok || !reflect.DeepEqual(v, dryRunProp)) {
+		obj["dryRun"] = dryRunProp
+	}
 
 	return obj, nil
 }
@@ -456,5 +468,46 @@ func expandStorageBatchOperationsJobPutObjectHoldTemporaryHold(v interface{}, d 
 }
 
 func expandStorageBatchOperationsJobDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandStorageBatchOperationsJobLoggingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLogActions, err := expandStorageBatchOperationsJobLoggingConfigLogActions(original["log_actions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLogActions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["logActions"] = transformedLogActions
+	}
+
+	transformedLogActionStates, err := expandStorageBatchOperationsJobLoggingConfigLogActionStates(original["log_action_states"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLogActionStates); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["logActionStates"] = transformedLogActionStates
+	}
+
+	return transformed, nil
+}
+
+func expandStorageBatchOperationsJobLoggingConfigLogActions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandStorageBatchOperationsJobLoggingConfigLogActionStates(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandStorageBatchOperationsJobDryRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
