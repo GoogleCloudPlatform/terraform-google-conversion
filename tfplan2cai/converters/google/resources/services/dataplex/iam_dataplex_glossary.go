@@ -46,6 +46,7 @@ func NewDataplexGlossaryIamMemberResource() *schema.Resource {
 		DataplexGlossaryIamUpdaterProducer,
 		DataplexGlossaryIdParseFunc,
 		tpgiamresource.IamWithParentResourceIdentity(DataplexGlossaryIamParentParentResourceIdentityParser),
+		tpgiamresource.IamWithMaxBackoffSeconds(1200),
 	)
 }
 

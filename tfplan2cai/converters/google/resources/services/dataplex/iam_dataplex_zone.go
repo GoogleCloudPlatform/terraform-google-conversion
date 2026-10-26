@@ -46,6 +46,7 @@ func NewDataplexZoneIamMemberResource() *schema.Resource {
 		DataplexZoneIamUpdaterProducer,
 		DataplexZoneIdParseFunc,
 		tpgiamresource.IamWithParentResourceIdentity(DataplexZoneIamParentParentResourceIdentityParser),
+		tpgiamresource.IamWithMaxBackoffSeconds(1200),
 	)
 }
 
