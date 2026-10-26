@@ -370,7 +370,16 @@ func expandBiglakeIcebergIcebergTableSchemaFieldsName(v interface{}, d tpgresour
 }
 
 func expandBiglakeIcebergIcebergTableSchemaFieldsType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
-	return v, nil
+	// List, map and struct types are JSON objects; primitive types are plain strings.
+	s := v.(string)
+	if !strings.HasPrefix(s, "{") {
+		return s, nil
+	}
+	var j interface{}
+	if err := json.Unmarshal([]byte(s), &j); err != nil {
+		return nil, err
+	}
+	return j, nil
 }
 
 func expandBiglakeIcebergIcebergTableSchemaFieldsRequired(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
