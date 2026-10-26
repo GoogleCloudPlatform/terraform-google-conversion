@@ -188,6 +188,24 @@ func GetIntegrationConnectorsConnectionApiObject(d tpgresource.TerraformResource
 	} else if v, ok := d.GetOkExists("eventing_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(eventingConfigProp)) && (ok || !reflect.DeepEqual(v, eventingConfigProp)) {
 		obj["eventingConfig"] = eventingConfigProp
 	}
+	asyncOperationsEnabledProp, err := expandIntegrationConnectorsConnectionAsyncOperationsEnabled(d.Get("async_operations_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("async_operations_enabled"); ok || (v != nil && !reflect.DeepEqual(v, asyncOperationsEnabledProp)) {
+		obj["asyncOperationsEnabled"] = asyncOperationsEnabledProp
+	}
+	authOverrideEnabledProp, err := expandIntegrationConnectorsConnectionAuthOverrideEnabled(d.Get("auth_override_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("auth_override_enabled"); ok || (v != nil && !reflect.DeepEqual(v, authOverrideEnabledProp)) {
+		obj["authOverrideEnabled"] = authOverrideEnabledProp
+	}
+	trafficShapingConfigsProp, err := expandIntegrationConnectorsConnectionTrafficShapingConfigs(d.Get("traffic_shaping_configs"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("traffic_shaping_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(trafficShapingConfigsProp)) && (ok || !reflect.DeepEqual(v, trafficShapingConfigsProp)) {
+		obj["trafficShapingConfigs"] = trafficShapingConfigsProp
+	}
 	effectiveLabelsProp, err := expandIntegrationConnectorsConnectionEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -2053,6 +2071,54 @@ func expandIntegrationConnectorsConnectionEventingConfigAdditionalVariableEncryp
 }
 
 func expandIntegrationConnectorsConnectionEventingConfigEnrichmentEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsConnectionAsyncOperationsEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsConnectionAuthOverrideEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsConnectionTrafficShapingConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedQuotaLimit, err := expandIntegrationConnectorsConnectionTrafficShapingConfigsQuotaLimit(original["quota_limit"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedQuotaLimit); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["quotaLimit"] = transformedQuotaLimit
+		}
+
+		transformedDuration, err := expandIntegrationConnectorsConnectionTrafficShapingConfigsDuration(original["duration"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["duration"] = transformedDuration
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandIntegrationConnectorsConnectionTrafficShapingConfigsQuotaLimit(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsConnectionTrafficShapingConfigsDuration(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
