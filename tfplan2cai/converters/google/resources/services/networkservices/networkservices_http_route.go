@@ -557,6 +557,20 @@ func expandNetworkServicesHttpRouteRulesAction(v interface{}, d tpgresource.Terr
 		transformed["corsPolicy"] = transformedCorsPolicy
 	}
 
+	transformedDirectResponse, err := expandNetworkServicesHttpRouteRulesActionDirectResponse(original["direct_response"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDirectResponse); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["directResponse"] = transformedDirectResponse
+	}
+
+	transformedIdleTimeout, err := expandNetworkServicesHttpRouteRulesActionIdleTimeout(original["idle_timeout"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdleTimeout); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idleTimeout"] = transformedIdleTimeout
+	}
+
 	return transformed, nil
 }
 
@@ -1027,6 +1041,13 @@ func expandNetworkServicesHttpRouteRulesActionRequestMirrorPolicy(v interface{},
 		transformed["destination"] = transformedDestination
 	}
 
+	transformedMirrorPercent, err := expandNetworkServicesHttpRouteRulesActionRequestMirrorPolicyMirrorPercent(original["mirror_percent"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMirrorPercent); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mirrorPercent"] = transformedMirrorPercent
+	}
+
 	return transformed, nil
 }
 
@@ -1064,6 +1085,10 @@ func expandNetworkServicesHttpRouteRulesActionRequestMirrorPolicyDestinationServ
 }
 
 func expandNetworkServicesHttpRouteRulesActionRequestMirrorPolicyDestinationWeight(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesHttpRouteRulesActionRequestMirrorPolicyMirrorPercent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1167,6 +1192,58 @@ func expandNetworkServicesHttpRouteRulesActionCorsPolicyAllowCredentials(v inter
 }
 
 func expandNetworkServicesHttpRouteRulesActionCorsPolicyDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesHttpRouteRulesActionDirectResponse(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedStatus, err := expandNetworkServicesHttpRouteRulesActionDirectResponseStatus(original["status"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStatus); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["status"] = transformedStatus
+	}
+
+	transformedStringBody, err := expandNetworkServicesHttpRouteRulesActionDirectResponseStringBody(original["string_body"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStringBody); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["stringBody"] = transformedStringBody
+	}
+
+	transformedBytesBody, err := expandNetworkServicesHttpRouteRulesActionDirectResponseBytesBody(original["bytes_body"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedBytesBody); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["bytesBody"] = transformedBytesBody
+	}
+
+	return transformed, nil
+}
+
+func expandNetworkServicesHttpRouteRulesActionDirectResponseStatus(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesHttpRouteRulesActionDirectResponseStringBody(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesHttpRouteRulesActionDirectResponseBytesBody(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesHttpRouteRulesActionIdleTimeout(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
