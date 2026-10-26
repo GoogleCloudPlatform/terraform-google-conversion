@@ -92,6 +92,9 @@ func TestAccPubsubTopic(t *testing.T) {
 			Name: "TestAccPubsubTopic_javascriptUdfUpdate",
 		},
 		{
+			Name: "TestAccPubsubTopic_compressionUpdate",
+		},
+		{
 			Name: "TestAccPubsubTopic_tags",
 		},
 	}
