@@ -333,6 +333,18 @@ func GetArtifactRegistryRepositoryApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("vulnerability_scanning_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(vulnerabilityScanningConfigProp)) && (ok || !reflect.DeepEqual(v, vulnerabilityScanningConfigProp)) {
 		obj["vulnerabilityScanningConfig"] = vulnerabilityScanningConfigProp
 	}
+	disallowUnspecifiedModeProp, err := expandArtifactRegistryRepositoryDisallowUnspecifiedMode(d.Get("disallow_unspecified_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("disallow_unspecified_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(disallowUnspecifiedModeProp)) && (ok || !reflect.DeepEqual(v, disallowUnspecifiedModeProp)) {
+		obj["disallowUnspecifiedMode"] = disallowUnspecifiedModeProp
+	}
+	platformLogsConfigProp, err := expandArtifactRegistryRepositoryPlatformLogsConfig(d.Get("platform_logs_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("platform_logs_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(platformLogsConfigProp)) && (ok || !reflect.DeepEqual(v, platformLogsConfigProp)) {
+		obj["platformLogsConfig"] = platformLogsConfigProp
+	}
 	effectiveLabelsProp, err := expandArtifactRegistryRepositoryEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -1342,6 +1354,47 @@ func expandArtifactRegistryRepositoryVulnerabilityScanningConfigEnablementState(
 }
 
 func expandArtifactRegistryRepositoryVulnerabilityScanningConfigEnablementStateReason(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryDisallowUnspecifiedMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryPlatformLogsConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLoggingState, err := expandArtifactRegistryRepositoryPlatformLogsConfigLoggingState(original["logging_state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLoggingState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["loggingState"] = transformedLoggingState
+	}
+
+	transformedSeverityLevel, err := expandArtifactRegistryRepositoryPlatformLogsConfigSeverityLevel(original["severity_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSeverityLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["severityLevel"] = transformedSeverityLevel
+	}
+
+	return transformed, nil
+}
+
+func expandArtifactRegistryRepositoryPlatformLogsConfigLoggingState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandArtifactRegistryRepositoryPlatformLogsConfigSeverityLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

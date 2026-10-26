@@ -132,6 +132,7 @@ func TestAccArtifactRegistryRepository(t *testing.T) {
 					"count",
 					"deletion_protection",
 					"depends_on",
+					"disallow_unspecified_mode",
 					"dynamic",
 					"for_each",
 					"lifecycle",

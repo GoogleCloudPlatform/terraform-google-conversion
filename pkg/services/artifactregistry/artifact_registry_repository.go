@@ -362,6 +362,12 @@ repository.`,
 				Optional:    true,
 				Description: `The user-provided description of the repository.`,
 			},
+			"disallow_unspecified_mode": {
+				Type:     schema.TypeBool,
+				Optional: true,
+				Description: `If this is true, an unspecified repo type will be treated as error rather
+than defaulting to standard.`,
+			},
 			"docker_config": {
 				Type:        schema.TypeList,
 				Optional:    true,
@@ -447,6 +453,29 @@ snapshot versions.`,
 				ValidateFunc: verify.ValidateEnum([]string{"STANDARD_REPOSITORY", "VIRTUAL_REPOSITORY", "REMOTE_REPOSITORY", ""}),
 				Description:  `The mode configures the repository to serve artifacts from different sources. Default value: "STANDARD_REPOSITORY" Possible values: ["STANDARD_REPOSITORY", "VIRTUAL_REPOSITORY", "REMOTE_REPOSITORY"]`,
 				Default:      "STANDARD_REPOSITORY",
+			},
+			"platform_logs_config": {
+				Type:        schema.TypeList,
+				Optional:    true,
+				Description: `Configuration for platform logs.`,
+				MaxItems:    1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"logging_state": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							ValidateFunc: verify.ValidateEnum([]string{"ENABLED", "DISABLED", ""}),
+							Description:  `The state of the platform logs: enabled or disabled. Possible values: ["ENABLED", "DISABLED"]`,
+						},
+						"severity_level": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							ValidateFunc: verify.ValidateEnum([]string{"DEBUG", "INFO", "NOTICE", "WARNING", "ERROR", "CRITICAL", "ALERT", "EMERGENCY", ""}),
+							Description: `The severity level for the logs. Logs will be generated if their
+severity level is >= than the value of the severity level mentioned here. Possible values: ["DEBUG", "INFO", "NOTICE", "WARNING", "ERROR", "CRITICAL", "ALERT", "EMERGENCY"]`,
+						},
+					},
+				},
 			},
 			"remote_repository_config": {
 				Type:        schema.TypeList,
