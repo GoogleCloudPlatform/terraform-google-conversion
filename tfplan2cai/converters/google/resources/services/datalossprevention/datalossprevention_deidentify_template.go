@@ -183,6 +183,13 @@ func expandDataLossPreventionDeidentifyTemplateDeidentifyConfig(v interface{}, d
 		transformed["recordTransformations"] = transformedRecordTransformations
 	}
 
+	transformedTransformationErrorHandling, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigTransformationErrorHandling(original["transformation_error_handling"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTransformationErrorHandling); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["transformationErrorHandling"] = transformedTransformationErrorHandling
+	}
+
 	return transformed, nil
 }
 
@@ -8354,4 +8361,69 @@ func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigRecordTransformat
 
 func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigRecordTransformationsRecordSuppressionsConditionExpressionsConditionsConditionsValueDayOfWeekValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigTransformationErrorHandling(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedThrowError, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigTransformationErrorHandlingThrowError(original["throw_error"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["throwError"] = transformedThrowError
+	}
+
+	transformedLeaveUntransformed, err := expandDataLossPreventionDeidentifyTemplateDeidentifyConfigTransformationErrorHandlingLeaveUntransformed(original["leave_untransformed"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["leaveUntransformed"] = transformedLeaveUntransformed
+	}
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigTransformationErrorHandlingThrowError(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
+}
+
+func expandDataLossPreventionDeidentifyTemplateDeidentifyConfigTransformationErrorHandlingLeaveUntransformed(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	transformed := make(map[string]interface{})
+
+	return transformed, nil
 }
