@@ -138,10 +138,11 @@ func (c *BackupDRBackupPlanCai2hclConverter) convertResourceData(asset caiasset.
 		return nil, err
 	}
 
-	outputFields := map[string]struct{}{"backup_vault_service_account": struct{}{}, "create_time": struct{}{}, "name": struct{}{}, "supported_resource_types": struct{}{}, "update_time": struct{}{}}
+	outputFields := map[string]struct{}{"backup_vault_service_account": struct{}{}, "create_time": struct{}{}, "effective_labels": struct{}{}, "name": struct{}{}, "supported_resource_types": struct{}{}, "terraform_labels": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//backupdr.googleapis.com/projects/{{project}}/locations/{{location}}/backupPlans/{{backup_plan_id}}", outputFields, hclData)
 
 	hclData["description"] = flattenBackupDRBackupPlanDescription(res["description"], d, config)
+	hclData["labels"] = flattenBackupDRBackupPlanLabels(res["labels"], d, config)
 	hclData["backup_vault"] = flattenBackupDRBackupPlanBackupVault(res["backupVault"], d, config)
 	hclData["resource_type"] = flattenBackupDRBackupPlanResourceType(res["resourceType"], d, config)
 	hclData["max_custom_on_demand_retention_days"] = flattenBackupDRBackupPlanMaxCustomOnDemandRetentionDays(res["maxCustomOnDemandRetentionDays"], d, config)
@@ -162,6 +163,10 @@ func (c *BackupDRBackupPlanCai2hclConverter) convertResourceData(asset caiasset.
 
 func flattenBackupDRBackupPlanDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenBackupDRBackupPlanLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return tgcresource.RemoveTerraformAttributionLabel(v)
 }
 
 func flattenBackupDRBackupPlanBackupVault(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

@@ -163,6 +163,12 @@ func GetBackupDRBackupPlanCaiObject(d tpgresource.TerraformResourceData, config 
 	} else if v, ok := d.GetOkExists("compute_instance_backup_plan_properties"); !tpgresource.IsEmptyValue(reflect.ValueOf(computeInstanceBackupPlanPropertiesProp)) && (ok || !reflect.DeepEqual(v, computeInstanceBackupPlanPropertiesProp)) {
 		obj["computeInstanceBackupPlanProperties"] = computeInstanceBackupPlanPropertiesProp
 	}
+	effectiveLabelsProp, err := expandBackupDRBackupPlanEffectiveLabels(d.Get("effective_labels"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("effective_labels"); !tpgresource.IsEmptyValue(reflect.ValueOf(effectiveLabelsProp)) && (ok || !reflect.DeepEqual(v, effectiveLabelsProp)) {
+		obj["labels"] = effectiveLabelsProp
+	}
 
 	return obj, nil
 }
@@ -453,4 +459,15 @@ func expandBackupDRBackupPlanComputeInstanceBackupPlanProperties(v interface{}, 
 
 func expandBackupDRBackupPlanComputeInstanceBackupPlanPropertiesGuestFlush(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandBackupDRBackupPlanEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
