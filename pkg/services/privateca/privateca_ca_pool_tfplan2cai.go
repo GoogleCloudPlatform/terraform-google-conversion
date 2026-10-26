@@ -214,6 +214,13 @@ func expandPrivatecaCaPoolIssuancePolicy(v interface{}, d tpgresource.TerraformR
 		transformed["baselineValues"] = transformedBaselineValues
 	}
 
+	transformedPassthroughExtensions, err := expandPrivatecaCaPoolIssuancePolicyPassthroughExtensions(original["passthrough_extensions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPassthroughExtensions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["passthroughExtensions"] = transformedPassthroughExtensions
+	}
+
 	return transformed, nil
 }
 
@@ -515,6 +522,68 @@ func expandPrivatecaCaPoolIssuancePolicyBaselineValues(v interface{}, d tpgresou
 	}
 	transformed["nameConstraints"] = nameConstraints
 	return transformed, nil
+}
+
+func expandPrivatecaCaPoolIssuancePolicyPassthroughExtensions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedKnownExtensions, err := expandPrivatecaCaPoolIssuancePolicyPassthroughExtensionsKnownExtensions(original["known_extensions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKnownExtensions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["knownExtensions"] = transformedKnownExtensions
+	}
+
+	transformedAdditionalExtensions, err := expandPrivatecaCaPoolIssuancePolicyPassthroughExtensionsAdditionalExtensions(original["additional_extensions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAdditionalExtensions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["additionalExtensions"] = transformedAdditionalExtensions
+	}
+
+	return transformed, nil
+}
+
+func expandPrivatecaCaPoolIssuancePolicyPassthroughExtensionsKnownExtensions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPrivatecaCaPoolIssuancePolicyPassthroughExtensionsAdditionalExtensions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedObjectIdPath, err := expandPrivatecaCaPoolIssuancePolicyPassthroughExtensionsAdditionalExtensionsObjectIdPath(original["object_id_path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedObjectIdPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["objectIdPath"] = transformedObjectIdPath
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandPrivatecaCaPoolIssuancePolicyPassthroughExtensionsAdditionalExtensionsObjectIdPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandPrivatecaCaPoolPublishingOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
