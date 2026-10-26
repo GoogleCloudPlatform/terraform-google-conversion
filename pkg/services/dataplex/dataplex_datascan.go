@@ -319,6 +319,16 @@ Cloud Storage bucket (//storage.googleapis.com/projects/PROJECT_ID/buckets/BUCKE
 							Optional:    true,
 							Description: `If set, the latest DataScan job result will be published to Knowledge Catalog.`,
 						},
+						"generation_scopes": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							ForceNew:    true,
+							Description: `Specifies which components of the data documentation to generate. Any component that is required to generate the specified components will also be generated. If no generation scope is specified, all available documentation components will be generated. Possible values: ["ALL", "TABLE_AND_COLUMN_DESCRIPTIONS", "SQL_QUERIES", "BUSINESS_GLOSSARY_TERM_ASSOCIATIONS"]`,
+							Elem: &schema.Schema{
+								Type:         schema.TypeString,
+								ValidateFunc: verify.ValidateEnum([]string{"ALL", "TABLE_AND_COLUMN_DESCRIPTIONS", "SQL_QUERIES", "BUSINESS_GLOSSARY_TERM_ASSOCIATIONS"}),
+							},
+						},
 						"sql_dialect": {
 							Type:         schema.TypeString,
 							Computed:     true,
@@ -384,6 +394,12 @@ For instance, if 'x' is of nested field type, listing 'x' is supported but 'x.y.
 									},
 								},
 							},
+						},
+						"mode": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							ValidateFunc: verify.ValidateEnum([]string{"STANDARD", "LIGHTWEIGHT", ""}),
+							Description:  `The execution mode for the profile scan. Possible values: ["STANDARD", "LIGHTWEIGHT"]`,
 						},
 						"post_scan_actions": {
 							Type:        schema.TypeList,
@@ -563,6 +579,27 @@ Format://bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/
 										Type:        schema.TypeString,
 										Optional:    true,
 										Description: `The unnested column which this rule is evaluated against.`,
+									},
+									"debug_queries": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Description: `Specifies the debug queries for this rule.
+Currently, only one query is supported, but this may be expanded in the future.`,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"sql_statement": {
+													Type:        schema.TypeString,
+													Required:    true,
+													Description: `Specifies the SQL statement to be executed.`,
+												},
+												"description": {
+													Type:     schema.TypeString,
+													Optional: true,
+													Description: `Specifies the description of the debug query.
+The maximum length is 1,024 characters.`,
+												},
+											},
+										},
 									},
 									"description": {
 										Type:     schema.TypeString,

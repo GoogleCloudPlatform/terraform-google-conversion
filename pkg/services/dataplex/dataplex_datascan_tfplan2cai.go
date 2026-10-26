@@ -863,6 +863,13 @@ func expandDataplexDatascanDataQualitySpecRules(v interface{}, d tpgresource.Ter
 			transformed["templateReference"] = transformedTemplateReference
 		}
 
+		transformedDebugQueries, err := expandDataplexDatascanDataQualitySpecRulesDebugQueries(original["debug_queries"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDebugQueries); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["debugQueries"] = transformedDebugQueries
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -1264,6 +1271,46 @@ func expandDataplexDatascanDataQualitySpecRulesTemplateReferenceValuesValue(v in
 	return v, nil
 }
 
+func expandDataplexDatascanDataQualitySpecRulesDebugQueries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedDescription, err := expandDataplexDatascanDataQualitySpecRulesDebugQueriesDescription(original["description"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDescription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["description"] = transformedDescription
+		}
+
+		transformedSqlStatement, err := expandDataplexDatascanDataQualitySpecRulesDebugQueriesSqlStatement(original["sql_statement"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSqlStatement); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sqlStatement"] = transformedSqlStatement
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandDataplexDatascanDataQualitySpecRulesDebugQueriesDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataQualitySpecRulesDebugQueriesSqlStatement(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandDataplexDatascanDataQualitySpecCatalogPublishingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -1333,6 +1380,13 @@ func expandDataplexDatascanDataProfileSpec(v interface{}, d tpgresource.Terrafor
 		return nil, err
 	} else if val := reflect.ValueOf(transformedCatalogPublishingEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["catalogPublishingEnabled"] = transformedCatalogPublishingEnabled
+	}
+
+	transformedMode, err := expandDataplexDatascanDataProfileSpecMode(original["mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["mode"] = transformedMode
 	}
 
 	return transformed, nil
@@ -1447,6 +1501,10 @@ func expandDataplexDatascanDataProfileSpecExcludeFieldsFieldNames(v interface{},
 }
 
 func expandDataplexDatascanDataProfileSpecCatalogPublishingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataProfileSpecMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1732,6 +1790,13 @@ func expandDataplexDatascanDataDocumentationSpec(v interface{}, d tpgresource.Te
 		transformed["sqlDialect"] = transformedSqlDialect
 	}
 
+	transformedGenerationScopes, err := expandDataplexDatascanDataDocumentationSpecGenerationScopes(original["generation_scopes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGenerationScopes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["generationScopes"] = transformedGenerationScopes
+	}
+
 	return transformed, nil
 }
 
@@ -1740,6 +1805,10 @@ func expandDataplexDatascanDataDocumentationSpecCatalogPublishingEnabled(v inter
 }
 
 func expandDataplexDatascanDataDocumentationSpecSqlDialect(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDatascanDataDocumentationSpecGenerationScopes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

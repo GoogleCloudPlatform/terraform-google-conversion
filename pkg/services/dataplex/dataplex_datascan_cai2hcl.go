@@ -562,6 +562,7 @@ func flattenDataplexDatascanDataQualitySpecRules(v interface{}, d *schema.Resour
 			"table_condition_expectation": flattenDataplexDatascanDataQualitySpecRulesTableConditionExpectation(original["tableConditionExpectation"], d, config),
 			"sql_assertion":               flattenDataplexDatascanDataQualitySpecRulesSqlAssertion(original["sqlAssertion"], d, config),
 			"template_reference":          flattenDataplexDatascanDataQualitySpecRulesTemplateReference(original["templateReference"], d, config),
+			"debug_queries":               flattenDataplexDatascanDataQualitySpecRulesDebugQueries(original["debugQueries"], d, config),
 		})
 	}
 	return transformed
@@ -914,6 +915,47 @@ func flattenDataplexDatascanDataQualitySpecRulesTemplateReferenceValuesValue(v i
 	return v
 }
 
+func flattenDataplexDatascanDataQualitySpecRulesDebugQueries(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"description":   flattenDataplexDatascanDataQualitySpecRulesDebugQueriesDescription(original["description"], d, config),
+			"sql_statement": flattenDataplexDatascanDataQualitySpecRulesDebugQueriesSqlStatement(original["sqlStatement"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenDataplexDatascanDataQualitySpecRulesDebugQueriesDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenDataplexDatascanDataQualitySpecRulesDebugQueriesSqlStatement(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
 func flattenDataplexDatascanDataQualitySpecCatalogPublishingEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
@@ -950,6 +992,8 @@ func flattenDataplexDatascanDataProfileSpec(v interface{}, d *schema.ResourceDat
 		flattenDataplexDatascanDataProfileSpecExcludeFields(original["excludeFields"], d, config)
 	transformed["catalog_publishing_enabled"] =
 		flattenDataplexDatascanDataProfileSpecCatalogPublishingEnabled(original["catalogPublishingEnabled"], d, config)
+	transformed["mode"] =
+		flattenDataplexDatascanDataProfileSpecMode(original["mode"], d, config)
 	return []interface{}{transformed}
 }
 
@@ -1042,6 +1086,10 @@ func flattenDataplexDatascanDataProfileSpecExcludeFieldsFieldNames(v interface{}
 }
 
 func flattenDataplexDatascanDataProfileSpecCatalogPublishingEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDataplexDatascanDataProfileSpecMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
@@ -1253,6 +1301,8 @@ func flattenDataplexDatascanDataDocumentationSpec(v interface{}, d *schema.Resou
 		flattenDataplexDatascanDataDocumentationSpecCatalogPublishingEnabled(original["catalogPublishingEnabled"], d, config)
 	transformed["sql_dialect"] =
 		flattenDataplexDatascanDataDocumentationSpecSqlDialect(original["sqlDialect"], d, config)
+	transformed["generation_scopes"] =
+		flattenDataplexDatascanDataDocumentationSpecGenerationScopes(original["generationScopes"], d, config)
 	return []interface{}{transformed}
 }
 
@@ -1261,6 +1311,10 @@ func flattenDataplexDatascanDataDocumentationSpecCatalogPublishingEnabled(v inte
 }
 
 func flattenDataplexDatascanDataDocumentationSpecSqlDialect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenDataplexDatascanDataDocumentationSpecGenerationScopes(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
