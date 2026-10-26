@@ -606,6 +606,48 @@ see https://cloud.google.com/certificate-authority-service/docs/cel-guide`,
 							Description: `The maximum lifetime allowed for issued Certificates. Note that if the issuing CertificateAuthority
 expires before a Certificate's requested maximumLifetime, the effective lifetime will be explicitly truncated to match it.`,
 						},
+						"passthrough_extensions": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Description: `Describes the set of X.509 extensions that may appear in a Certificate issued through this CaPool.
+If a certificate request sets extensions that don't appear in the passthrough_extensions, those extensions
+will be dropped. If a certificate request uses a CertificateTemplate with predefined_values that don't
+appear here, the certificate issuance request will fail. If this is omitted, then this CaPool will not
+add restrictions on a certificate's X.509 extensions. These constraints do not apply to X.509 extensions
+set in this CaPool's baseline_values.`,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"additional_extensions": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Description: `A set of ObjectIds identifying custom X.509 extensions.
+Will be combined with known_extensions to determine the full set of X.509 extensions.`,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"object_id_path": {
+													Type:        schema.TypeList,
+													Required:    true,
+													Description: `An ObjectId specifies an object identifier (OID). These provide context and describe types in ASN.1 messages.`,
+													Elem: &schema.Schema{
+														Type: schema.TypeInt,
+													},
+												},
+											},
+										},
+									},
+									"known_extensions": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Description: `A set of named X.509 extensions. Will be combined with additional_extensions to determine the full set of X.509 extensions.
+Acceptable values are: 'BASE_KEY_USAGE', 'EXTENDED_KEY_USAGE', 'CA_OPTIONS', 'POLICY_IDS', 'AIA_OCSP_SERVERS', 'NAME_CONSTRAINTS'.`,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+								},
+							},
+						},
 					},
 				},
 			},

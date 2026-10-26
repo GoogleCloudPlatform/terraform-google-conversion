@@ -181,6 +181,8 @@ func flattenPrivatecaCaPoolIssuancePolicy(v interface{}, d *schema.ResourceData,
 		flattenPrivatecaCaPoolIssuancePolicyIdentityConstraints(original["identityConstraints"], d, config)
 	transformed["baseline_values"] =
 		flattenPrivatecaCaPoolIssuancePolicyBaselineValues(original["baselineValues"], d, config)
+	transformed["passthrough_extensions"] =
+		flattenPrivatecaCaPoolIssuancePolicyPassthroughExtensions(original["passthroughExtensions"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -426,6 +428,49 @@ func flattenPrivatecaCaPoolIssuancePolicyBaselineValues(v interface{}, d *schema
 	transformed["name_constraints"] =
 		flattenPrivatecaCertificateConfigX509ConfigNameConstraints(original["nameConstraints"], d, config)
 	return []interface{}{transformed}
+}
+
+func flattenPrivatecaCaPoolIssuancePolicyPassthroughExtensions(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["known_extensions"] =
+		flattenPrivatecaCaPoolIssuancePolicyPassthroughExtensionsKnownExtensions(original["knownExtensions"], d, config)
+	transformed["additional_extensions"] =
+		flattenPrivatecaCaPoolIssuancePolicyPassthroughExtensionsAdditionalExtensions(original["additionalExtensions"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenPrivatecaCaPoolIssuancePolicyPassthroughExtensionsKnownExtensions(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenPrivatecaCaPoolIssuancePolicyPassthroughExtensionsAdditionalExtensions(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"object_id_path": flattenPrivatecaCaPoolIssuancePolicyPassthroughExtensionsAdditionalExtensionsObjectIdPath(original["objectIdPath"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenPrivatecaCaPoolIssuancePolicyPassthroughExtensionsAdditionalExtensionsObjectIdPath(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenPrivatecaCaPoolPublishingOptions(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
