@@ -148,6 +148,8 @@ func (c *ArtifactRegistryRepositoryCai2hclConverter) convertResourceData(asset c
 	hclData["remote_repository_config"] = flattenArtifactRegistryRepositoryRemoteRepositoryConfig(res["remoteRepositoryConfig"], d, config)
 	hclData["cleanup_policy_dry_run"] = flattenArtifactRegistryRepositoryCleanupPolicyDryRun(res["cleanupPolicyDryRun"], d, config)
 	hclData["vulnerability_scanning_config"] = flattenArtifactRegistryRepositoryVulnerabilityScanningConfig(res["vulnerabilityScanningConfig"], d, config)
+	hclData["disallow_unspecified_mode"] = flattenArtifactRegistryRepositoryDisallowUnspecifiedMode(res["disallowUnspecifiedMode"], d, config)
+	hclData["platform_logs_config"] = flattenArtifactRegistryRepositoryPlatformLogsConfig(res["platformLogsConfig"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -845,5 +847,33 @@ func flattenArtifactRegistryRepositoryVulnerabilityScanningConfig(v interface{},
 }
 
 func flattenArtifactRegistryRepositoryVulnerabilityScanningConfigEnablementConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenArtifactRegistryRepositoryDisallowUnspecifiedMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenArtifactRegistryRepositoryPlatformLogsConfig(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["logging_state"] =
+		flattenArtifactRegistryRepositoryPlatformLogsConfigLoggingState(original["loggingState"], d, config)
+	transformed["severity_level"] =
+		flattenArtifactRegistryRepositoryPlatformLogsConfigSeverityLevel(original["severityLevel"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenArtifactRegistryRepositoryPlatformLogsConfigLoggingState(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenArtifactRegistryRepositoryPlatformLogsConfigSeverityLevel(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
