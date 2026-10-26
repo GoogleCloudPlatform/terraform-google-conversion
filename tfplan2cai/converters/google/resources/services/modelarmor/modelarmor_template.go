@@ -177,6 +177,13 @@ func expandModelArmorTemplateFilterConfig(v interface{}, d tpgresource.Terraform
 		transformed["piAndJailbreakFilterSettings"] = transformedPiAndJailbreakFilterSettings
 	}
 
+	transformedFilterRuleSettings, err := expandModelArmorTemplateFilterConfigFilterRuleSettings(original["filter_rule_settings"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedFilterRuleSettings); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["filterRuleSettings"] = transformedFilterRuleSettings
+	}
+
 	return transformed, nil
 }
 
@@ -397,6 +404,203 @@ func expandModelArmorTemplateFilterConfigPiAndJailbreakFilterSettingsConfidenceL
 	return v, nil
 }
 
+func expandModelArmorTemplateFilterConfigFilterRuleSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRuleSets, err := expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSets(original["rule_sets"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRuleSets); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ruleSets"] = transformedRuleSets
+	}
+
+	return transformed, nil
+}
+
+func expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSets(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedFilterTypes, err := expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsFilterTypes(original["filter_types"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFilterTypes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["filterTypes"] = transformedFilterTypes
+		}
+
+		transformedRules, err := expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRules(original["rules"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRules); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["rules"] = transformedRules
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsFilterTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRules(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedExclusionRule, err := expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRule(original["exclusion_rule"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedExclusionRule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["exclusionRule"] = transformedExclusionRule
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMatchingScope, err := expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleMatchingScope(original["matching_scope"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMatchingScope); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["matchingScope"] = transformedMatchingScope
+	}
+
+	transformedDictionary, err := expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleDictionary(original["dictionary"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDictionary); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dictionary"] = transformedDictionary
+	}
+
+	transformedRegex, err := expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleRegex(original["regex"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRegex); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["regex"] = transformedRegex
+	}
+
+	return transformed, nil
+}
+
+func expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleMatchingScope(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleDictionary(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWordList, err := expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleDictionaryWordList(original["word_list"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWordList); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["wordList"] = transformedWordList
+	}
+
+	return transformed, nil
+}
+
+func expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleDictionaryWordList(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedWords, err := expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleDictionaryWordListWords(original["words"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWords); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["words"] = transformedWords
+	}
+
+	return transformed, nil
+}
+
+func expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleDictionaryWordListWords(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPattern, err := expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleRegexPattern(original["pattern"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPattern); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pattern"] = transformedPattern
+	}
+
+	return transformed, nil
+}
+
+func expandModelArmorTemplateFilterConfigFilterRuleSettingsRuleSetsRulesExclusionRuleRegexPattern(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandModelArmorTemplateTemplateMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -489,6 +693,13 @@ func expandModelArmorTemplateTemplateMetadata(v interface{}, d tpgresource.Terra
 		return nil, err
 	} else if val := reflect.ValueOf(transformedFilterVersionSelector); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["filterVersionSelector"] = transformedFilterVersionSelector
+	}
+
+	transformedDataResidencyCompliant, err := expandModelArmorTemplateTemplateMetadataDataResidencyCompliant(original["data_residency_compliant"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataResidencyCompliant); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataResidencyCompliant"] = transformedDataResidencyCompliant
 	}
 
 	return transformed, nil
@@ -591,6 +802,34 @@ func expandModelArmorTemplateTemplateMetadataFilterVersionSelectorAlias(v interf
 
 func expandModelArmorTemplateTemplateMetadataFilterVersionSelectorVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+// expandModelArmorTemplateTemplateMetadataDataResidencyCompliant uses raw config inspection so that an explicitly
+// configured `data_residency_compliant = false` reaches the API, while an unconfigured field stays
+// out of the request entirely.
+//
+// `data_residency_compliant` is Optional + Computed because the API default depends on the template:
+// new templates default to true, while templates created before data residency enforcement resolve
+// to false. Since false is the zero value for bools in Terraform SDKv2, resource data alone cannot
+// distinguish "the practitioner asked for false" from "the practitioner said nothing":
+//
+//   - Omitting every false (the default expander behavior) drops a configured false, so the API
+//     keeps (or defaults to) true and the next plan shows a permanent diff.
+//   - Sending every false (send_empty_value) would opt unconfigured new templates out of data
+//     residency compliance.
+//
+// Returning a *bool threads the needle: a non-nil pointer is not an empty value, so a configured
+// false is included in the request, while nil leaves the field out and the API value is preserved.
+func expandModelArmorTemplateTemplateMetadataDataResidencyCompliant(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	b, ok := v.(bool)
+	if !ok {
+		return nil, nil
+	}
+	if b {
+		return b, nil
+	}
+
+	return nil, nil
 }
 
 func expandModelArmorTemplateEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
