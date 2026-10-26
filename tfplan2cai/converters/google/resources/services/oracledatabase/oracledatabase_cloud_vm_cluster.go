@@ -164,6 +164,12 @@ func GetOracleDatabaseCloudVmClusterApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("backup_odb_subnet"); !tpgresource.IsEmptyValue(reflect.ValueOf(backupOdbSubnetProp)) && (ok || !reflect.DeepEqual(v, backupOdbSubnetProp)) {
 		obj["backupOdbSubnet"] = backupOdbSubnetProp
 	}
+	odbDnsZoneProp, err := expandOracleDatabaseCloudVmClusterOdbDnsZone(d.Get("odb_dns_zone"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("odb_dns_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(odbDnsZoneProp)) && (ok || !reflect.DeepEqual(v, odbDnsZoneProp)) {
+		obj["odbDnsZone"] = odbDnsZoneProp
+	}
 	exascaleDbStorageVaultProp, err := expandOracleDatabaseCloudVmClusterExascaleDbStorageVault(d.Get("exascale_db_storage_vault"), d, config)
 	if err != nil {
 		return nil, err
@@ -686,6 +692,10 @@ func expandOracleDatabaseCloudVmClusterOdbSubnet(v interface{}, d tpgresource.Te
 }
 
 func expandOracleDatabaseCloudVmClusterBackupOdbSubnet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseCloudVmClusterOdbDnsZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
