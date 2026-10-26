@@ -461,6 +461,30 @@ message to form the inference request.`,
 								},
 							},
 						},
+						"compression": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Description: `Configuration for compressing/decompressing message data using a
+user-specified compression algorithm.`,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"compression_algorithm": {
+										Type:     schema.TypeString,
+										Required: true,
+										Description: `Specifies the compression algorithm to use.
+Possible values include 'ZLIB'.
+See [CompressionAlgorithm](https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topics#CompressionAlgorithm) for allowed values.`,
+									},
+									"compression_mode": {
+										Type:         schema.TypeString,
+										Required:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"COMPRESS", "DECOMPRESS"}),
+										Description:  `Specifies whether to compress or decompress the message. Possible values: ["COMPRESS", "DECOMPRESS"]`,
+									},
+								},
+							},
+						},
 						"disabled": {
 							Type:     schema.TypeBool,
 							Optional: true,

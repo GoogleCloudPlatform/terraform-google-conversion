@@ -796,6 +796,13 @@ func expandPubsubTopicMessageTransforms(v interface{}, d tpgresource.TerraformRe
 			transformed["aiInference"] = transformedAiInference
 		}
 
+		transformedCompression, err := expandPubsubTopicMessageTransformsCompression(original["compression"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCompression); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["compression"] = transformedCompression
+		}
+
 		transformedJavascriptUdf, err := expandPubsubTopicMessageTransformsJavascriptUdf(original["javascript_udf"], d, config)
 		if err != nil {
 			return nil, err
@@ -889,6 +896,43 @@ func expandPubsubTopicMessageTransformsAiInferenceUnstructuredInferenceParameter
 }
 
 func expandPubsubTopicMessageTransformsAiInferenceServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicMessageTransformsCompression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCompressionAlgorithm, err := expandPubsubTopicMessageTransformsCompressionCompressionAlgorithm(original["compression_algorithm"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCompressionAlgorithm); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["compressionAlgorithm"] = transformedCompressionAlgorithm
+	}
+
+	transformedCompressionMode, err := expandPubsubTopicMessageTransformsCompressionCompressionMode(original["compression_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCompressionMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["compressionMode"] = transformedCompressionMode
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubTopicMessageTransformsCompressionCompressionAlgorithm(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubTopicMessageTransformsCompressionCompressionMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
