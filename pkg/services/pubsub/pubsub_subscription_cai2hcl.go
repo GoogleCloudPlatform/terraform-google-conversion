@@ -738,6 +738,7 @@ func flattenPubsubSubscriptionMessageTransforms(v interface{}, d *schema.Resourc
 		}
 		transformed = append(transformed, map[string]interface{}{
 			"ai_inference":   flattenPubsubSubscriptionMessageTransformsAiInference(original["aiInference"], d, config),
+			"compression":    flattenPubsubSubscriptionMessageTransformsCompression(original["compression"], d, config),
 			"javascript_udf": flattenPubsubSubscriptionMessageTransformsJavascriptUdf(original["javascriptUdf"], d, config),
 			"disabled":       flattenPubsubSubscriptionMessageTransformsDisabled(original["disabled"], d, config),
 		})
@@ -799,6 +800,37 @@ func flattenPubsubSubscriptionMessageTransformsAiInferenceServiceAccountEmail(v 
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenPubsubSubscriptionMessageTransformsCompression(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["compression_algorithm"] =
+		flattenPubsubSubscriptionMessageTransformsCompressionCompressionAlgorithm(original["compressionAlgorithm"], d, config)
+	transformed["compression_mode"] =
+		flattenPubsubSubscriptionMessageTransformsCompressionCompressionMode(original["compressionMode"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenPubsubSubscriptionMessageTransformsCompressionCompressionAlgorithm(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return "unknown"
+	}
+	transformed := v.(string)
+	if transformed == "" {
+		return "unknown"
+	}
+	return v
+}
+
+func flattenPubsubSubscriptionMessageTransformsCompressionCompressionMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

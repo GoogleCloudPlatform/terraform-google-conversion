@@ -1010,6 +1010,13 @@ func expandPubsubSubscriptionMessageTransforms(v interface{}, d tpgresource.Terr
 			transformed["aiInference"] = transformedAiInference
 		}
 
+		transformedCompression, err := expandPubsubSubscriptionMessageTransformsCompression(original["compression"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCompression); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["compression"] = transformedCompression
+		}
+
 		transformedJavascriptUdf, err := expandPubsubSubscriptionMessageTransformsJavascriptUdf(original["javascript_udf"], d, config)
 		if err != nil {
 			return nil, err
@@ -1103,6 +1110,43 @@ func expandPubsubSubscriptionMessageTransformsAiInferenceUnstructuredInferencePa
 }
 
 func expandPubsubSubscriptionMessageTransformsAiInferenceServiceAccountEmail(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsCompression(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCompressionAlgorithm, err := expandPubsubSubscriptionMessageTransformsCompressionCompressionAlgorithm(original["compression_algorithm"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCompressionAlgorithm); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["compressionAlgorithm"] = transformedCompressionAlgorithm
+	}
+
+	transformedCompressionMode, err := expandPubsubSubscriptionMessageTransformsCompressionCompressionMode(original["compression_mode"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCompressionMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["compressionMode"] = transformedCompressionMode
+	}
+
+	return transformed, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsCompressionCompressionAlgorithm(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandPubsubSubscriptionMessageTransformsCompressionCompressionMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
