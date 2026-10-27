@@ -189,6 +189,12 @@ func GetFirestoreIndexApiObject(d tpgresource.TerraformResourceData, config *tra
 	} else if v, ok := d.GetOkExists("unique"); !tpgresource.IsEmptyValue(reflect.ValueOf(uniqueProp)) && (ok || !reflect.DeepEqual(v, uniqueProp)) {
 		obj["unique"] = uniqueProp
 	}
+	searchIndexOptionsProp, err := expandFirestoreIndexSearchIndexOptions(d.Get("search_index_options"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("search_index_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(searchIndexOptionsProp)) && (ok || !reflect.DeepEqual(v, searchIndexOptionsProp)) {
+		obj["searchIndexOptions"] = searchIndexOptionsProp
+	}
 	fieldsProp, err := expandFirestoreIndexFields(d.Get("fields"), d, config)
 	if err != nil {
 		return nil, err
@@ -234,6 +240,43 @@ func expandFirestoreIndexMultikey(v interface{}, d tpgresource.TerraformResource
 }
 
 func expandFirestoreIndexUnique(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreIndexSearchIndexOptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTextLanguage, err := expandFirestoreIndexSearchIndexOptionsTextLanguage(original["text_language"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTextLanguage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["textLanguage"] = transformedTextLanguage
+	}
+
+	transformedTextLanguageOverrideFieldPath, err := expandFirestoreIndexSearchIndexOptionsTextLanguageOverrideFieldPath(original["text_language_override_field_path"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTextLanguageOverrideFieldPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["textLanguageOverrideFieldPath"] = transformedTextLanguageOverrideFieldPath
+	}
+
+	return transformed, nil
+}
+
+func expandFirestoreIndexSearchIndexOptionsTextLanguage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirestoreIndexSearchIndexOptionsTextLanguageOverrideFieldPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
