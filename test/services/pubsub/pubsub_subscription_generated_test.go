@@ -125,6 +125,9 @@ func TestAccPubsubSubscription(t *testing.T) {
 			Name: "TestAccPubsubSubscription_javascriptUdfUpdate",
 		},
 		{
+			Name: "TestAccPubsubSubscription_compressionUpdate",
+		},
+		{
 			Name: "TestAccPubsubSubscription_tags",
 		},
 		{
