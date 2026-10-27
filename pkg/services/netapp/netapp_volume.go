@@ -567,6 +567,12 @@ Use NTFS to use NTFS ACLs for file permissions. Can only be set for volumes whic
 					ValidateFunc: verify.ValidateEnum([]string{"ENCRYPT_DATA", "BROWSABLE", "CHANGE_NOTIFY", "NON_BROWSABLE", "OPLOCKS", "SHOW_SNAPSHOT", "SHOW_PREVIOUS_VERSIONS", "ACCESS_BASED_ENUMERATION", "CONTINUOUSLY_AVAILABLE"}),
 				},
 			},
+			"snap_reserve": {
+				Type:     schema.TypeFloat,
+				Optional: true,
+				Description: `Optional. Snap_reserve specifies percentage of volume storage reserved for
+snapshot storage. Default is 0 percent.`,
+			},
 			"snapshot_directory": {
 				Type:        schema.TypeBool,
 				Optional:    true,

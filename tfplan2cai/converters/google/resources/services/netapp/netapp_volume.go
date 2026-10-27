@@ -201,6 +201,12 @@ func GetNetappVolumeApiObject(d tpgresource.TerraformResourceData, config *trans
 	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
 		obj["description"] = descriptionProp
 	}
+	snapReserveProp, err := expandNetappVolumeSnapReserve(d.Get("snap_reserve"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("snap_reserve"); !tpgresource.IsEmptyValue(reflect.ValueOf(snapReserveProp)) && (ok || !reflect.DeepEqual(v, snapReserveProp)) {
+		obj["snapReserve"] = snapReserveProp
+	}
 	snapshotDirectoryProp, err := expandNetappVolumeSnapshotDirectory(d.Get("snapshot_directory"), d, config)
 	if err != nil {
 		return nil, err
@@ -509,6 +515,10 @@ func expandNetappVolumeUnixPermissions(v interface{}, d tpgresource.TerraformRes
 }
 
 func expandNetappVolumeDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetappVolumeSnapReserve(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
