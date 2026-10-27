@@ -235,6 +235,13 @@ func expandDataplexDataProductAccessGroups(v interface{}, d tpgresource.Terrafor
 			transformed["principal"] = transformedPrincipal
 		}
 
+		transformedDefaultIamRoleConfig, err := expandDataplexDataProductAccessGroupsDefaultIamRoleConfig(original["default_iam_role_config"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDefaultIamRoleConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["defaultIamRoleConfig"] = transformedDefaultIamRoleConfig
+		}
+
 		transformedId, err := tpgresource.ExpandString(original["id"], d, config)
 		if err != nil {
 			return nil, err
@@ -290,6 +297,32 @@ func expandDataplexDataProductAccessGroupsPrincipalGoogleGroup(v interface{}, d 
 }
 
 func expandDataplexDataProductAccessGroupsPrincipalServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexDataProductAccessGroupsDefaultIamRoleConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedRole, err := expandDataplexDataProductAccessGroupsDefaultIamRoleConfigRole(original["role"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRole); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["role"] = transformedRole
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexDataProductAccessGroupsDefaultIamRoleConfigRole(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
