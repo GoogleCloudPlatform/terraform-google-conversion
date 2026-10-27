@@ -140,6 +140,12 @@ func GetDiscoveryEngineAssistantApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("web_grounding_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(webGroundingTypeProp)) && (ok || !reflect.DeepEqual(v, webGroundingTypeProp)) {
 		obj["webGroundingType"] = webGroundingTypeProp
 	}
+	defaultWebGroundingToggleOffProp, err := expandDiscoveryEngineAssistantDefaultWebGroundingToggleOff(d.Get("default_web_grounding_toggle_off"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("default_web_grounding_toggle_off"); ok || (v != nil && !reflect.DeepEqual(v, defaultWebGroundingToggleOffProp)) {
+		obj["defaultWebGroundingToggleOff"] = defaultWebGroundingToggleOffProp
+	}
 
 	return obj, nil
 }
@@ -340,5 +346,9 @@ func expandDiscoveryEngineAssistantCustomerPolicyModelArmorConfigFailureMode(v i
 }
 
 func expandDiscoveryEngineAssistantWebGroundingType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDiscoveryEngineAssistantDefaultWebGroundingToggleOff(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
