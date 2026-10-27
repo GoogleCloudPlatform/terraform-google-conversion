@@ -661,6 +661,12 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withKubeletResourceManagerConfig",
 		},
 		{
+			Name: "TestAccContainerCluster_guestAcceleratorSubconfigUpdate",
+		},
+		{
+			Name: "TestAccContainerCluster_nodePoolGuestAcceleratorSubconfigUpdate",
+		},
+		{
 			Name: "TestAccContainerCluster_nodePool_acceleratorNetworkProfile_Lifecycle",
 		},
 		{
