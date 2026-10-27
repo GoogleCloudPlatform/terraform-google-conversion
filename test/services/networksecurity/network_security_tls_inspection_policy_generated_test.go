@@ -28,6 +28,9 @@ func TestAccNetworkSecurityTlsInspectionPolicy(t *testing.T) {
 			Name: "TestAccNetworkSecurityTlsInspectionPolicy_networkSecurityTlsInspectionPolicyBasicExample",
 		},
 		{
+			Name: "TestAccNetworkSecurityTlsInspectionPolicy_certificateIssuanceMode",
+		},
+		{
 			Name: "TestAccNetworkSecurityTlsInspectionPolicy_update",
 		},
 	}

@@ -157,6 +157,12 @@ func GetNetworkSecurityTlsInspectionPolicyCaiObject(d tpgresource.TerraformResou
 	} else if v, ok := d.GetOkExists("exclude_public_ca_set"); !tpgresource.IsEmptyValue(reflect.ValueOf(excludePublicCaSetProp)) && (ok || !reflect.DeepEqual(v, excludePublicCaSetProp)) {
 		obj["excludePublicCaSet"] = excludePublicCaSetProp
 	}
+	certificateIssuanceModeProp, err := expandNetworkSecurityTlsInspectionPolicyCertificateIssuanceMode(d.Get("certificate_issuance_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("certificate_issuance_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(certificateIssuanceModeProp)) && (ok || !reflect.DeepEqual(v, certificateIssuanceModeProp)) {
+		obj["certificateIssuanceMode"] = certificateIssuanceModeProp
+	}
 
 	return obj, nil
 }
@@ -186,5 +192,9 @@ func expandNetworkSecurityTlsInspectionPolicyCustomTlsFeatures(v interface{}, d 
 }
 
 func expandNetworkSecurityTlsInspectionPolicyExcludePublicCaSet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityTlsInspectionPolicyCertificateIssuanceMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }

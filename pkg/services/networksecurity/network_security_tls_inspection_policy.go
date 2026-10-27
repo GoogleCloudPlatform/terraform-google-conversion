@@ -87,6 +87,13 @@ func ResourceNetworkSecurityTlsInspectionPolicy() *schema.Resource {
 				Required:    true,
 				Description: `Short name of the TlsInspectionPolicy resource to be created.`,
 			},
+			"certificate_issuance_mode": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				ValidateFunc:     verify.ValidateEnum([]string{"DIRECT_LEAF_PROVISIONING", "LOCAL_INTERMEDIATE_CA_SIGNING", ""}),
+				DiffSuppressFunc: tpgresource.EmptyOrDefaultStringSuppress("CERTIFICATE_ISSUANCE_MODE_UNSPECIFIED"),
+				Description:      `The mode used to issue certificates (local CA signing vs direct leaf). Possible values: ["DIRECT_LEAF_PROVISIONING", "LOCAL_INTERMEDIATE_CA_SIGNING"]`,
+			},
 			"custom_tls_features": {
 				Type:        schema.TypeList,
 				Optional:    true,
