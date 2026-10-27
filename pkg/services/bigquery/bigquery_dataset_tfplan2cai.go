@@ -187,6 +187,12 @@ func GetBigQueryDatasetCaiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("default_collation"); ok || (v != nil && !reflect.DeepEqual(v, defaultCollationProp)) {
 		obj["defaultCollation"] = defaultCollationProp
 	}
+	defaultRoundingModeProp, err := expandBigQueryDatasetDefaultRoundingMode(d.Get("default_rounding_mode"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("default_rounding_mode"); !tpgresource.IsEmptyValue(reflect.ValueOf(defaultRoundingModeProp)) && (ok || !reflect.DeepEqual(v, defaultRoundingModeProp)) {
+		obj["defaultRoundingMode"] = defaultRoundingModeProp
+	}
 	storageBillingModelProp, err := expandBigQueryDatasetStorageBillingModel(d.Get("storage_billing_model"), d, config)
 	if err != nil {
 		return nil, err
@@ -675,6 +681,10 @@ func expandBigQueryDatasetDefaultCollation(v interface{}, d tpgresource.Terrafor
 			return conf.GetAttr("default_collation").AsString(), nil
 		}
 	}
+	return v, nil
+}
+
+func expandBigQueryDatasetDefaultRoundingMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -153,6 +153,7 @@ func (c *BigQueryDatasetCai2hclConverter) convertResourceData(asset caiasset.Ass
 	hclData["default_encryption_configuration"] = flattenBigQueryDatasetDefaultEncryptionConfiguration(res["defaultEncryptionConfiguration"], d, config)
 	hclData["is_case_insensitive"] = flattenBigQueryDatasetIsCaseInsensitive(res["isCaseInsensitive"], d, config)
 	hclData["default_collation"] = flattenBigQueryDatasetDefaultCollation(res["defaultCollation"], d, config)
+	hclData["default_rounding_mode"] = flattenBigQueryDatasetDefaultRoundingMode(res["defaultRoundingMode"], d, config)
 	hclData["storage_billing_model"] = flattenBigQueryDatasetStorageBillingModel(res["storageBillingModel"], d, config)
 	hclData["resource_tags"] = flattenBigQueryDatasetResourceTags(res["resourceTags"], d, config)
 	hclData["external_catalog_dataset_options"] = flattenBigQueryDatasetExternalCatalogDatasetOptions(res["externalCatalogDatasetOptions"], d, config)
@@ -631,6 +632,10 @@ func flattenBigQueryDatasetIsCaseInsensitive(v interface{}, d *schema.ResourceDa
 }
 
 func flattenBigQueryDatasetDefaultCollation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenBigQueryDatasetDefaultRoundingMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

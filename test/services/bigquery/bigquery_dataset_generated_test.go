@@ -99,6 +99,9 @@ func TestAccBigQueryDataset(t *testing.T) {
 		{
 			Name: "TestAccBigQueryDataset_collationUpdate",
 		},
+		{
+			Name: "TestAccBigQueryDataset_defaultRoundingModeUpdate",
+		},
 	}
 
 	for _, tt := range tests {
