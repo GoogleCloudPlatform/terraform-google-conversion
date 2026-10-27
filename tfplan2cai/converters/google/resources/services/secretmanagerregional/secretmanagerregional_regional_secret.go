@@ -49,6 +49,35 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+func secretManagerRegionalSecretRotationCustomizeDiffFunc(diff tpgresource.TerraformResourceDiff) error {
+	rotation, rotationOk := diff.GetOk("rotation")
+	if !rotationOk {
+		return nil
+	}
+	if rotationList, ok := rotation.([]interface{}); !ok || len(rotationList) == 0 {
+		return nil
+	}
+
+	secretType, _ := diff.Get("secret_type").(string)
+	if secretType == "CLOUD_SQL_DB_CREDENTIALS" {
+		return nil
+	}
+
+	topics, topicsOk := diff.GetOk("topics")
+	if !topicsOk {
+		return fmt.Errorf("`topics` is required when `rotation` is configured unless `secret_type` is `CLOUD_SQL_DB_CREDENTIALS`")
+	}
+	if topicsList, ok := topics.([]interface{}); !ok || len(topicsList) == 0 {
+		return fmt.Errorf("`topics` is required when `rotation` is configured unless `secret_type` is `CLOUD_SQL_DB_CREDENTIALS`")
+	}
+
+	return nil
+}
+
+func secretManagerRegionalSecretRotationCustomizeDiff(_ context.Context, diff *schema.ResourceDiff, meta interface{}) error {
+	return secretManagerRegionalSecretRotationCustomizeDiffFunc(diff)
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
