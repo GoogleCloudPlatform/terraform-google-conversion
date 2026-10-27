@@ -212,6 +212,18 @@ table. If you provide an explicit 'timePartitioning.expirationMs' when
 creating or updating a partitioned table, that value takes precedence
 over the default partition expiration time indicated by this property.`,
 			},
+			"default_rounding_mode": {
+				Type:         schema.TypeString,
+				Optional:     true,
+				ValidateFunc: verify.ValidateEnum([]string{"ROUND_HALF_AWAY_FROM_ZERO", "ROUND_HALF_EVEN", ""}),
+				Description: `Defines the default rounding mode specification of new tables created
+within this dataset. During table creation, if this field is specified,
+the table within this dataset will inherit the default rounding mode of
+the dataset. Setting the default rounding mode on a table overrides this
+specification. Existing tables in the dataset are unaffected. If columns
+are defined during that table creation, they will immediately inherit the
+table's default rounding mode, unless otherwise specified. Possible values: ["ROUND_HALF_AWAY_FROM_ZERO", "ROUND_HALF_EVEN"]`,
+			},
 			"default_table_expiration_ms": {
 				Type:         schema.TypeInt,
 				Optional:     true,
