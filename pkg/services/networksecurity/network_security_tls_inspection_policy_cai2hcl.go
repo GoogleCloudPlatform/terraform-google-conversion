@@ -143,6 +143,7 @@ func (c *NetworkSecurityTlsInspectionPolicyCai2hclConverter) convertResourceData
 	hclData["tls_feature_profile"] = flattenNetworkSecurityTlsInspectionPolicyTlsFeatureProfile(res["tlsFeatureProfile"], d, config)
 	hclData["custom_tls_features"] = flattenNetworkSecurityTlsInspectionPolicyCustomTlsFeatures(res["customTlsFeatures"], d, config)
 	hclData["exclude_public_ca_set"] = flattenNetworkSecurityTlsInspectionPolicyExcludePublicCaSet(res["excludePublicCaSet"], d, config)
+	hclData["certificate_issuance_mode"] = flattenNetworkSecurityTlsInspectionPolicyCertificateIssuanceMode(res["certificateIssuanceMode"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -198,5 +199,9 @@ func flattenNetworkSecurityTlsInspectionPolicyCustomTlsFeatures(v interface{}, d
 }
 
 func flattenNetworkSecurityTlsInspectionPolicyExcludePublicCaSet(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetworkSecurityTlsInspectionPolicyCertificateIssuanceMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
