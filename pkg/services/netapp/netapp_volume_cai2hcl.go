@@ -145,6 +145,7 @@ func (c *NetappVolumeCai2hclConverter) convertResourceData(asset caiasset.Asset,
 	hclData["unix_permissions"] = flattenNetappVolumeUnixPermissions(res["unixPermissions"], d, config)
 	hclData["labels"] = flattenNetappVolumeLabels(res["labels"], d, config)
 	hclData["description"] = flattenNetappVolumeDescription(res["description"], d, config)
+	hclData["snap_reserve"] = flattenNetappVolumeSnapReserve(res["snapReserve"], d, config)
 	hclData["snapshot_directory"] = flattenNetappVolumeSnapshotDirectory(res["snapshotDirectory"], d, config)
 	hclData["security_style"] = flattenNetappVolumeSecurityStyle(res["securityStyle"], d, config)
 	hclData["kerberos_enabled"] = flattenNetappVolumeKerberosEnabled(res["kerberosEnabled"], d, config)
@@ -342,6 +343,10 @@ func flattenNetappVolumeDescription(v interface{}, d *schema.ResourceData, confi
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenNetappVolumeSnapReserve(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
