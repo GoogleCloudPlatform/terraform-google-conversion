@@ -203,6 +203,12 @@ func GetBigqueryDataTransferConfigApiObject(d tpgresource.TerraformResourceData,
 	} else if v, ok := d.GetOkExists("schedule_options"); !tpgresource.IsEmptyValue(reflect.ValueOf(scheduleOptionsProp)) && (ok || !reflect.DeepEqual(v, scheduleOptionsProp)) {
 		obj["scheduleOptions"] = scheduleOptionsProp
 	}
+	scheduleOptionsV2Prop, err := expandBigqueryDataTransferConfigScheduleOptionsV2(d.Get("schedule_options_v2"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("schedule_options_v2"); !tpgresource.IsEmptyValue(reflect.ValueOf(scheduleOptionsV2Prop)) && (ok || !reflect.DeepEqual(v, scheduleOptionsV2Prop)) {
+		obj["scheduleOptionsV2"] = scheduleOptionsV2Prop
+	}
 	emailPreferencesProp, err := expandBigqueryDataTransferConfigEmailPreferences(d.Get("email_preferences"), d, config)
 	if err != nil {
 		return nil, err
@@ -340,6 +346,54 @@ func expandBigqueryDataTransferConfigScheduleOptionsStartTime(v interface{}, d t
 }
 
 func expandBigqueryDataTransferConfigScheduleOptionsEndTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigqueryDataTransferConfigScheduleOptionsV2(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEventDrivenSchedule, err := expandBigqueryDataTransferConfigScheduleOptionsV2EventDrivenSchedule(original["event_driven_schedule"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEventDrivenSchedule); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["eventDrivenSchedule"] = transformedEventDrivenSchedule
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryDataTransferConfigScheduleOptionsV2EventDrivenSchedule(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPubsubSubscription, err := expandBigqueryDataTransferConfigScheduleOptionsV2EventDrivenSchedulePubsubSubscription(original["pubsub_subscription"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPubsubSubscription); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pubsubSubscription"] = transformedPubsubSubscription
+	}
+
+	return transformed, nil
+}
+
+func expandBigqueryDataTransferConfigScheduleOptionsV2EventDrivenSchedulePubsubSubscription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
