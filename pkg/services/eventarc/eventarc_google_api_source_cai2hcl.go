@@ -142,6 +142,8 @@ func (c *EventarcGoogleApiSourceCai2hclConverter) convertResourceData(asset caia
 	hclData["display_name"] = flattenEventarcGoogleApiSourceDisplayName(res["displayName"], d, config)
 	hclData["destination"] = flattenEventarcGoogleApiSourceDestination(res["destination"], d, config)
 	hclData["logging_config"] = flattenEventarcGoogleApiSourceLoggingConfig(res["loggingConfig"], d, config)
+	hclData["organization_subscription"] = flattenEventarcGoogleApiSourceOrganizationSubscription(res["organizationSubscription"], d, config)
+	hclData["project_subscriptions"] = flattenEventarcGoogleApiSourceProjectSubscriptions(res["projectSubscriptions"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -207,5 +209,44 @@ func flattenEventarcGoogleApiSourceLoggingConfig(v interface{}, d *schema.Resour
 }
 
 func flattenEventarcGoogleApiSourceLoggingConfigLogSeverity(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenEventarcGoogleApiSourceOrganizationSubscription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["enabled"] =
+		flattenEventarcGoogleApiSourceOrganizationSubscriptionEnabled(original["enabled"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenEventarcGoogleApiSourceOrganizationSubscriptionEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return false
+	}
+	return v
+}
+
+func flattenEventarcGoogleApiSourceProjectSubscriptions(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["list"] =
+		flattenEventarcGoogleApiSourceProjectSubscriptionsList(original["list"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenEventarcGoogleApiSourceProjectSubscriptionsList(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }

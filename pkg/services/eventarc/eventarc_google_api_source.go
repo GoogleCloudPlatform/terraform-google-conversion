@@ -149,6 +149,49 @@ Telemetry. Logs at severitiy ≥ this value will be sent, unless it is NONE. Pos
 					},
 				},
 			},
+			"organization_subscription": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Description: `Config to enable subscribing to events from all projects in the
+GoogleApiSource's org.`,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"enabled": {
+							Type:        schema.TypeBool,
+							Required:    true,
+							Description: `Enable org level subscription.`,
+						},
+					},
+				},
+				ConflictsWith: []string{"project_subscriptions"},
+			},
+			"project_subscriptions": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Description: `Config to enable subscribing to all events from a list of projects.
+
+All the projects must be in the same org as the GoogleApiSource.`,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"list": {
+							Type:     schema.TypeList,
+							Required: true,
+							Description: `A list of projects to receive events from.
+
+All the projects must be in the same org. The listed projects should have
+the format project/{identifier} where identifier can be either the
+project id for project number. A single list may contain both formats. At
+most 100 projects can be listed.`,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+					},
+				},
+				ConflictsWith: []string{"organization_subscription"},
+			},
 			"create_time": {
 				Type:        schema.TypeString,
 				Computed:    true,

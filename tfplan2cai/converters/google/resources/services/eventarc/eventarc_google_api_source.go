@@ -134,6 +134,18 @@ func GetEventarcGoogleApiSourceApiObject(d tpgresource.TerraformResourceData, co
 	} else if v, ok := d.GetOkExists("logging_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(loggingConfigProp)) && (ok || !reflect.DeepEqual(v, loggingConfigProp)) {
 		obj["loggingConfig"] = loggingConfigProp
 	}
+	organizationSubscriptionProp, err := expandEventarcGoogleApiSourceOrganizationSubscription(d.Get("organization_subscription"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("organization_subscription"); !tpgresource.IsEmptyValue(reflect.ValueOf(organizationSubscriptionProp)) && (ok || !reflect.DeepEqual(v, organizationSubscriptionProp)) {
+		obj["organizationSubscription"] = organizationSubscriptionProp
+	}
+	projectSubscriptionsProp, err := expandEventarcGoogleApiSourceProjectSubscriptions(d.Get("project_subscriptions"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("project_subscriptions"); !tpgresource.IsEmptyValue(reflect.ValueOf(projectSubscriptionsProp)) && (ok || !reflect.DeepEqual(v, projectSubscriptionsProp)) {
+		obj["projectSubscriptions"] = projectSubscriptionsProp
+	}
 	effectiveLabelsProp, err := expandEventarcGoogleApiSourceEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -185,6 +197,58 @@ func expandEventarcGoogleApiSourceLoggingConfig(v interface{}, d tpgresource.Ter
 }
 
 func expandEventarcGoogleApiSourceLoggingConfigLogSeverity(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandEventarcGoogleApiSourceOrganizationSubscription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnabled, err := expandEventarcGoogleApiSourceOrganizationSubscriptionEnabled(original["enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enabled"] = transformedEnabled
+	}
+
+	return transformed, nil
+}
+
+func expandEventarcGoogleApiSourceOrganizationSubscriptionEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandEventarcGoogleApiSourceProjectSubscriptions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedList, err := expandEventarcGoogleApiSourceProjectSubscriptionsList(original["list"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedList); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["list"] = transformedList
+	}
+
+	return transformed, nil
+}
+
+func expandEventarcGoogleApiSourceProjectSubscriptionsList(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
