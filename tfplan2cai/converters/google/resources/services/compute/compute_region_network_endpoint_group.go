@@ -237,10 +237,43 @@ func expandComputeRegionNetworkEndpointGroupPscData(v interface{}, d tpgresource
 		transformed["producerPort"] = transformedProducerPort
 	}
 
+	transformedPscConnectionId, err := expandComputeRegionNetworkEndpointGroupPscDataPscConnectionId(original["psc_connection_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscConnectionId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscConnectionId"] = transformedPscConnectionId
+	}
+
+	transformedPscConnectionStatus, err := expandComputeRegionNetworkEndpointGroupPscDataPscConnectionStatus(original["psc_connection_status"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscConnectionStatus); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscConnectionStatus"] = transformedPscConnectionStatus
+	}
+
+	transformedConsumerPscAddress, err := expandComputeRegionNetworkEndpointGroupPscDataConsumerPscAddress(original["consumer_psc_address"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedConsumerPscAddress); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["consumerPscAddress"] = transformedConsumerPscAddress
+	}
+
 	return transformed, nil
 }
 
 func expandComputeRegionNetworkEndpointGroupPscDataProducerPort(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionNetworkEndpointGroupPscDataPscConnectionId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionNetworkEndpointGroupPscDataPscConnectionStatus(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeRegionNetworkEndpointGroupPscDataConsumerPscAddress(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
