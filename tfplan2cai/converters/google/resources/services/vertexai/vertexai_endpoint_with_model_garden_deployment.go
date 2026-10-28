@@ -1611,7 +1611,7 @@ func expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourc
 	transformedMinReplicaCount, err := expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesMinReplicaCount(original["min_replica_count"], d, config)
 	if err != nil {
 		return nil, err
-	} else if val := reflect.ValueOf(transformedMinReplicaCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+	} else {
 		transformed["minReplicaCount"] = transformedMinReplicaCount
 	}
 
@@ -1627,6 +1627,20 @@ func expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourc
 		return nil, err
 	} else if val := reflect.ValueOf(transformedRequiredReplicaCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["requiredReplicaCount"] = transformedRequiredReplicaCount
+	}
+
+	transformedInitialReplicaCount, err := expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesInitialReplicaCount(original["initial_replica_count"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedInitialReplicaCount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["initialReplicaCount"] = transformedInitialReplicaCount
+	}
+
+	transformedScaleToZeroSpec, err := expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesScaleToZeroSpec(original["scale_to_zero_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedScaleToZeroSpec); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["scaleToZeroSpec"] = transformedScaleToZeroSpec
 	}
 
 	transformedAutoscalingMetricSpecs, err := expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesAutoscalingMetricSpecs(original["autoscaling_metric_specs"], d, config)
@@ -1780,6 +1794,47 @@ func expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourc
 }
 
 func expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesRequiredReplicaCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesInitialReplicaCount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesScaleToZeroSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedMinScaleupPeriod, err := expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesScaleToZeroSpecMinScaleupPeriod(original["min_scaleup_period"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMinScaleupPeriod); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["minScaleupPeriod"] = transformedMinScaleupPeriod
+	}
+
+	transformedIdleScaledownPeriod, err := expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesScaleToZeroSpecIdleScaledownPeriod(original["idle_scaledown_period"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdleScaledownPeriod); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idleScaledownPeriod"] = transformedIdleScaledownPeriod
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesScaleToZeroSpecMinScaleupPeriod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIEndpointWithModelGardenDeploymentDeployConfigDedicatedResourcesScaleToZeroSpecIdleScaledownPeriod(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
