@@ -48,7 +48,7 @@ func NetappVolumeReplicationWaitForMirror(d *schema.ResourceData, meta interface
 		return err
 	}
 
-	url, err := tpgresource.ReplaceVars(d, config, "{{NetappBasePath}}projects/{{project}}/locations/{{location}}/volumes/{{volume_name}}/replications/{{name}}")
+	url, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+"projects/{{project}}/locations/{{location}}/volumes/{{volume_name}}/replications/{{name}}")
 	if err != nil {
 		return err
 	}

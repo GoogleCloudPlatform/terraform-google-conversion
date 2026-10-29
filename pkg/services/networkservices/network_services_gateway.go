@@ -45,7 +45,7 @@ func gatewaysSameLocation(d *schema.ResourceData, config *transport_tpg.Config, 
 	log.Print("[DEBUG] Looking for gateways under the same location.")
 	var gateways []interface{}
 
-	gatewaysUrl, err := tpgresource.ReplaceVars(d, config, "{{NetworkServicesBasePath}}projects/{{project}}/locations/{{location}}/gateways")
+	gatewaysUrl, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+"projects/{{project}}/locations/{{location}}/gateways")
 	if err != nil {
 		return gateways, err
 	}
