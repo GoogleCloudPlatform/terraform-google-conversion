@@ -37,7 +37,13 @@ func TestAccNetworkSecurityServerTlsPolicy(t *testing.T) {
 			Name: "TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyMtlsExample",
 		},
 		{
+			Name: "TestAccNetworkSecurityServerTlsPolicy_networkSecurityServerTlsPolicyMtlsValidationRelaxationsExample",
+		},
+		{
 			Name: "TestAccNetworkSecurityServerTlsPolicy_update",
+		},
+		{
+			Name: "TestAccNetworkSecurityServerTlsPolicy_mtlsValidationRelaxationsUpdate",
 		},
 	}
 

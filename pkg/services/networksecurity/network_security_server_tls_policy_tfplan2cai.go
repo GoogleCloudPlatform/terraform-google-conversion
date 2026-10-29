@@ -257,6 +257,13 @@ func expandNetworkSecurityServerTlsPolicyMtlsPolicy(v interface{}, d tpgresource
 		transformed["clientValidationMode"] = transformedClientValidationMode
 	}
 
+	transformedClientValidationRelaxations, err := expandNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationRelaxations(original["client_validation_relaxations"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedClientValidationRelaxations); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["clientValidationRelaxations"] = transformedClientValidationRelaxations
+	}
+
 	transformedClientValidationTrustConfig, err := expandNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationTrustConfig(original["client_validation_trust_config"], d, config)
 	if err != nil {
 		return nil, err
@@ -275,6 +282,11 @@ func expandNetworkSecurityServerTlsPolicyMtlsPolicy(v interface{}, d tpgresource
 }
 
 func expandNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkSecurityServerTlsPolicyMtlsPolicyClientValidationRelaxations(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
 
