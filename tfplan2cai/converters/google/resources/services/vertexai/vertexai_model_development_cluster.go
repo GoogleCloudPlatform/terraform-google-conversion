@@ -49,6 +49,95 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+func vertexAiModelDevelopmentClusterGkeVersionMatches(actual, target string) bool {
+	if actual == target {
+		return true
+	}
+	if actual == "" || target == "" {
+		return false
+	}
+
+	targetParts := strings.SplitN(target, "-", 2)
+	targetVer := targetParts[0]
+	hasTargetSuffix := len(targetParts) > 1
+	targetSuffix := ""
+	if hasTargetSuffix {
+		targetSuffix = targetParts[1]
+	}
+
+	targetDots := strings.Split(targetVer, ".")
+	if len(targetDots) < 2 {
+		return actual == target
+	}
+	targetMajor := targetDots[0]
+	targetMinor := targetDots[1]
+	hasTargetPatch := len(targetDots) >= 3
+	targetPatch := ""
+	if hasTargetPatch {
+		targetPatch = targetDots[2]
+	}
+
+	actualParts := strings.SplitN(actual, "-", 2)
+	actualVer := actualParts[0]
+	hasActualSuffix := len(actualParts) > 1
+	actualSuffix := ""
+	if hasActualSuffix {
+		actualSuffix = actualParts[1]
+	}
+
+	actualDots := strings.Split(actualVer, ".")
+	if len(actualDots) < 2 {
+		return actual == target
+	}
+	actualMajor := actualDots[0]
+	actualMinor := actualDots[1]
+	hasActualPatch := len(actualDots) >= 3
+	actualPatch := ""
+	if hasActualPatch {
+		actualPatch = actualDots[2]
+	}
+
+	if targetMajor != actualMajor || targetMinor != actualMinor {
+		return false
+	}
+
+	if hasTargetPatch {
+		if !hasActualPatch || targetPatch != actualPatch {
+			return false
+		}
+	}
+
+	if hasTargetSuffix {
+		if !hasActualSuffix || targetSuffix != actualSuffix {
+			return false
+		}
+	}
+
+	return true
+}
+
+func vertexAiModelDevelopmentClusterGkeVersionDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	if new == "-" {
+		if strings.Contains(k, "node_pool_versions.") {
+			if old == "" || d == nil {
+				return false
+			}
+			oldCp, newCp := d.GetChange("orchestrator_spec.0.kubernetes_spec.0.control_plane_version")
+			oldCpStr, _ := oldCp.(string)
+			newCpStr, _ := newCp.(string)
+			if oldCpStr == "" {
+				return false
+			}
+			if newCpStr == "" || newCpStr == "-" || vertexAiModelDevelopmentClusterGkeVersionMatches(oldCpStr, newCpStr) {
+				return old == oldCpStr
+			}
+			return false
+		}
+		return old != ""
+	}
+	return vertexAiModelDevelopmentClusterGkeVersionMatches(old, new)
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -619,9 +708,15 @@ func expandVertexAIModelDevelopmentClusterOrchestratorSpec(v interface{}, d tpgr
 		transformed["slurmSpec"] = transformedSlurmSpec
 	}
 
+	transformedKubernetesSpec, err := expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpec(original["kubernetes_spec"], d, config)
+	if err != nil {
+		return nil, err
+	} else if transformedKubernetesSpec != nil {
+		transformed["kubernetesSpec"] = transformedKubernetesSpec
+	}
+
 	return transformed, nil
 }
-
 func expandVertexAIModelDevelopmentClusterOrchestratorSpecSlurmSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	if v == nil {
 		return nil, nil
@@ -827,6 +922,98 @@ func expandVertexAIModelDevelopmentClusterOrchestratorSpecSlurmSpecPartitionsNod
 
 func expandVertexAIModelDevelopmentClusterOrchestratorSpecSlurmSpecPrologBashScripts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNodePoolIds, err := expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecNodePoolIds(original["node_pool_ids"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNodePoolIds); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nodePoolIds"] = transformedNodePoolIds
+	}
+
+	transformedEnableIpAlias, err := expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecEnableIpAlias(original["enable_ip_alias"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnableIpAlias); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enableIpAlias"] = transformedEnableIpAlias
+	}
+
+	transformedPublicAccessEndpointEnabled, err := expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecPublicAccessEndpointEnabled(original["public_access_endpoint_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPublicAccessEndpointEnabled); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["publicAccessEndpointEnabled"] = transformedPublicAccessEndpointEnabled
+	}
+
+	transformedControlPlaneVersion, err := expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecControlPlaneVersion(original["control_plane_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedControlPlaneVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["controlPlaneVersion"] = transformedControlPlaneVersion
+	}
+
+	transformedNodePoolVersions, err := expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecNodePoolVersions(original["node_pool_versions"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNodePoolVersions); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["nodePoolVersions"] = transformedNodePoolVersions
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecNodePoolIds(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecEnableIpAlias(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecPublicAccessEndpointEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecControlPlaneVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecNodePoolVersions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	if m, ok := v.(map[string]interface{}); ok {
+		if len(m) == 0 {
+			return nil, nil
+		}
+		transformed := make(map[string]interface{})
+		for k, val := range m {
+			if strVal, ok := val.(string); ok && strVal != "" {
+				transformed[k] = map[string]interface{}{
+					"version": strVal,
+				}
+			}
+		}
+		return transformed, nil
+	}
+	return nil, nil
 }
 
 func expandVertexAIModelDevelopmentClusterRuntimeSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
