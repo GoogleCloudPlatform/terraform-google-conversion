@@ -128,7 +128,6 @@ func ResourceClouddeployAutomation() *schema.Resource {
 									},
 								},
 							},
-							ExactlyOneOf: []string{},
 						},
 						"promote_release_rule": {
 							Type:        schema.TypeList,
@@ -159,7 +158,6 @@ func ResourceClouddeployAutomation() *schema.Resource {
 									},
 								},
 							},
-							ExactlyOneOf: []string{},
 						},
 						"repair_rollout_rule": {
 							Type:        schema.TypeList,
@@ -220,7 +218,6 @@ func ResourceClouddeployAutomation() *schema.Resource {
 															},
 														},
 													},
-													ExactlyOneOf: []string{},
 												},
 												"rollback": {
 													Type:        schema.TypeList,
@@ -241,14 +238,12 @@ func ResourceClouddeployAutomation() *schema.Resource {
 															},
 														},
 													},
-													ExactlyOneOf: []string{},
 												},
 											},
 										},
 									},
 								},
 							},
-							ExactlyOneOf: []string{},
 						},
 						"timed_promote_release_rule": {
 							Type:        schema.TypeList,
@@ -286,7 +281,6 @@ func ResourceClouddeployAutomation() *schema.Resource {
 									},
 								},
 							},
-							ExactlyOneOf: []string{},
 						},
 					},
 				},
