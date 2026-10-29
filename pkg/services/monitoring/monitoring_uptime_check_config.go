@@ -405,7 +405,6 @@ uptime checks:
 									},
 								},
 							},
-							ExactlyOneOf: []string{},
 						},
 					},
 				},
