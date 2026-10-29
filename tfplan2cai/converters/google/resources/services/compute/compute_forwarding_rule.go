@@ -42,6 +42,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/registry"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
@@ -216,6 +217,7 @@ var (
 	_ = structure.ExpandJsonFromString
 	_ = validation.All
 	_ = terraform.State{}
+	_ = registry.Product{}
 	_ = tpgresource.SetLabels
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
@@ -434,14 +436,14 @@ func expandComputeForwardingRuleBackendService(v interface{}, d tpgresource.Terr
 		return v, nil
 	} else if strings.HasPrefix(v.(string), "projects/") {
 		// If the self link references a project, we'll just stuck the compute prefix on it
-		url, err := tpgresource.ReplaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		url, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+v.(string))
 		if err != nil {
 			return "", err
 		}
 		return url, nil
 	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
 		// For regional or zonal resources which include their region or zone, just put the project in front.
-		url, err := tpgresource.ReplaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		url, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+"projects/{{project}}/")
 		if err != nil {
 			return nil, err
 		}
@@ -450,7 +452,7 @@ func expandComputeForwardingRuleBackendService(v interface{}, d tpgresource.Terr
 	// Anything else is assumed to be a regional resource, with a partial link that begins with the resource name.
 	// This isn't very likely - it's a last-ditch effort to extract something useful here.  We can do a better job
 	// as soon as MultiResourceRefs are working since we'll know the types that this field is supposed to point to.
-	url, err := tpgresource.ReplaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/regions/{{region}}/")
+	url, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+"projects/{{project}}/regions/{{region}}/")
 	if err != nil {
 		return nil, err
 	}
@@ -499,14 +501,14 @@ func expandComputeForwardingRuleTarget(v interface{}, d tpgresource.TerraformRes
 		return v, nil
 	} else if strings.HasPrefix(v.(string), "projects/") {
 		// If the self link references a project, we'll just stuck the compute prefix on it
-		url, err := tpgresource.ReplaceVars(d, config, "{{ComputeBasePath}}"+v.(string))
+		url, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+v.(string))
 		if err != nil {
 			return "", err
 		}
 		return url, nil
 	} else if strings.HasPrefix(v.(string), "regions/") || strings.HasPrefix(v.(string), "zones/") {
 		// For regional or zonal resources which include their region or zone, just put the project in front.
-		url, err := tpgresource.ReplaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/")
+		url, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+"projects/{{project}}/")
 		if err != nil {
 			return nil, err
 		}
@@ -515,7 +517,7 @@ func expandComputeForwardingRuleTarget(v interface{}, d tpgresource.TerraformRes
 	// Anything else is assumed to be a regional resource, with a partial link that begins with the resource name.
 	// This isn't very likely - it's a last-ditch effort to extract something useful here.  We can do a better job
 	// as soon as MultiResourceRefs are working since we'll know the types that this field is supposed to point to.
-	url, err := tpgresource.ReplaceVars(d, config, "{{ComputeBasePath}}projects/{{project}}/regions/{{region}}/")
+	url, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+"projects/{{project}}/regions/{{region}}/")
 	if err != nil {
 		return nil, err
 	}

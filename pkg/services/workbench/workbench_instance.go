@@ -216,7 +216,7 @@ func WorkbenchInstanceAcceleratorDiffSuppress(_, _, _ string, d *schema.Resource
 }
 
 func modifyWorkbenchInstanceState(config *transport_tpg.Config, d *schema.ResourceData, project string, billingProject string, userAgent string, state string) (map[string]interface{}, error) {
-	url, err := tpgresource.ReplaceVars(d, config, "{{WorkbenchBasePath}}projects/{{project}}/locations/{{location}}/instances/{{name}}:"+state)
+	url, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+"projects/{{project}}/locations/{{location}}/instances/{{name}}:"+state)
 	if err != nil {
 		return nil, err
 	}

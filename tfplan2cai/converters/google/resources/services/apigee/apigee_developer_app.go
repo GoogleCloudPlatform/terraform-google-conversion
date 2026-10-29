@@ -42,6 +42,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/registry"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
@@ -110,7 +111,7 @@ func updateDeveloperAppKeyProductsAndScopes(config *transport_tpg.Config, d *sch
 		return fmt.Errorf("cannot update api_products/scopes in place: no existing consumer_key found in state for DeveloperApp %q", d.Id())
 	}
 
-	keyURL, err := tpgresource.ReplaceVars(d, config, "{{ApigeeBasePath}}{{org_id}}/developers/{{developer_email}}/apps/{{name}}/keys/"+consumerKey)
+	keyURL, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+"{{org_id}}/developers/{{developer_email}}/apps/{{name}}/keys/"+consumerKey)
 	if err != nil {
 		return err
 	}
@@ -198,6 +199,7 @@ var (
 	_ = structure.ExpandJsonFromString
 	_ = validation.All
 	_ = terraform.State{}
+	_ = registry.Product{}
 	_ = tpgresource.SetLabels
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex

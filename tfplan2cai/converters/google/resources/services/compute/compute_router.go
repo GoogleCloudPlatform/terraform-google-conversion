@@ -42,6 +42,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/registry"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
@@ -90,6 +91,7 @@ var (
 	_ = structure.ExpandJsonFromString
 	_ = validation.All
 	_ = terraform.State{}
+	_ = registry.Product{}
 	_ = tpgresource.SetLabels
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
@@ -373,7 +375,7 @@ func expandComputeRouterNccGateway(v interface{}, d tpgresource.TerraformResourc
 	// Anything else is assumed to be a regional resource, with a partial link that begins with the resource name.
 	// This isn't very likely - it's a last-ditch effort to extract something useful here.  We can do a better job
 	// as soon as MultiResourceRefs are working since we'll know the types that this field is supposed to point to.
-	url, err := tpgresource.ReplaceVars(d, config, "{{NetworkConnectivityBasePath}}")
+	url, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(registry.GetProduct("networkconnectivity"), config))
 	if err != nil {
 		return nil, err
 	}

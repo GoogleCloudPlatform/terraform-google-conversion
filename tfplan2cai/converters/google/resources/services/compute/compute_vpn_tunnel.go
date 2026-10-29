@@ -42,6 +42,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/registry"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
@@ -184,6 +185,7 @@ var (
 	_ = structure.ExpandJsonFromString
 	_ = validation.All
 	_ = terraform.State{}
+	_ = registry.Product{}
 	_ = tpgresource.SetLabels
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
@@ -416,7 +418,7 @@ func expandComputeVpnTunnelRouter(v interface{}, d tpgresource.TerraformResource
 		return nil, fmt.Errorf("Invalid value for router: %s", err)
 	}
 
-	url, err := tpgresource.ReplaceVars(d, config, "{{ComputeBasePath}}"+f.RelativeLink())
+	url, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+f.RelativeLink())
 	if err != nil {
 		return nil, err
 	}

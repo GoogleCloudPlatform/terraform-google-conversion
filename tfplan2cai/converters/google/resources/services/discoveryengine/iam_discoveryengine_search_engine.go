@@ -259,7 +259,7 @@ func (u *DiscoveryEngineSearchEngineIamUpdater) SetResourceIamPolicy(policy *clo
 }
 
 func (u *DiscoveryEngineSearchEngineIamUpdater) qualifySearchEngineUrl(methodIdentifier string) (string, error) {
-	urlTemplate := fmt.Sprintf("{{DiscoveryEngineBasePath}}%s:%s", fmt.Sprintf("projects/%s/locations/%s/collections/%s/engines/%s", u.project, u.location, u.collectionId, u.engineId), methodIdentifier)
+	urlTemplate := fmt.Sprintf(transport_tpg.BaseUrl(Product, u.Config)+"%s:%s", fmt.Sprintf("projects/%s/locations/%s/collections/%s/engines/%s", u.project, u.location, u.collectionId, u.engineId), methodIdentifier)
 	url, err := tpgresource.ReplaceVars(u.d, u.Config, urlTemplate)
 	if err != nil {
 		return "", err

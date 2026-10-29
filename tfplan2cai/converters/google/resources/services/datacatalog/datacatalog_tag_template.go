@@ -42,6 +42,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
 	"github.com/GoogleCloudPlatform/terraform-google-conversion/v7/tfplan2cai/converters/google/resources/cai"
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/registry"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/verify"
@@ -52,7 +53,7 @@ import (
 // Use it to delete TagTemplate Field
 func deleteTagTemplateField(d *schema.ResourceData, config *transport_tpg.Config, name, billingProject, userAgent string) error {
 
-	url_delete, err := tpgresource.ReplaceVars(d, config, "{{DataCatalogBasePath}}{{name}}/fields/"+name+"?force={{force_delete}}")
+	url_delete, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+"{{name}}/fields/"+name+"?force={{force_delete}}")
 	if err != nil {
 		return err
 	}
@@ -77,7 +78,7 @@ func deleteTagTemplateField(d *schema.ResourceData, config *transport_tpg.Config
 // Use it to create TagTemplate Field
 func createTagTemplateField(d *schema.ResourceData, config *transport_tpg.Config, body map[string]interface{}, name, billingProject, userAgent string) error {
 
-	url_create, err := tpgresource.ReplaceVars(d, config, "{{DataCatalogBasePath}}{{name}}/fields")
+	url_create, err := tpgresource.ReplaceVars(d, config, transport_tpg.BaseUrl(Product, config)+"{{name}}/fields")
 	if err != nil {
 		return err
 	}
@@ -132,6 +133,7 @@ var (
 	_ = structure.ExpandJsonFromString
 	_ = validation.All
 	_ = terraform.State{}
+	_ = registry.Product{}
 	_ = tpgresource.SetLabels
 	_ = transport_tpg.Config{}
 	_ = verify.ProjectRegex
