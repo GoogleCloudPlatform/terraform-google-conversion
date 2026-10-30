@@ -12,13 +12,13 @@ require (
 	github.com/hashicorp/hcl/v2 v2.25.0
 	github.com/hashicorp/terraform-json v0.29.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20261030170707-b64f1c30ecd5
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20261030172420-5a6a23ca8c04
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.12.1
 	github.com/zclconf/go-cty v1.19.0
 	go.uber.org/zap v1.27.0
-	google.golang.org/api v0.305.0
+	google.golang.org/api v0.310.0
 )
 
 require (
@@ -34,7 +34,7 @@ require (
 	github.com/sirupsen/logrus v1.10.2
 	github.com/spf13/cobra v1.8.1
 	golang.org/x/oauth2 v0.37.0
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20261012220534-4341edf3f941
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20261019180522-ce908d29299b
 	google.golang.org/grpc v1.84.0
 )
 
@@ -67,8 +67,8 @@ require (
 	github.com/google/go-cpy v0.0.0-20211218193943-a9c933c06932 // indirect
 	github.com/google/s2a-go v0.1.11 // indirect
 	github.com/google/uuid v1.6.0 // indirect
-	github.com/googleapis/enterprise-certificate-proxy v0.3.23 // indirect
-	github.com/googleapis/gax-go/v2 v2.26.2 // indirect
+	github.com/googleapis/enterprise-certificate-proxy v0.3.24 // indirect
+	github.com/googleapis/gax-go/v2 v2.27.0 // indirect
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-uuid v1.0.4 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
