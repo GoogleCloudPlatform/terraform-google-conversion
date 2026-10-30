@@ -185,6 +185,19 @@ func GetComputeRouterApiObject(d tpgresource.TerraformResourceData, config *tran
 		obj["region"] = regionProp
 	}
 
+	return resourceComputeRouterEncoder(d, config, obj)
+}
+
+func resourceComputeRouterEncoder(d tpgresource.TerraformResourceData, meta interface{}, obj map[string]interface{}) (map[string]interface{}, error) {
+	// md5_authentication_keys is deprecated and is never sent to the API.
+	//
+	// The API only accepts an MD5 authentication key that is referenced by exactly
+	// one BGP peer, and the keys on a router are managed by
+	// google_compute_router_peer.md5_authentication_key. Sending this field would
+	// overwrite the router's whole key list (removing the keys owned by
+	// google_compute_router_peer), so it is dropped from create and update requests.
+	delete(obj, "md5AuthenticationKeys")
+
 	return obj, nil
 }
 

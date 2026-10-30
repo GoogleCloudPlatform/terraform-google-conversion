@@ -198,6 +198,7 @@ attachments (interconnectAttachments).`,
 			"md5_authentication_keys": {
 				Type:        schema.TypeList,
 				Optional:    true,
+				Deprecated:  "`md5_authentication_keys` is deprecated and will be removed in a future major release. It has no effect; use the `md5_authentication_key` block of `google_compute_router_peer` to configure MD5 authentication for a BGP peer instead.",
 				Description: `Keys used for MD5 authentication.`,
 				MaxItems:    1,
 				Elem: &schema.Resource{
@@ -206,6 +207,7 @@ attachments (interconnectAttachments).`,
 							Type:        schema.TypeString,
 							Required:    true,
 							Description: `Value of the key used for MD5 authentication.`,
+							Sensitive:   true,
 						},
 						"name": {
 							Type:     schema.TypeString,
