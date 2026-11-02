@@ -268,9 +268,6 @@ func flattenComputeNodeGroupAutoscalingPolicyMaxNodes(v interface{}, d *schema.R
 		intVal := int(floatVal)
 		return intVal
 	}
-	if v == nil {
-		return 0
-	}
 
 	return v // let terraform core handle it otherwise
 }
