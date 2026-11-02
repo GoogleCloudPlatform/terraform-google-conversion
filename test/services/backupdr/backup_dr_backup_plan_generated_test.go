@@ -37,6 +37,9 @@ func TestAccBackupDRBackupPlan(t *testing.T) {
 			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanForFilestoreResourceExample",
 		},
 		{
+			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanForNetappVolumeExample",
+		},
+		{
 			Name: "TestAccBackupDRBackupPlan_fullUpdate",
 		},
 		{
