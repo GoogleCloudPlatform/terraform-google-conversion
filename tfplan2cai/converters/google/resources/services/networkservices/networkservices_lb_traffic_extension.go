@@ -299,6 +299,13 @@ func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensions(v interfac
 			transformed["metadata"] = transformedMetadata
 		}
 
+		transformedObservabilityMode, err := expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsObservabilityMode(original["observability_mode"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedObservabilityMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["observabilityMode"] = transformedObservabilityMode
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -345,6 +352,10 @@ func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsMetadata(v 
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsObservabilityMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandNetworkServicesLbTrafficExtensionLoadBalancingScheme(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
