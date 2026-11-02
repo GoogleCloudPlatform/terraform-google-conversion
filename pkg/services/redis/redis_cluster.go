@@ -77,14 +77,6 @@ const RedisClusterSchemaName string = "google_redis_cluster"
 func ResourceRedisCluster() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
-			"name": {
-				Type:     schema.TypeString,
-				Computed: true,
-				Optional: true,
-				ForceNew: true,
-				Description: `Unique name of the resource in this scope including project and location using the form:
-projects/{projectId}/locations/{locationId}/clusters/{clusterId}`,
-			},
 			"shard_count": {
 				Type:        schema.TypeInt,
 				Required:    true,
@@ -339,6 +331,14 @@ An API may allow the value 60 if it allows leap-seconds.`,
 					},
 				},
 				ConflictsWith: []string{"gcs_source"},
+			},
+			"name": {
+				Type:     schema.TypeString,
+				Computed: true,
+				Optional: true,
+				ForceNew: true,
+				Description: `Unique name of the resource in this scope including project and location using the form:
+projects/{projectId}/locations/{locationId}/clusters/{clusterId}`,
 			},
 			"node_type": {
 				Type:         schema.TypeString,
