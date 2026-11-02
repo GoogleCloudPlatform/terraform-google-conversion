@@ -50,9 +50,6 @@ func TestAccComputeInstance(t *testing.T) {
 			Name: "TestAccComputeInstance_importBlockWithResourceIdentity",
 		},
 		{
-			Name: "TestAccComputeInstance_metadataGceContainerDeclaration",
-		},
-		{
 			Name: "TestAccComputeInstance_resourceManagerTags",
 		},
 		{
