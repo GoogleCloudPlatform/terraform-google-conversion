@@ -51,13 +51,11 @@ import (
 )
 
 import (
-	"github.com/gammazero/workerpool"
 	"runtime"
 )
 
 var (
 	_ = runtime.GOARCH
-	_ = workerpool.New
 )
 
 var (
