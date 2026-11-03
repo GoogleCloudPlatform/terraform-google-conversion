@@ -337,6 +337,34 @@ func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCode(v in
 		transformed["tokenEndpoint"] = transformedTokenEndpoint
 	}
 
+	transformedApplyReauthPolicy, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeApplyReauthPolicy(original["apply_reauth_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedApplyReauthPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["applyReauthPolicy"] = transformedApplyReauthPolicy
+	}
+
+	transformedRequestType, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeRequestType(original["request_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequestType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requestType"] = transformedRequestType
+	}
+
+	transformedAuthParams, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParams(original["auth_params"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAuthParams); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["authParams"] = transformedAuthParams
+	}
+
+	transformedTokenParams, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParams(original["token_params"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTokenParams); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["tokenParams"] = transformedTokenParams
+	}
+
 	return transformed, nil
 }
 
@@ -357,6 +385,314 @@ func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthE
 }
 
 func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenEndpoint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeApplyReauthPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeRequestType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEntries, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntries(original["entries"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEntries); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["entries"] = transformedEntries
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedKey, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesKey(original["key"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["key"] = transformedKey
+		}
+
+		transformedValue, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLiteralValue, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesKeyLiteralValue(original["literal_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLiteralValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["literalValue"] = transformedLiteralValue
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesKeyLiteralValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedStringValue, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesKeyLiteralValueStringValue(original["string_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStringValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["stringValue"] = transformedStringValue
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesKeyLiteralValueStringValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLiteralValue, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesValueLiteralValue(original["literal_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLiteralValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["literalValue"] = transformedLiteralValue
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesValueLiteralValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedStringValue, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesValueLiteralValueStringValue(original["string_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStringValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["stringValue"] = transformedStringValue
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeAuthParamsEntriesValueLiteralValueStringValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEntries, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntries(original["entries"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEntries); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["entries"] = transformedEntries
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedKey, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesKey(original["key"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedKey); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["key"] = transformedKey
+		}
+
+		transformedValue, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLiteralValue, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesKeyLiteralValue(original["literal_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLiteralValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["literalValue"] = transformedLiteralValue
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesKeyLiteralValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedStringValue, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesKeyLiteralValueStringValue(original["string_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStringValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["stringValue"] = transformedStringValue
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesKeyLiteralValueStringValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedLiteralValue, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesValueLiteralValue(original["literal_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedLiteralValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["literalValue"] = transformedLiteralValue
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesValueLiteralValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedStringValue, err := expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesValueLiteralValueStringValue(original["string_value"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStringValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["stringValue"] = transformedStringValue
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationsAuthConfigDecryptedCredentialOauth2AuthorizationCodeTokenParamsEntriesValueLiteralValueStringValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
