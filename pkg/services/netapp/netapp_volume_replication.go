@@ -197,6 +197,13 @@ func ResourceNetappVolumeReplication() *schema.Resource {
 										Description: `Optional. Time in days to mark the volume's data block as cold and make it eligible for tiering, can be range from 2-183.
 Default is 31.`,
 									},
+									"hot_tier_bypass_mode_enabled": {
+										Type:     schema.TypeBool,
+										Optional: true,
+										ForceNew: true,
+										Description: `Flag indicating that the hot tier bypass mode is enabled. Default is false.
+Only applicable to Flex service level.`,
+									},
 									"tier_action": {
 										Type:         schema.TypeString,
 										Optional:     true,

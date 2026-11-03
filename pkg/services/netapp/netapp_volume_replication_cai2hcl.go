@@ -220,6 +220,8 @@ func flattenNetappVolumeReplicationDestinationVolumeParametersTieringPolicy(v in
 		flattenNetappVolumeReplicationDestinationVolumeParametersTieringPolicyCoolingThresholdDays(original["coolingThresholdDays"], d, config)
 	transformed["tier_action"] =
 		flattenNetappVolumeReplicationDestinationVolumeParametersTieringPolicyTierAction(original["tierAction"], d, config)
+	transformed["hot_tier_bypass_mode_enabled"] =
+		flattenNetappVolumeReplicationDestinationVolumeParametersTieringPolicyHotTierBypassModeEnabled(original["hotTierBypassModeEnabled"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -244,6 +246,10 @@ func flattenNetappVolumeReplicationDestinationVolumeParametersTieringPolicyCooli
 }
 
 func flattenNetappVolumeReplicationDestinationVolumeParametersTieringPolicyTierAction(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenNetappVolumeReplicationDestinationVolumeParametersTieringPolicyHotTierBypassModeEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
