@@ -133,7 +133,7 @@ func (c *StorageInsightsReportConfigCai2hclConverter) convertResourceData(asset 
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"name": struct{}{}}
+	outputFields := map[string]struct{}{"effective_labels": struct{}{}, "name": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//storageinsights.googleapis.com/projects/{{project}}/locations/{{location}}/reportConfigs/{{name}}", outputFields, hclData)
 
 	hclData["frequency_options"] = flattenStorageInsightsReportConfigFrequencyOptions(res["frequencyOptions"], d, config)
@@ -141,6 +141,7 @@ func (c *StorageInsightsReportConfigCai2hclConverter) convertResourceData(asset 
 	hclData["csv_options"] = flattenStorageInsightsReportConfigCsvOptions(res["csvOptions"], d, config)
 	hclData["object_metadata_report_options"] = flattenStorageInsightsReportConfigObjectMetadataReportOptions(res["objectMetadataReportOptions"], d, config)
 	hclData["display_name"] = flattenStorageInsightsReportConfigDisplayName(res["displayName"], d, config)
+	hclData["labels"] = flattenStorageInsightsReportConfigLabels(res["labels"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -471,4 +472,8 @@ func flattenStorageInsightsReportConfigDisplayName(v interface{}, d *schema.Reso
 		return nil
 	}
 	return v
+}
+
+func flattenStorageInsightsReportConfigLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return tgcresource.RemoveTerraformAttributionLabel(v)
 }

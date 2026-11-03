@@ -181,6 +181,16 @@ must be in the same location.`,
 					},
 				},
 			},
+			"labels": {
+				Type:     schema.TypeMap,
+				Optional: true,
+				Description: `Labels as key value pairs. Have a character limit of 64 per key and value.
+
+
+**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.
+Please refer to the field 'effective_labels' for all of the labels present on the resource.`,
+				Elem: &schema.Schema{Type: schema.TypeString},
+			},
 			"object_metadata_report_options": {
 				Type:        schema.TypeList,
 				Optional:    true,
@@ -245,10 +255,23 @@ must be in the same location.`,
 				},
 				ExactlyOneOf: []string{"csv_options", "parquet_options"},
 			},
+			"effective_labels": {
+				Type:        schema.TypeMap,
+				Computed:    true,
+				Description: `All of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services.`,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+			},
 			"name": {
 				Type:        schema.TypeString,
 				Computed:    true,
 				Description: `The UUID of the inventory report configuration.`,
+			},
+			"terraform_labels": {
+				Type:     schema.TypeMap,
+				Computed: true,
+				Description: `The combination of labels configured directly on the resource
+ and default labels configured on the provider.`,
+				Elem: &schema.Schema{Type: schema.TypeString},
 			},
 			"force_destroy": {
 				Type:        schema.TypeBool,
