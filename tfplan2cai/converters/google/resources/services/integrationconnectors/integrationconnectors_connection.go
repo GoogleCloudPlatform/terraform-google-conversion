@@ -1597,6 +1597,34 @@ func expandIntegrationConnectorsConnectionEventingConfig(v interface{}, d tpgres
 		transformed["enrichmentEnabled"] = transformedEnrichmentEnabled
 	}
 
+	transformedAllowedEventTypes, err := expandIntegrationConnectorsConnectionEventingConfigAllowedEventTypes(original["allowed_event_types"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAllowedEventTypes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["allowedEventTypes"] = transformedAllowedEventTypes
+	}
+
+	transformedGlobalEventFilter, err := expandIntegrationConnectorsConnectionEventingConfigGlobalEventFilter(original["global_event_filter"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedGlobalEventFilter); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["globalEventFilter"] = transformedGlobalEventFilter
+	}
+
+	transformedDeadLetterConfig, err := expandIntegrationConnectorsConnectionEventingConfigDeadLetterConfig(original["dead_letter_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDeadLetterConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["deadLetterConfig"] = transformedDeadLetterConfig
+	}
+
+	transformedEnrichmentConfig, err := expandIntegrationConnectorsConnectionEventingConfigEnrichmentConfig(original["enrichment_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEnrichmentConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["enrichmentConfig"] = transformedEnrichmentConfig
+	}
+
 	return transformed, nil
 }
 
@@ -2073,6 +2101,82 @@ func expandIntegrationConnectorsConnectionEventingConfigAdditionalVariableEncryp
 }
 
 func expandIntegrationConnectorsConnectionEventingConfigEnrichmentEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsConnectionEventingConfigAllowedEventTypes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsConnectionEventingConfigGlobalEventFilter(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsConnectionEventingConfigDeadLetterConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedProjectId, err := expandIntegrationConnectorsConnectionEventingConfigDeadLetterConfigProjectId(original["project_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProjectId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["projectId"] = transformedProjectId
+	}
+
+	transformedTopic, err := expandIntegrationConnectorsConnectionEventingConfigDeadLetterConfigTopic(original["topic"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTopic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["topic"] = transformedTopic
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationConnectorsConnectionEventingConfigDeadLetterConfigProjectId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsConnectionEventingConfigDeadLetterConfigTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIntegrationConnectorsConnectionEventingConfigEnrichmentConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedAppendAcl, err := expandIntegrationConnectorsConnectionEventingConfigEnrichmentConfigAppendAcl(original["append_acl"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["appendAcl"] = transformedAppendAcl
+	}
+
+	return transformed, nil
+}
+
+func expandIntegrationConnectorsConnectionEventingConfigEnrichmentConfigAppendAcl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
