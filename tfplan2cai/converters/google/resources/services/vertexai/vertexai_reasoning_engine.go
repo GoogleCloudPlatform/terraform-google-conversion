@@ -2019,6 +2019,13 @@ func expandVertexAIReasoningEngineContextSpecMemoryBankConfigCustomizationConfig
 			transformed["audioTranscription"] = transformedAudioTranscription
 		}
 
+		transformedSpeechMetadata, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigCustomizationConfigsGenerateMemoriesExamplesConversationSourceEventsContentPartsSpeechMetadata(original["speech_metadata"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSpeechMetadata); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["speechMetadata"] = transformedSpeechMetadata
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -2443,6 +2450,43 @@ func expandVertexAIReasoningEngineContextSpecMemoryBankConfigCustomizationConfig
 }
 
 func expandVertexAIReasoningEngineContextSpecMemoryBankConfigCustomizationConfigsGenerateMemoriesExamplesConversationSourceEventsContentPartsAudioTranscriptionWordsWord(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigCustomizationConfigsGenerateMemoriesExamplesConversationSourceEventsContentPartsSpeechMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSpeaker, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigCustomizationConfigsGenerateMemoriesExamplesConversationSourceEventsContentPartsSpeechMetadataSpeaker(original["speaker"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSpeaker); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["speaker"] = transformedSpeaker
+	}
+
+	transformedStyle, err := expandVertexAIReasoningEngineContextSpecMemoryBankConfigCustomizationConfigsGenerateMemoriesExamplesConversationSourceEventsContentPartsSpeechMetadataStyle(original["style"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStyle); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["style"] = transformedStyle
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigCustomizationConfigsGenerateMemoriesExamplesConversationSourceEventsContentPartsSpeechMetadataSpeaker(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIReasoningEngineContextSpecMemoryBankConfigCustomizationConfigsGenerateMemoriesExamplesConversationSourceEventsContentPartsSpeechMetadataStyle(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
