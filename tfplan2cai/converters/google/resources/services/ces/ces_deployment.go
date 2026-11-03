@@ -136,6 +136,18 @@ func GetCESDeploymentApiObject(d tpgresource.TerraformResourceData, config *tran
 	} else if v, ok := d.GetOkExists("instagram_credentials"); !tpgresource.IsEmptyValue(reflect.ValueOf(instagramCredentialsProp)) && (ok || !reflect.DeepEqual(v, instagramCredentialsProp)) {
 		obj["instagramCredentials"] = instagramCredentialsProp
 	}
+	modalityProp, err := expandCESDeploymentModality(d.Get("modality"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("modality"); !tpgresource.IsEmptyValue(reflect.ValueOf(modalityProp)) && (ok || !reflect.DeepEqual(v, modalityProp)) {
+		obj["modality"] = modalityProp
+	}
+	modelSettingsProp, err := expandCESDeploymentModelSettings(d.Get("model_settings"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("model_settings"); !tpgresource.IsEmptyValue(reflect.ValueOf(modelSettingsProp)) && (ok || !reflect.DeepEqual(v, modelSettingsProp)) {
+		obj["modelSettings"] = modelSettingsProp
+	}
 	whatsappCredentialsProp, err := expandCESDeploymentWhatsappCredentials(d.Get("whatsapp_credentials"), d, config)
 	if err != nil {
 		return nil, err
@@ -489,6 +501,58 @@ func expandCESDeploymentInstagramCredentialsAuthCode(v interface{}, d tpgresourc
 }
 
 func expandCESDeploymentInstagramCredentialsConversationProfileId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentModality(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentModelSettings(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedModel, err := expandCESDeploymentModelSettingsModel(original["model"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedModel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["model"] = transformedModel
+	}
+
+	transformedTemperature, err := expandCESDeploymentModelSettingsTemperature(original["temperature"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTemperature); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["temperature"] = transformedTemperature
+	}
+
+	transformedThinkingLevel, err := expandCESDeploymentModelSettingsThinkingLevel(original["thinking_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedThinkingLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["thinkingLevel"] = transformedThinkingLevel
+	}
+
+	return transformed, nil
+}
+
+func expandCESDeploymentModelSettingsModel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentModelSettingsTemperature(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentModelSettingsThinkingLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
