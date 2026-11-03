@@ -30,6 +30,9 @@ func TestAccNetappVolumeReplication(t *testing.T) {
 		{
 			Name: "TestAccNetappVolumeReplication_NetappVolumeReplicationCreateExample_update",
 		},
+		{
+			Name: "TestAccNetappVolumeReplication_flexHotTierBypass",
+		},
 	}
 
 	for _, tt := range tests {
