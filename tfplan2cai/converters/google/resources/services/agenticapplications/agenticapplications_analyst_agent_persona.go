@@ -1953,6 +1953,20 @@ func expandAgenticApplicationsAnalystAgentPersonaMcpDataSources(v interface{}, d
 			transformed["serverUrl"] = transformedServerUrl
 		}
 
+		transformedSessionIdHeader, err := expandAgenticApplicationsAnalystAgentPersonaMcpDataSourcesSessionIdHeader(original["session_id_header"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSessionIdHeader); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sessionIdHeader"] = transformedSessionIdHeader
+		}
+
+		transformedTaskIdHeader, err := expandAgenticApplicationsAnalystAgentPersonaMcpDataSourcesTaskIdHeader(original["task_id_header"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedTaskIdHeader); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["taskIdHeader"] = transformedTaskIdHeader
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -1999,6 +2013,14 @@ func expandAgenticApplicationsAnalystAgentPersonaMcpDataSourcesPrompt(v interfac
 }
 
 func expandAgenticApplicationsAnalystAgentPersonaMcpDataSourcesServerUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAgenticApplicationsAnalystAgentPersonaMcpDataSourcesSessionIdHeader(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAgenticApplicationsAnalystAgentPersonaMcpDataSourcesTaskIdHeader(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
