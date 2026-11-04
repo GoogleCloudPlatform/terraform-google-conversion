@@ -781,6 +781,8 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteAction(v interface{}, d *schema
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionWeightedBackendServices(original["weightedBackendServices"], d, config)
 	transformed["cache_policy"] =
 		flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicy(original["cachePolicy"], d, config)
+	transformed["image_optimization_policy"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionImageOptimizationPolicy(original["imageOptimizationPolicy"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -1760,6 +1762,24 @@ func flattenComputeUrlMapPathMatcherPathRuleRouteActionCachePolicyCacheKeyPolicy
 	return v
 }
 
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionImageOptimizationPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["query_parameter_interpretation"] =
+		flattenComputeUrlMapPathMatcherPathRuleRouteActionImageOptimizationPolicyQueryParameterInterpretation(original["queryParameterInterpretation"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherPathRuleRouteActionImageOptimizationPolicyQueryParameterInterpretation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenComputeUrlMapPathMatcherPathRuleUrlRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -2371,6 +2391,8 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteAction(v interface{}, d *sche
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionWeightedBackendServices(original["weightedBackendServices"], d, config)
 	transformed["cache_policy"] =
 		flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicy(original["cachePolicy"], d, config)
+	transformed["image_optimization_policy"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionImageOptimizationPolicy(original["imageOptimizationPolicy"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -3399,6 +3421,24 @@ func flattenComputeUrlMapPathMatcherRouteRulesRouteActionCachePolicyCacheKeyPoli
 	return v
 }
 
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionImageOptimizationPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["query_parameter_interpretation"] =
+		flattenComputeUrlMapPathMatcherRouteRulesRouteActionImageOptimizationPolicyQueryParameterInterpretation(original["queryParameterInterpretation"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherRouteRulesRouteActionImageOptimizationPolicyQueryParameterInterpretation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenComputeUrlMapPathMatcherRouteRulesUrlRedirect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -3637,6 +3677,8 @@ func flattenComputeUrlMapPathMatcherDefaultRouteAction(v interface{}, d *schema.
 		flattenComputeUrlMapPathMatcherDefaultRouteActionFaultInjectionPolicy(original["faultInjectionPolicy"], d, config)
 	transformed["cache_policy"] =
 		flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicy(original["cachePolicy"], d, config)
+	transformed["image_optimization_policy"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionImageOptimizationPolicy(original["imageOptimizationPolicy"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -4594,6 +4636,24 @@ func flattenComputeUrlMapPathMatcherDefaultRouteActionCachePolicyCacheKeyPolicyI
 	return v
 }
 
+func flattenComputeUrlMapPathMatcherDefaultRouteActionImageOptimizationPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["query_parameter_interpretation"] =
+		flattenComputeUrlMapPathMatcherDefaultRouteActionImageOptimizationPolicyQueryParameterInterpretation(original["queryParameterInterpretation"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapPathMatcherDefaultRouteActionImageOptimizationPolicyQueryParameterInterpretation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
 func flattenComputeUrlMapDefaultCustomErrorResponsePolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
 		return nil
@@ -4903,6 +4963,8 @@ func flattenComputeUrlMapDefaultRouteAction(v interface{}, d *schema.ResourceDat
 		flattenComputeUrlMapDefaultRouteActionFaultInjectionPolicy(original["faultInjectionPolicy"], d, config)
 	transformed["cache_policy"] =
 		flattenComputeUrlMapDefaultRouteActionCachePolicy(original["cachePolicy"], d, config)
+	transformed["image_optimization_policy"] =
+		flattenComputeUrlMapDefaultRouteActionImageOptimizationPolicy(original["imageOptimizationPolicy"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -5857,6 +5919,24 @@ func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludedHead
 }
 
 func flattenComputeUrlMapDefaultRouteActionCachePolicyCacheKeyPolicyIncludedCookieNames(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeUrlMapDefaultRouteActionImageOptimizationPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["query_parameter_interpretation"] =
+		flattenComputeUrlMapDefaultRouteActionImageOptimizationPolicyQueryParameterInterpretation(original["queryParameterInterpretation"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeUrlMapDefaultRouteActionImageOptimizationPolicyQueryParameterInterpretation(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

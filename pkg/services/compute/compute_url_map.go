@@ -589,7 +589,7 @@ This translates to the Access-Control-Max-Age header.`,
 									},
 								},
 							},
-							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
+							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.image_optimization_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
 						},
 						"fault_injection_policy": {
 							Type:     schema.TypeList,
@@ -676,7 +676,26 @@ The value must be between 0.0 and 100.0 inclusive.`,
 									},
 								},
 							},
-							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
+							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.image_optimization_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
+						},
+						"image_optimization_policy": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `Specifies the policy for optimizing images returned in the HTTP response.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"query_parameter_interpretation": {
+										Type:         schema.TypeString,
+										Optional:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"DISABLED", "ENABLED", ""}),
+										Description: `Controls whether presets or control parameters specified as URL query
+parameters are used to optimize the image. If not specified, the default
+value is DISABLED. Possible values: ["DISABLED", "ENABLED"]`,
+									},
+								},
+							},
+							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.image_optimization_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
 						},
 						"max_stream_duration": {
 							Type:     schema.TypeList,
@@ -729,7 +748,7 @@ The value must be between 0.0 and 100.0 inclusive.`,
 									},
 								},
 							},
-							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
+							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.image_optimization_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
 						},
 						"retry_policy": {
 							Type:        schema.TypeList,
@@ -800,7 +819,7 @@ Note: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.2
 									},
 								},
 							},
-							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
+							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.image_optimization_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
 						},
 						"timeout": {
 							Type:     schema.TypeList,
@@ -829,7 +848,7 @@ Note: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.2
 									},
 								},
 							},
-							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
+							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.image_optimization_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
 						},
 						"url_rewrite": {
 							Type:        schema.TypeList,
@@ -858,7 +877,7 @@ The value must be between 1 and 1024 characters.`,
 									},
 								},
 							},
-							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
+							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.image_optimization_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
 						},
 						"weighted_backend_services": {
 							Type:     schema.TypeList,
@@ -980,7 +999,7 @@ The value must be between 0 and 1000`,
 									},
 								},
 							},
-							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
+							AtLeastOneOf: []string{"default_route_action.0.cache_policy", "default_route_action.0.cors_policy", "default_route_action.0.fault_injection_policy", "default_route_action.0.image_optimization_policy", "default_route_action.0.request_mirror_policy", "default_route_action.0.retry_policy", "default_route_action.0.timeout", "default_route_action.0.url_rewrite", "default_route_action.0.weighted_backend_services"},
 							ExactlyOneOf: []string{"default_route_action.0.weighted_backend_services", "default_service", "default_url_redirect"},
 						},
 					},
@@ -1727,6 +1746,24 @@ The value must be between 0.0 and 100.0 inclusive.`,
 															},
 														},
 													},
+												},
+											},
+										},
+									},
+									"image_optimization_policy": {
+										Type:        schema.TypeList,
+										Optional:    true,
+										Description: `Specifies the policy for optimizing images returned in the HTTP response.`,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"query_parameter_interpretation": {
+													Type:         schema.TypeString,
+													Optional:     true,
+													ValidateFunc: verify.ValidateEnum([]string{"DISABLED", "ENABLED", ""}),
+													Description: `Controls whether presets or control parameters specified as URL query
+parameters are used to optimize the image. If not specified, the default
+value is DISABLED. Possible values: ["DISABLED", "ENABLED"]`,
 												},
 											},
 										},
@@ -2763,6 +2800,24 @@ be introduced as part of fault injection. The value must be between 0.0 and
 																		},
 																	},
 																},
+															},
+														},
+													},
+												},
+												"image_optimization_policy": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `Specifies the policy for optimizing images returned in the HTTP response.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"query_parameter_interpretation": {
+																Type:         schema.TypeString,
+																Optional:     true,
+																ValidateFunc: verify.ValidateEnum([]string{"DISABLED", "ENABLED", ""}),
+																Description: `Controls whether presets or control parameters specified as URL query
+parameters are used to optimize the image. If not specified, the default
+value is DISABLED. Possible values: ["DISABLED", "ENABLED"]`,
 															},
 														},
 													},
@@ -4038,6 +4093,24 @@ be introduced as part of fault injection. The value must be between 0.0 and
 																		},
 																	},
 																},
+															},
+														},
+													},
+												},
+												"image_optimization_policy": {
+													Type:        schema.TypeList,
+													Optional:    true,
+													Description: `Specifies the policy for optimizing images returned in the HTTP response.`,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+															"query_parameter_interpretation": {
+																Type:         schema.TypeString,
+																Optional:     true,
+																ValidateFunc: verify.ValidateEnum([]string{"DISABLED", "ENABLED", ""}),
+																Description: `Controls whether presets or control parameters specified as URL query
+parameters are used to optimize the image. If not specified, the default
+value is DISABLED. Possible values: ["DISABLED", "ENABLED"]`,
 															},
 														},
 													},

@@ -83,6 +83,9 @@ func TestAccComputeUrlMap(t *testing.T) {
 			Name: "TestAccComputeUrlMap_urlMapCustomErrorResponsePolicyExample",
 		},
 		{
+			Name: "TestAccComputeUrlMap_urlMapImageOptimizationPolicyExample",
+		},
+		{
 			Name: "TestAccComputeUrlMap_update_path_matcher",
 		},
 		{
