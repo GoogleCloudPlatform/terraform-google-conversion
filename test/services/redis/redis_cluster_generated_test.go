@@ -99,6 +99,9 @@ func TestAccRedisCluster(t *testing.T) {
 		{
 			Name: "TestAccRedisCluster_withTokenAuth",
 		},
+		{
+			Name: "TestAccRedisCluster_zoneDistributionConfigZones",
+		},
 	}
 
 	for _, tt := range tests {

@@ -745,6 +745,20 @@ func expandMemorystoreInstanceZoneDistributionConfig(v interface{}, d tpgresourc
 		transformed["mode"] = transformedMode
 	}
 
+	transformedZones, err := expandMemorystoreInstanceZoneDistributionConfigZones(original["zones"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedZones); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["zones"] = transformedZones
+	}
+
+	transformedActiveZones, err := expandMemorystoreInstanceZoneDistributionConfigActiveZones(original["active_zones"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedActiveZones); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["activeZones"] = transformedActiveZones
+	}
+
 	return transformed, nil
 }
 
@@ -753,6 +767,14 @@ func expandMemorystoreInstanceZoneDistributionConfigZone(v interface{}, d tpgres
 }
 
 func expandMemorystoreInstanceZoneDistributionConfigMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceZoneDistributionConfigZones(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandMemorystoreInstanceZoneDistributionConfigActiveZones(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
