@@ -34,8 +34,6 @@ github.com/ProtonMail/go-crypto v1.5.2 h1:cucYnvqcY7UOXVD//mSyjeaPY0SSN3v5cDkYPx
 github.com/ProtonMail/go-crypto v1.5.2/go.mod h1:/RaSu30DaKO4RY+XdV/ACcCcZkGr7AhUIduq5sjzzCo=
 github.com/agext/levenshtein v1.2.3 h1:YB2fHEn0UJagG8T1rrWknE3ZQzWM06O8AMAatNn7lmo=
 github.com/agext/levenshtein v1.2.3/go.mod h1:JEDfjyjHDjOF/1e4FlBE/PkbqA9OfWu2ki2W0IB5558=
-github.com/apparentlymart/go-cidr v1.1.1 h1:oEEk8CE0HP0YpHxsegk/TaOtR2FLHdWv4p3eM4ceUwg=
-github.com/apparentlymart/go-cidr v1.1.1/go.mod h1:EBcsNrHc3zQeuaeCeCtQruQm+n9/YjEn/vI25Lg7Gwc=
 github.com/apparentlymart/go-textseg/v12 v12.0.0/go.mod h1:S/4uRK2UtaQttw1GenVJEynmyUenKwP++x/+DdGV/Ec=
 github.com/apparentlymart/go-textseg/v15 v15.0.0 h1:uYvfpb3DyLSCGWnctWKGj857c6ew1u1fNQOlOtuGxQY=
 github.com/apparentlymart/go-textseg/v15 v15.0.0/go.mod h1:K8XmNZdhEBkdlyDdvbmmsvpAG721bKi0joRfFdHIWJ4=
@@ -166,8 +164,8 @@ github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1 h1:2yPUd7esMOpuTaG3y1iEla1i
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1/go.mod h1:sq8qsxh+PwdvTQFcd17kfCoBgQo46ADNMvCpKE7t/gY=
 github.com/hashicorp/terraform-plugin-testing v1.16.0 h1:GB97nGnJ1hESpDrCjqZig38RodSF0gdRzxlDupLXP38=
 github.com/hashicorp/terraform-plugin-testing v1.16.0/go.mod h1:eQPYAy9xFMV7xtIFX8Y+wJGtUB++HBl329zCF6PBMZk=
-github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20261104021054-b98d97d65baf h1:3nuVk/CJuIbMNQ6FHe9B/Nkn6vEfF6TJJ2/9QYc2ii4=
-github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20261104021054-b98d97d65baf/go.mod h1:/ux70MC4n6Hcf/VCMRmOb8FUzst3wqlGkemKcNE9K0M=
+github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20261104022407-5ca5c290a006 h1:QmG+mb5VB+k9Os+u12nPUofvPWyDljHs8b/2vV+qtek=
+github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20261104022407-5ca5c290a006/go.mod h1:EFyjG3svmMur8OAOpGfd2dAaZ1437s8KSZbYasMVwMs=
 github.com/hashicorp/terraform-registry-address v0.5.0 h1:FAlhWOLFgMvo/4f5DPhCTwRYfHYdF1DjiOtgxfGr4p0=
 github.com/hashicorp/terraform-registry-address v0.5.0/go.mod h1:wOJYCN60i/gSQGPCcGdamatjxn65EZBMFVt7c/Suzis=
 github.com/hashicorp/terraform-svchost v0.2.1 h1:ubvrTFw3Q7CsoEaX7V06PtCTKG3wu7GyyobAoN4eF3Q=
@@ -196,14 +194,10 @@ github.com/mattn/go-isatty v0.0.24 h1:tGZZoVgT/KiqK1c8ocVLeDS8BSWMRd47J3Lbz7vsRe
 github.com/mattn/go-isatty v0.0.24/go.mod h1:nMCL3Zebbrt45jsMDgnfIwz6ydEQApk5oEI3HqDio6A=
 github.com/mitchellh/copystructure v1.2.0 h1:vpKXTN4ewci03Vljg/q9QvCGUDttBOGBIa15WveJJGw=
 github.com/mitchellh/copystructure v1.2.0/go.mod h1:qLl+cE2AmVv+CoeAwDPye/v+N2HKCj9FbZEVFJRxO9s=
-github.com/mitchellh/go-homedir v1.1.0 h1:lukF9ziXFxDFPkA1vsr5zpc1XuPDn/wFntq5mG+4E0Y=
-github.com/mitchellh/go-homedir v1.1.0/go.mod h1:SfyaCUpYCn1Vlf4IUYiD9fPX4A5wJrkLzIz1N1q0pr0=
 github.com/mitchellh/go-testing-interface v1.14.1 h1:jrgshOhYAUVNMAJiKbEu7EqAwgJJ2JqpQmpLJOu07cU=
 github.com/mitchellh/go-testing-interface v1.14.1/go.mod h1:gfgS7OtZj6MA4U1UrDRp04twqAjfvlZyCfX3sDjEym8=
 github.com/mitchellh/go-wordwrap v1.0.1 h1:TLuKupo69TCn6TQSyGxwI1EblZZEsQ0vMlAFQflz0v0=
 github.com/mitchellh/go-wordwrap v1.0.1/go.mod h1:R62XHJLzvMFRBbcrT7m7WgmE1eOyTSsCt+hzestvNj0=
-github.com/mitchellh/hashstructure v1.1.0 h1:P6P1hdjqAAknpY/M1CGipelZgp+4y9ja9kmUZPXP+H0=
-github.com/mitchellh/hashstructure v1.1.0/go.mod h1:xUDAozZz0Wmdiufv0uyhnHkUTN6/6d8ulp4AwfLKrmA=
 github.com/mitchellh/mapstructure v1.5.0 h1:jeMsZIYE/09sWLaz43PL7Gy6RuMjD2eJVyuac5Z2hdY=
 github.com/mitchellh/mapstructure v1.5.0/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RRV2QTWOzhPopBRo=
 github.com/mitchellh/reflectwalk v1.0.2 h1:G2LzWKi524PWgd3mLHV8Y5k7s6XUvT0Gef6zxSIeXaQ=
