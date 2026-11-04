@@ -2165,6 +2165,13 @@ func expandCloudBuildTriggerBuildOptions(v interface{}, d tpgresource.TerraformR
 		transformed["workerPool"] = transformedWorkerPool
 	}
 
+	transformedWorkerRelease, err := expandCloudBuildTriggerBuildOptionsWorkerRelease(original["worker_release"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedWorkerRelease); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["workerRelease"] = transformedWorkerRelease
+	}
+
 	transformedLogging, err := expandCloudBuildTriggerBuildOptionsLogging(original["logging"], d, config)
 	if err != nil {
 		return nil, err
@@ -2225,6 +2232,10 @@ func expandCloudBuildTriggerBuildOptionsLogStreamingOption(v interface{}, d tpgr
 }
 
 func expandCloudBuildTriggerBuildOptionsWorkerPool(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudBuildTriggerBuildOptionsWorkerRelease(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
