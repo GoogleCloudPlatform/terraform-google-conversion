@@ -428,6 +428,20 @@ func expandRedisClusterZoneDistributionConfig(v interface{}, d tpgresource.Terra
 		transformed["zone"] = transformedZone
 	}
 
+	transformedZones, err := expandRedisClusterZoneDistributionConfigZones(original["zones"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedZones); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["zones"] = transformedZones
+	}
+
+	transformedActiveZones, err := expandRedisClusterZoneDistributionConfigActiveZones(original["active_zones"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedActiveZones); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["activeZones"] = transformedActiveZones
+	}
+
 	return transformed, nil
 }
 
@@ -436,6 +450,14 @@ func expandRedisClusterZoneDistributionConfigMode(v interface{}, d tpgresource.T
 }
 
 func expandRedisClusterZoneDistributionConfigZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterZoneDistributionConfigZones(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandRedisClusterZoneDistributionConfigActiveZones(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

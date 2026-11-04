@@ -507,6 +507,16 @@ If not provided, MULTI_ZONE will be used as default Possible values: ["MULTI_ZON
 							Optional:    true,
 							Description: `Immutable. The zone for single zone Memorystore Redis cluster.`,
 						},
+						"zones": {
+							Type:     schema.TypeList,
+							Optional: true,
+							ForceNew: true,
+							Description: `Specify the zones of a multi-zone cluster where Redis Cluster
+allocates resources. This flag isn't applicable for single-zone clusters.`,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
 					},
 				},
 			},

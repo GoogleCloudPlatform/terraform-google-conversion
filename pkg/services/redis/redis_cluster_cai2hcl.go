@@ -316,6 +316,8 @@ func flattenRedisClusterZoneDistributionConfig(v interface{}, d *schema.Resource
 		flattenRedisClusterZoneDistributionConfigMode(original["mode"], d, config)
 	transformed["zone"] =
 		flattenRedisClusterZoneDistributionConfigZone(original["zone"], d, config)
+	transformed["zones"] =
+		flattenRedisClusterZoneDistributionConfigZones(original["zones"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -333,6 +335,10 @@ func flattenRedisClusterZoneDistributionConfigZone(v interface{}, d *schema.Reso
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenRedisClusterZoneDistributionConfigZones(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
