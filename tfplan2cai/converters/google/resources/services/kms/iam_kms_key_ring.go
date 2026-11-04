@@ -3,7 +3,6 @@ package kms
 import (
 	"fmt"
 
-	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgiamresource"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgresource"
@@ -31,7 +30,7 @@ func NewKmsKeyRingIamUpdater(d tpgresource.TerraformResourceData, config *transp
 	keyRingId, err := parseKmsKeyRingId(keyRing, config)
 
 	if err != nil {
-		return nil, errwrap.Wrapf(fmt.Sprintf("Error parsing resource ID for %s: {{err}}", keyRing), err)
+		return nil, fmt.Errorf("Error parsing resource ID for %s: %w", keyRing, err)
 	}
 
 	return &KmsKeyRingIamUpdater{
@@ -63,13 +62,13 @@ func (u *KmsKeyRingIamUpdater) GetResourceIamPolicy() (*cloudresourcemanager.Pol
 	p, err := NewClient(u.Config, userAgent).Projects.Locations.KeyRings.GetIamPolicy(u.resourceId).OptionsRequestedPolicyVersion(tpgiamresource.IamPolicyVersion).Do()
 
 	if err != nil {
-		return nil, errwrap.Wrapf(fmt.Sprintf("Error retrieving IAM policy for %s: {{err}}", u.DescribeResource()), err)
+		return nil, fmt.Errorf("Error retrieving IAM policy for %s: %w", u.DescribeResource(), err)
 	}
 
 	cloudResourcePolicy, err := kmsToResourceManagerPolicy(p)
 
 	if err != nil {
-		return nil, errwrap.Wrapf(fmt.Sprintf("Invalid IAM policy for %s: {{err}}", u.DescribeResource()), err)
+		return nil, fmt.Errorf("Invalid IAM policy for %s: %w", u.DescribeResource(), err)
 	}
 
 	return cloudResourcePolicy, nil
@@ -79,7 +78,7 @@ func (u *KmsKeyRingIamUpdater) SetResourceIamPolicy(policy *cloudresourcemanager
 	kmsPolicy, err := resourceManagerToKmsPolicy(policy)
 
 	if err != nil {
-		return errwrap.Wrapf(fmt.Sprintf("Invalid IAM policy for %s: {{err}}", u.DescribeResource()), err)
+		return fmt.Errorf("Invalid IAM policy for %s: %w", u.DescribeResource(), err)
 	}
 
 	userAgent, err := tpgresource.GenerateUserAgentString(u.d, u.Config.UserAgent)
@@ -92,7 +91,7 @@ func (u *KmsKeyRingIamUpdater) SetResourceIamPolicy(policy *cloudresourcemanager
 	}).Do()
 
 	if err != nil {
-		return errwrap.Wrapf(fmt.Sprintf("Error setting IAM policy for %s: {{err}}", u.DescribeResource()), err)
+		return fmt.Errorf("Error setting IAM policy for %s: %w", u.DescribeResource(), err)
 	}
 
 	return nil
@@ -114,7 +113,7 @@ func resourceManagerToKmsPolicy(p *cloudresourcemanager.Policy) (*cloudkms.Polic
 	out := &cloudkms.Policy{}
 	err := tpgresource.Convert(p, out)
 	if err != nil {
-		return nil, errwrap.Wrapf("Cannot convert a v1 policy to a kms policy: {{err}}", err)
+		return nil, fmt.Errorf("Cannot convert a v1 policy to a kms policy: %w", err)
 	}
 	return out, nil
 }
@@ -123,7 +122,7 @@ func kmsToResourceManagerPolicy(p *cloudkms.Policy) (*cloudresourcemanager.Polic
 	out := &cloudresourcemanager.Policy{}
 	err := tpgresource.Convert(p, out)
 	if err != nil {
-		return nil, errwrap.Wrapf("Cannot convert a kms policy to a v1 policy: {{err}}", err)
+		return nil, fmt.Errorf("Cannot convert a kms policy to a v1 policy: %w", err)
 	}
 	return out, nil
 }

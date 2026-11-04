@@ -50,6 +50,10 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+import "errors"
+
+var _ = errors.New
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel

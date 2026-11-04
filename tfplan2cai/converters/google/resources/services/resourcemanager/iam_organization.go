@@ -3,7 +3,6 @@ package resourcemanager
 import (
 	"fmt"
 
-	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	rmClient "github.com/hashicorp/terraform-provider-google-beta/google-beta/services/resourcemanager/client"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgiamresource"
@@ -57,7 +56,7 @@ func (u *OrganizationIamUpdater) GetResourceIamPolicy() (*cloudresourcemanager.P
 		},
 	).Do()
 	if err != nil {
-		return nil, errwrap.Wrapf(fmt.Sprintf("Error retrieving IAM policy for %s: {{err}}", u.DescribeResource()), err)
+		return nil, fmt.Errorf("Error retrieving IAM policy for %s: %w", u.DescribeResource(), err)
 	}
 
 	return p, nil
@@ -75,7 +74,7 @@ func (u *OrganizationIamUpdater) SetResourceIamPolicy(policy *cloudresourcemanag
 	}).Do()
 
 	if err != nil {
-		return errwrap.Wrapf(fmt.Sprintf("Error setting IAM policy for %s: {{err}}", u.DescribeResource()), err)
+		return fmt.Errorf("Error setting IAM policy for %s: %w", u.DescribeResource(), err)
 	}
 
 	return nil
