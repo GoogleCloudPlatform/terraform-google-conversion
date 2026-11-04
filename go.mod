@@ -5,13 +5,12 @@ go 1.26.0
 require (
 	cloud.google.com/go/storage v1.56.0
 	github.com/google/go-cmp v0.7.0
-	github.com/hashicorp/errwrap v1.1.0
 	github.com/hashicorp/go-cty v1.5.0
 	github.com/hashicorp/hcl v1.0.0
 	github.com/hashicorp/hcl/v2 v2.25.0
 	github.com/hashicorp/terraform-json v0.29.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1
-	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20261104030437-a7bcbb41845d
+	github.com/hashicorp/terraform-provider-google-beta v1.20.1-0.20261104143238-0ee0d2004c8a
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.12.1
 	github.com/zclconf/go-cty v1.19.0

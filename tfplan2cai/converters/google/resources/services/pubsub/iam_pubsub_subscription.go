@@ -3,7 +3,6 @@ package pubsub
 import (
 	"fmt"
 
-	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/terraform-plugin-framework/list"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-provider-google-beta/google-beta/tpgiamresource"
@@ -65,7 +64,7 @@ func (u *PubsubSubscriptionIamUpdater) GetResourceIamPolicy() (*cloudresourceman
 	p, err := NewClient(u.Config, userAgent).Projects.Subscriptions.GetIamPolicy(u.subscription).Do()
 
 	if err != nil {
-		return nil, errwrap.Wrapf(fmt.Sprintf("Error retrieving IAM policy for %s: {{err}}", u.DescribeResource()), err)
+		return nil, fmt.Errorf("Error retrieving IAM policy for %s: %w", u.DescribeResource(), err)
 	}
 
 	v1Policy, err := pubsubToResourceManagerPolicy(p)
@@ -92,7 +91,7 @@ func (u *PubsubSubscriptionIamUpdater) SetResourceIamPolicy(policy *cloudresourc
 	}).Do()
 
 	if err != nil {
-		return errwrap.Wrapf(fmt.Sprintf("Error setting IAM policy for %s: {{err}}", u.DescribeResource()), err)
+		return fmt.Errorf("Error setting IAM policy for %s: %w", u.DescribeResource(), err)
 	}
 
 	return nil
@@ -115,7 +114,7 @@ func resourceManagerToPubsubPolicy(in *cloudresourcemanager.Policy) (*pubsub.Pol
 	out := &pubsub.Policy{}
 	err := tpgresource.Convert(in, out)
 	if err != nil {
-		return nil, errwrap.Wrapf("Cannot convert a v1 policy to a pubsub policy: {{err}}", err)
+		return nil, fmt.Errorf("Cannot convert a v1 policy to a pubsub policy: %w", err)
 	}
 	return out, nil
 }
@@ -124,7 +123,7 @@ func pubsubToResourceManagerPolicy(in *pubsub.Policy) (*cloudresourcemanager.Pol
 	out := &cloudresourcemanager.Policy{}
 	err := tpgresource.Convert(in, out)
 	if err != nil {
-		return nil, errwrap.Wrapf("Cannot convert a pubsub policy to a v1 policy: {{err}}", err)
+		return nil, fmt.Errorf("Cannot convert a pubsub policy to a v1 policy: %w", err)
 	}
 	return out, nil
 }
