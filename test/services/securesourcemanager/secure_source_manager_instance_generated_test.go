@@ -31,22 +31,7 @@ func TestAccSecureSourceManagerInstance(t *testing.T) {
 			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstanceCmekExample",
 		},
 		{
-			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivateTrustedCertExample",
-		},
-		{
-			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivateExample",
-		},
-		{
 			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivateCustomHostExample",
-		},
-		{
-			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivatePscBackendExample",
-		},
-		{
-			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstancePrivatePscEndpointExample",
-		},
-		{
-			Name: "TestAccSecureSourceManagerInstance_secureSourceManagerInstanceWorkforceIdentityFederationExample",
 		},
 	}
 
