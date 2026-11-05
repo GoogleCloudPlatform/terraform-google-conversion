@@ -151,6 +151,8 @@ func (c *ComputeInterconnectCai2hclConverter) convertResourceData(asset caiasset
 	hclData["macsec_enabled"] = flattenComputeInterconnectMacsecEnabled(res["macsecEnabled"], d, config)
 	hclData["remote_location"] = flattenComputeInterconnectRemoteLocation(res["remoteLocation"], d, config)
 	hclData["requested_features"] = flattenComputeInterconnectRequestedFeatures(res["requestedFeatures"], d, config)
+	hclData["aai_enabled"] = flattenComputeInterconnectAaiEnabled(res["aaiEnabled"], d, config)
+	hclData["application_aware_interconnect"] = flattenComputeInterconnectApplicationAwareInterconnect(res["applicationAwareInterconnect"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -350,4 +352,142 @@ func flattenComputeInterconnectRemoteLocation(v interface{}, d *schema.ResourceD
 
 func flattenComputeInterconnectRequestedFeatures(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func flattenComputeInterconnectAaiEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeInterconnectApplicationAwareInterconnect(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["profile_description"] =
+		flattenComputeInterconnectApplicationAwareInterconnectProfileDescription(original["profileDescription"], d, config)
+	transformed["strict_priority_policy"] =
+		flattenComputeInterconnectApplicationAwareInterconnectStrictPriorityPolicy(original["strictPriorityPolicy"], d, config)
+	transformed["bandwidth_percentage_policy"] =
+		flattenComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicy(original["bandwidthPercentagePolicy"], d, config)
+	transformed["shape_average_percentage"] =
+		flattenComputeInterconnectApplicationAwareInterconnectShapeAveragePercentage(original["shapeAveragePercentages"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeInterconnectApplicationAwareInterconnectProfileDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
+}
+
+func flattenComputeInterconnectApplicationAwareInterconnectStrictPriorityPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	transformed := make(map[string]interface{})
+	return []interface{}{transformed}
+}
+
+func flattenComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["bandwidth_percentage"] =
+		flattenComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentage(original["bandwidthPercentages"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"traffic_class": flattenComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentageTrafficClass(original["trafficClass"], d, config),
+			"percentage":    flattenComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentagePercentage(original["percentage"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentageTrafficClass(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeInterconnectApplicationAwareInterconnectBandwidthPercentagePolicyBandwidthPercentagePercentage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeInterconnectApplicationAwareInterconnectShapeAveragePercentage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	l := v.([]interface{})
+	transformed := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		original := raw.(map[string]interface{})
+		if len(original) < 1 {
+			// Do not include empty json objects coming back from the api
+			continue
+		}
+		transformed = append(transformed, map[string]interface{}{
+			"traffic_class": flattenComputeInterconnectApplicationAwareInterconnectShapeAveragePercentageTrafficClass(original["trafficClass"], d, config),
+			"percentage":    flattenComputeInterconnectApplicationAwareInterconnectShapeAveragePercentagePercentage(original["percentage"], d, config),
+		})
+	}
+	return transformed
+}
+
+func flattenComputeInterconnectApplicationAwareInterconnectShapeAveragePercentageTrafficClass(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeInterconnectApplicationAwareInterconnectShapeAveragePercentagePercentage(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	// Handles the string fixed64 format
+	if strVal, ok := v.(string); ok {
+		if intVal, err := tpgresource.StringToFixed64(strVal); err == nil {
+			return intVal
+		}
+	}
+
+	// number values are represented as float64
+	if floatVal, ok := v.(float64); ok {
+		intVal := int(floatVal)
+		return intVal
+	}
+
+	return v // let terraform core handle it otherwise
 }
