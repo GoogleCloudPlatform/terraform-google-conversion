@@ -715,6 +715,13 @@ func expandBigQueryRoutineExternalRuntimeOptions(v interface{}, d tpgresource.Te
 		transformed["containerRequestConcurrency"] = transformedContainerRequestConcurrency
 	}
 
+	transformedVolumeMounts, err := expandBigQueryRoutineExternalRuntimeOptionsVolumeMounts(original["volume_mounts"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedVolumeMounts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["volumeMounts"] = transformedVolumeMounts
+	}
+
 	return transformed, nil
 }
 
@@ -739,5 +746,45 @@ func expandBigQueryRoutineExternalRuntimeOptionsRuntimeVersion(v interface{}, d 
 }
 
 func expandBigQueryRoutineExternalRuntimeOptionsContainerRequestConcurrency(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineExternalRuntimeOptionsVolumeMounts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedSourcePath, err := expandBigQueryRoutineExternalRuntimeOptionsVolumeMountsSourcePath(original["source_path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSourcePath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["sourcePath"] = transformedSourcePath
+		}
+
+		transformedMountPath, err := expandBigQueryRoutineExternalRuntimeOptionsVolumeMountsMountPath(original["mount_path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMountPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["mountPath"] = transformedMountPath
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandBigQueryRoutineExternalRuntimeOptionsVolumeMountsSourcePath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigQueryRoutineExternalRuntimeOptionsVolumeMountsMountPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
