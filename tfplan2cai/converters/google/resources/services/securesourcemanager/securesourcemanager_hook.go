@@ -121,7 +121,7 @@ func GetSecureSourceManagerHookApiObject(d tpgresource.TerraformResourceData, co
 	disabledProp, err := expandSecureSourceManagerHookDisabled(d.Get("disabled"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(disabledProp)) && (ok || !reflect.DeepEqual(v, disabledProp)) {
+	} else if v, ok := d.GetOkExists("disabled"); ok || (v != nil && !reflect.DeepEqual(v, disabledProp)) {
 		obj["disabled"] = disabledProp
 	}
 	eventsProp, err := expandSecureSourceManagerHookEvents(d.Get("events"), d, config)
@@ -139,7 +139,7 @@ func GetSecureSourceManagerHookApiObject(d tpgresource.TerraformResourceData, co
 	serviceAccountAuthProp, err := expandSecureSourceManagerHookServiceAccountAuth(d.Get("service_account_auth"), d, config)
 	if err != nil {
 		return nil, err
-	} else if v, ok := d.GetOkExists("service_account_auth"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceAccountAuthProp)) && (ok || !reflect.DeepEqual(v, serviceAccountAuthProp)) {
+	} else if v, ok := d.GetOkExists("service_account_auth"); ok || (v != nil && !reflect.DeepEqual(v, serviceAccountAuthProp)) {
 		obj["serviceAccountAuth"] = serviceAccountAuthProp
 	}
 	pushOptionProp, err := expandSecureSourceManagerHookPushOption(d.Get("push_option"), d, config)
