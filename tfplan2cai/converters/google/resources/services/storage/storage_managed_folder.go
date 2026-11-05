@@ -112,6 +112,12 @@ func GetStorageManagedFolderCaiObject(d tpgresource.TerraformResourceData, confi
 
 func GetStorageManagedFolderApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	rapidCacheConfigProp, err := expandStorageManagedFolderRapidCacheConfig(d.Get("rapid_cache_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("rapid_cache_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(rapidCacheConfigProp)) && (ok || !reflect.DeepEqual(v, rapidCacheConfigProp)) {
+		obj["rapidCacheConfig"] = rapidCacheConfigProp
+	}
 	bucketProp, err := expandStorageManagedFolderBucket(d.Get("bucket"), d, config)
 	if err != nil {
 		return nil, err
@@ -126,6 +132,52 @@ func GetStorageManagedFolderApiObject(d tpgresource.TerraformResourceData, confi
 	}
 
 	return obj, nil
+}
+
+func expandStorageManagedFolderRapidCacheConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPolicies, err := expandStorageManagedFolderRapidCacheConfigPolicies(original["policies"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPolicies); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["policies"] = transformedPolicies
+	}
+
+	return transformed, nil
+}
+
+func expandStorageManagedFolderRapidCacheConfigPolicies(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return map[string]interface{}{}, nil
+	}
+	l := v.(*schema.Set).List()
+	req := make(map[string]interface{})
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		rapidCacheId, _ := original["rapid_cache_id"].(string)
+		policyObj := make(map[string]interface{})
+		if rapidCacheId != "" {
+			policyObj["rapidCacheId"] = rapidCacheId
+		}
+		if ingestOnWrite, ok := original["ingest_on_write"].(string); ok && ingestOnWrite != "" {
+			policyObj["ingestOnWrite"] = ingestOnWrite
+		}
+		req[rapidCacheId] = policyObj
+	}
+	return req, nil
 }
 
 func expandStorageManagedFolderBucket(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
