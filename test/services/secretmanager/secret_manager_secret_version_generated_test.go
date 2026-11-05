@@ -52,6 +52,9 @@ func TestAccSecretManagerSecretVersion(t *testing.T) {
 			Name: "TestAccSecretManagerSecretVersion_secretVersionWithBase64StringSecretDataWriteOnlyExample",
 		},
 		{
+			Name: "TestAccSecretManagerSecretVersion_createDisabled",
+		},
+		{
 			Name: "TestAccSecretManagerSecretVersion_neitherSecretDataSet",
 		},
 	}
