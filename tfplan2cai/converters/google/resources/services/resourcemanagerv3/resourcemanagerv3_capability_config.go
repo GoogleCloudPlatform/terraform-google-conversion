@@ -130,6 +130,12 @@ func GetResourceManagerV3CapabilityConfigApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("management_project"); !tpgresource.IsEmptyValue(reflect.ValueOf(managementProjectProp)) && (ok || !reflect.DeepEqual(v, managementProjectProp)) {
 		obj["managementProject"] = managementProjectProp
 	}
+	boundariesProp, err := expandResourceManagerV3CapabilityConfigBoundaries(d.Get("boundaries"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("boundaries"); !tpgresource.IsEmptyValue(reflect.ValueOf(boundariesProp)) && (ok || !reflect.DeepEqual(v, boundariesProp)) {
+		obj["boundaries"] = boundariesProp
+	}
 
 	return obj, nil
 }
@@ -144,5 +150,10 @@ func expandResourceManagerV3CapabilityConfigTypes(v interface{}, d tpgresource.T
 }
 
 func expandResourceManagerV3CapabilityConfigManagementProject(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandResourceManagerV3CapabilityConfigBoundaries(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
 	return v, nil
 }
