@@ -126,6 +126,11 @@ lowercase letter, or digit, except the last character, which cannot be a dash.`,
 				Required:    true,
 				Description: `Target number of physical links in the link bundle, as requested by the customer.`,
 			},
+			"aai_enabled": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: `Enable or disable the Application Aware Interconnect(AAI) feature on this interconnect.`,
+			},
 			"admin_enabled": {
 				Type:     schema.TypeBool,
 				Optional: true,
@@ -133,6 +138,86 @@ lowercase letter, or digit, except the last character, which cannot be a dash.`,
 functional and can carry traffic. When set to false, no packets can be carried over the
 interconnect and no BGP routes are exchanged over it. By default, the status is set to true.`,
 				Default: true,
+			},
+			"application_aware_interconnect": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Description: `Configuration that enables Media Access Control security (MACsec) on the Cloud
+Interconnect connection between Google and your on-premises router.`,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"bandwidth_percentage_policy": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Description: `Bandwidth Percentage policy allows you to have granular control over how your Interconnect
+bandwidth is utilized among your workloads mapping to different traffic classes.`,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"bandwidth_percentage": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Description: `Specify bandwidth percentages for various traffic classes for queuing
+type Bandwidth Percent.`,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"percentage": {
+													Type:        schema.TypeInt,
+													Optional:    true,
+													Description: `Bandwidth percentage for a specific traffic class.`,
+												},
+												"traffic_class": {
+													Type:         schema.TypeString,
+													Optional:     true,
+													ValidateFunc: verify.ValidateEnum([]string{"TC_UNSPECIFIED", "TC1", "TC2", "TC3", "TC4", "TC5", "TC6", ""}),
+													Description:  `Enum representing the various traffic classes offered by AAI. Default value: "TC_UNSPECIFIED" Possible values: ["TC_UNSPECIFIED", "TC1", "TC2", "TC3", "TC4", "TC5", "TC6"]`,
+													Default:      "TC_UNSPECIFIED",
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"profile_description": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: `A description for the AAI profile on this interconnect.`,
+						},
+						"shape_average_percentage": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Description: `Optional field to specify a list of shape average percentages to be
+applied in conjunction with StrictPriorityPolicy or BandwidthPercentagePolicy`,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"percentage": {
+										Type:        schema.TypeInt,
+										Optional:    true,
+										Description: `Bandwidth percentage for a specific traffic class.`,
+									},
+									"traffic_class": {
+										Type:         schema.TypeString,
+										Optional:     true,
+										ValidateFunc: verify.ValidateEnum([]string{"TC_UNSPECIFIED", "TC1", "TC2", "TC3", "TC4", "TC5", "TC6", ""}),
+										Description:  `Enum representing the various traffic classes offered by AAI. Default value: "TC_UNSPECIFIED" Possible values: ["TC_UNSPECIFIED", "TC1", "TC2", "TC3", "TC4", "TC5", "TC6"]`,
+										Default:      "TC_UNSPECIFIED",
+									},
+								},
+							},
+						},
+						"strict_priority_policy": {
+							Type:        schema.TypeList,
+							Optional:    true,
+							Description: `Specify configuration for StrictPriorityPolicy.`,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{},
+							},
+						},
+					},
+				},
 			},
 			"customer_name": {
 				Type:     schema.TypeString,
