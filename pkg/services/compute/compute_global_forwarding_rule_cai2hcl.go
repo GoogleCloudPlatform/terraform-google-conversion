@@ -136,11 +136,13 @@ func (c *ComputeGlobalForwardingRuleCai2hclConverter) convertResourceData(asset 
 	outputFields := map[string]struct{}{"base_forwarding_rule": struct{}{}, "effective_labels": struct{}{}, "forwarding_rule_id": struct{}{}, "label_fingerprint": struct{}{}, "psc_connection_id": struct{}{}, "psc_connection_status": struct{}{}, "terraform_labels": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/global/forwardingRules/{{name}}", outputFields, hclData)
 
+	hclData["backend_service"] = flattenComputeGlobalForwardingRuleBackendService(res["backendService"], d, config)
 	hclData["description"] = flattenComputeGlobalForwardingRuleDescription(res["description"], d, config)
 	hclData["ip_address"] = flattenComputeGlobalForwardingRuleIPAddress(res["IPAddress"], d, config)
 	hclData["ip_protocol"] = flattenComputeGlobalForwardingRuleIPProtocol(res["IPProtocol"], d, config)
 	hclData["ip_version"] = flattenComputeGlobalForwardingRuleIpVersion(res["ipVersion"], d, config)
 	hclData["labels"] = flattenComputeGlobalForwardingRuleLabels(res["labels"], d, config)
+	hclData["ip_addresses"] = flattenComputeGlobalForwardingRuleIpAddresses(res["IPAddresses"], d, config)
 	hclData["load_balancing_scheme"] = flattenComputeGlobalForwardingRuleLoadBalancingScheme(res["loadBalancingScheme"], d, config)
 	hclData["metadata_filters"] = flattenComputeGlobalForwardingRuleMetadataFilters(res["metadataFilters"], d, config)
 	hclData["name"] = flattenComputeGlobalForwardingRuleName(res["name"], d, config)
@@ -163,6 +165,17 @@ func (c *ComputeGlobalForwardingRuleCai2hclConverter) convertResourceData(asset 
 		Labels: []string{c.name, hclBlockName},
 		Value:  ctyVal,
 	}, nil
+}
+
+func flattenComputeGlobalForwardingRuleBackendService(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return v
+	}
+	relative, err := tpgresource.GetRelativePath(v.(string))
+	if err != nil {
+		return v
+	}
+	return relative
 }
 
 func flattenComputeGlobalForwardingRuleDescription(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -189,6 +202,10 @@ func flattenComputeGlobalForwardingRuleIpVersion(v interface{}, d *schema.Resour
 
 func flattenComputeGlobalForwardingRuleLabels(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return tgcresource.RemoveTerraformAttributionLabel(v)
+}
+
+func flattenComputeGlobalForwardingRuleIpAddresses(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeGlobalForwardingRuleLoadBalancingScheme(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
@@ -306,11 +323,10 @@ func flattenComputeGlobalForwardingRuleSubnetwork(v interface{}, d *schema.Resou
 
 func flattenComputeGlobalForwardingRuleTarget(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	if v == nil {
-		return "unknown"
+		return nil
 	}
-	transformed := v.(string)
-	if transformed == "" {
-		return "unknown"
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
 	}
 	return v
 }

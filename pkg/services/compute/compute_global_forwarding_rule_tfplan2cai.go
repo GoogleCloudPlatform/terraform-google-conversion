@@ -117,6 +117,12 @@ func GetComputeGlobalForwardingRuleCaiAssets(d tpgresource.TerraformResourceData
 
 func GetComputeGlobalForwardingRuleCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+	backendServiceProp, err := expandComputeGlobalForwardingRuleBackendService(d.Get("backend_service"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("backend_service"); !tpgresource.IsEmptyValue(reflect.ValueOf(backendServiceProp)) && (ok || !reflect.DeepEqual(v, backendServiceProp)) {
+		obj["backendService"] = backendServiceProp
+	}
 	descriptionProp, err := expandComputeGlobalForwardingRuleDescription(d.Get("description"), d, config)
 	if err != nil {
 		return nil, err
@@ -146,6 +152,12 @@ func GetComputeGlobalForwardingRuleCaiObject(d tpgresource.TerraformResourceData
 		return nil, err
 	} else if v, ok := d.GetOkExists("label_fingerprint"); !tpgresource.IsEmptyValue(reflect.ValueOf(labelFingerprintProp)) && (ok || !reflect.DeepEqual(v, labelFingerprintProp)) {
 		obj["labelFingerprint"] = labelFingerprintProp
+	}
+	ipAddressesProp, err := expandComputeGlobalForwardingRuleIpAddresses(d.Get("ip_addresses"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ip_addresses"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipAddressesProp)) && (ok || !reflect.DeepEqual(v, ipAddressesProp)) {
+		obj["IPAddresses"] = ipAddressesProp
 	}
 	loadBalancingSchemeProp, err := expandComputeGlobalForwardingRuleLoadBalancingScheme(d.Get("load_balancing_scheme"), d, config)
 	if err != nil {
@@ -235,6 +247,15 @@ func GetComputeGlobalForwardingRuleCaiObject(d tpgresource.TerraformResourceData
 	return obj, nil
 }
 
+func expandComputeGlobalForwardingRuleBackendService(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	f, err := tpgresource.ParseGlobalFieldValue("backendServices", v.(string), "project", d, config, true)
+	if err != nil {
+		return nil, fmt.Errorf("Invalid value for backend_service: %s", err)
+	}
+	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
+	return url, nil
+}
+
 func expandComputeGlobalForwardingRuleDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -252,6 +273,10 @@ func expandComputeGlobalForwardingRuleIpVersion(v interface{}, d tpgresource.Ter
 }
 
 func expandComputeGlobalForwardingRuleLabelFingerprint(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandComputeGlobalForwardingRuleIpAddresses(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
