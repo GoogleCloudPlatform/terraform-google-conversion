@@ -1101,6 +1101,13 @@ func expandCESAppLoggingSettings(v interface{}, d tpgresource.TerraformResourceD
 		transformed["redactionConfig"] = transformedRedactionConfig
 	}
 
+	transformedRequiredRecordingConsent, err := expandCESAppLoggingSettingsRequiredRecordingConsent(original["required_recording_consent"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["requiredRecordingConsent"] = transformedRequiredRecordingConsent
+	}
+
 	return transformed, nil
 }
 
@@ -1328,6 +1335,10 @@ func expandCESAppLoggingSettingsRedactionConfigEnableRedaction(v interface{}, d 
 }
 
 func expandCESAppLoggingSettingsRedactionConfigInspectTemplate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppLoggingSettingsRequiredRecordingConsent(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
