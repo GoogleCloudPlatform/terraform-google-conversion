@@ -54,6 +54,9 @@ func TestAccComputeGlobalForwardingRule(t *testing.T) {
 		{
 			Name: "TestAccComputeGlobalForwardingRule_updateCanaryMigration",
 		},
+		{
+			Name: "TestAccComputeGlobalForwardingRule_ExternalPassthrough",
+		},
 	}
 
 	for _, tt := range tests {
