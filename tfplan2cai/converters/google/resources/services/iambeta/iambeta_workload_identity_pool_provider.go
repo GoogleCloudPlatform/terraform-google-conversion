@@ -212,6 +212,12 @@ func GetIAMBetaWorkloadIdentityPoolProviderApiObject(d tpgresource.TerraformReso
 	} else if v, ok := d.GetOkExists("x509"); !tpgresource.IsEmptyValue(reflect.ValueOf(x509Prop)) && (ok || !reflect.DeepEqual(v, x509Prop)) {
 		obj["x509"] = x509Prop
 	}
+	actorProvidersProp, err := expandIAMBetaWorkloadIdentityPoolProviderActorProviders(d.Get("actor_providers"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("actor_providers"); !tpgresource.IsEmptyValue(reflect.ValueOf(actorProvidersProp)) && (ok || !reflect.DeepEqual(v, actorProvidersProp)) {
+		obj["actorProviders"] = actorProvidersProp
+	}
 
 	return obj, nil
 }
@@ -302,6 +308,13 @@ func expandIAMBetaWorkloadIdentityPoolProviderOidc(v interface{}, d tpgresource.
 		transformed["jwksJson"] = transformedJwksJson
 	}
 
+	transformedDiscoveryUri, err := expandIAMBetaWorkloadIdentityPoolProviderOidcDiscoveryUri(original["discovery_uri"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDiscoveryUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["discoveryUri"] = transformedDiscoveryUri
+	}
+
 	return transformed, nil
 }
 
@@ -314,6 +327,10 @@ func expandIAMBetaWorkloadIdentityPoolProviderOidcIssuerUri(v interface{}, d tpg
 }
 
 func expandIAMBetaWorkloadIdentityPoolProviderOidcJwksJson(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolProviderOidcDiscoveryUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -449,5 +466,9 @@ func expandIAMBetaWorkloadIdentityPoolProviderX509TrustStoreIntermediateCas(v in
 }
 
 func expandIAMBetaWorkloadIdentityPoolProviderX509TrustStoreIntermediateCasPemCertificate(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMBetaWorkloadIdentityPoolProviderActorProviders(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
