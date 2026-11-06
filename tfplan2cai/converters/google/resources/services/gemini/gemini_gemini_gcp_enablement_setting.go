@@ -154,6 +154,12 @@ func GetGeminiGeminiGcpEnablementSettingApiObject(d tpgresource.TerraformResourc
 	} else if v, ok := d.GetOkExists("has_custom_instructions"); !tpgresource.IsEmptyValue(reflect.ValueOf(hasCustomInstructionsProp)) && (ok || !reflect.DeepEqual(v, hasCustomInstructionsProp)) {
 		obj["hasCustomInstructions"] = hasCustomInstructionsProp
 	}
+	gcsBucketProp, err := expandGeminiGeminiGcpEnablementSettingGcsBucket(d.Get("gcs_bucket"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("gcs_bucket"); !tpgresource.IsEmptyValue(reflect.ValueOf(gcsBucketProp)) && (ok || !reflect.DeepEqual(v, gcsBucketProp)) {
+		obj["gcsBucket"] = gcsBucketProp
+	}
 	effectiveLabelsProp, err := expandGeminiGeminiGcpEnablementSettingEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -189,6 +195,10 @@ func expandGeminiGeminiGcpEnablementSettingReleaseChannel(v interface{}, d tpgre
 }
 
 func expandGeminiGeminiGcpEnablementSettingHasCustomInstructions(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGeminiGeminiGcpEnablementSettingGcsBucket(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
