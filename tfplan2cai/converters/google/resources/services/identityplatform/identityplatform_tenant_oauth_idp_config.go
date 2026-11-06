@@ -148,6 +148,12 @@ func GetIdentityPlatformTenantOauthIdpConfigApiObject(d tpgresource.TerraformRes
 	} else if v, ok := d.GetOkExists("client_secret"); !tpgresource.IsEmptyValue(reflect.ValueOf(clientSecretProp)) && (ok || !reflect.DeepEqual(v, clientSecretProp)) {
 		obj["clientSecret"] = clientSecretProp
 	}
+	responseTypeProp, err := expandIdentityPlatformTenantOauthIdpConfigResponseType(d.Get("response_type"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("response_type"); !tpgresource.IsEmptyValue(reflect.ValueOf(responseTypeProp)) && (ok || !reflect.DeepEqual(v, responseTypeProp)) {
+		obj["responseType"] = responseTypeProp
+	}
 
 	return obj, nil
 }
@@ -173,5 +179,42 @@ func expandIdentityPlatformTenantOauthIdpConfigClientId(v interface{}, d tpgreso
 }
 
 func expandIdentityPlatformTenantOauthIdpConfigClientSecret(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformTenantOauthIdpConfigResponseType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedIdToken, err := expandIdentityPlatformTenantOauthIdpConfigResponseTypeIdToken(original["id_token"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIdToken); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["idToken"] = transformedIdToken
+	}
+
+	transformedCode, err := expandIdentityPlatformTenantOauthIdpConfigResponseTypeCode(original["code"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["code"] = transformedCode
+	}
+
+	return transformed, nil
+}
+
+func expandIdentityPlatformTenantOauthIdpConfigResponseTypeIdToken(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformTenantOauthIdpConfigResponseTypeCode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
