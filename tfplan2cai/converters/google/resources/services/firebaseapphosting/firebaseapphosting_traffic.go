@@ -233,6 +233,20 @@ func expandFirebaseAppHostingTrafficRolloutPolicy(v interface{}, d tpgresource.T
 		transformed["codebaseBranch"] = transformedCodebaseBranch
 	}
 
+	transformedIgnoredPaths, err := expandFirebaseAppHostingTrafficRolloutPolicyIgnoredPaths(original["ignored_paths"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedIgnoredPaths); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ignoredPaths"] = transformedIgnoredPaths
+	}
+
+	transformedRequiredPaths, err := expandFirebaseAppHostingTrafficRolloutPolicyRequiredPaths(original["required_paths"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRequiredPaths); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["requiredPaths"] = transformedRequiredPaths
+	}
+
 	return transformed, nil
 }
 
@@ -245,5 +259,85 @@ func expandFirebaseAppHostingTrafficRolloutPolicyDisabledTime(v interface{}, d t
 }
 
 func expandFirebaseAppHostingTrafficRolloutPolicyCodebaseBranch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseAppHostingTrafficRolloutPolicyIgnoredPaths(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPattern, err := expandFirebaseAppHostingTrafficRolloutPolicyIgnoredPathsPattern(original["pattern"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPattern); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pattern"] = transformedPattern
+		}
+
+		transformedType, err := expandFirebaseAppHostingTrafficRolloutPolicyIgnoredPathsType(original["type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["type"] = transformedType
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandFirebaseAppHostingTrafficRolloutPolicyIgnoredPathsPattern(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseAppHostingTrafficRolloutPolicyIgnoredPathsType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseAppHostingTrafficRolloutPolicyRequiredPaths(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPattern, err := expandFirebaseAppHostingTrafficRolloutPolicyRequiredPathsPattern(original["pattern"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPattern); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pattern"] = transformedPattern
+		}
+
+		transformedType, err := expandFirebaseAppHostingTrafficRolloutPolicyRequiredPathsType(original["type"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["type"] = transformedType
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandFirebaseAppHostingTrafficRolloutPolicyRequiredPathsPattern(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirebaseAppHostingTrafficRolloutPolicyRequiredPathsType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
