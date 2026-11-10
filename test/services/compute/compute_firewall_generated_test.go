@@ -37,6 +37,9 @@ func TestAccComputeFirewall(t *testing.T) {
 			Name: "TestAccComputeFirewall_localRanges",
 		},
 		{
+			Name: "TestAccComputeFirewall_sourceRangesReplaceDefault",
+		},
+		{
 			Name: "TestAccComputeFirewall_priority",
 		},
 		{
