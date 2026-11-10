@@ -49,6 +49,36 @@ func QuotaPreferredValueDiffSuppress(k, old, new string, d *schema.ResourceData)
 	return (oldEmpty && n == "0") || (o == "0" && newEmpty)
 }
 
+// ignore_safety_checks is a comma-separated list sent as the repeated
+// ignoreSafetyChecks query parameter.
+func splitQuotaPreferenceIgnoreSafetyChecks(v string) []string {
+	var checks []string
+	for _, check := range strings.Split(v, ",") {
+		checks = append(checks, strings.TrimSpace(check))
+	}
+	return checks
+}
+
+func validateQuotaPreferenceIgnoreSafetyChecks(v interface{}, k string) (ws []string, errs []error) {
+	value := v.(string)
+	if value == "" {
+		return
+	}
+	checks := splitQuotaPreferenceIgnoreSafetyChecks(value)
+	for _, check := range checks {
+		switch check {
+		case "QUOTA_DECREASE_BELOW_USAGE", "QUOTA_DECREASE_PERCENTAGE_TOO_HIGH":
+		case "QUOTA_SAFETY_CHECK_UNSPECIFIED":
+			if len(checks) > 1 {
+				errs = append(errs, fmt.Errorf("%q: QUOTA_SAFETY_CHECK_UNSPECIFIED cannot be combined with other values", k))
+			}
+		default:
+			errs = append(errs, fmt.Errorf("%q contains an invalid value %q, expected a comma-separated list of QUOTA_SAFETY_CHECK_UNSPECIFIED, QUOTA_DECREASE_BELOW_USAGE, QUOTA_DECREASE_PERCENTAGE_TOO_HIGH", k, check))
+		}
+	}
+	return
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
@@ -131,9 +161,13 @@ Example: '{"provider": "Foo Inc"}' where "provider" is a service specific dimens
 			"ignore_safety_checks": {
 				Type:         schema.TypeString,
 				Optional:     true,
-				ValidateFunc: verify.ValidateEnum([]string{"QUOTA_SAFETY_CHECK_UNSPECIFIED", "QUOTA_DECREASE_BELOW_USAGE", "QUOTA_DECREASE_PERCENTAGE_TOO_HIGH", ""}),
-				Description:  `The list of quota safety checks to be ignored. Default value: "QUOTA_SAFETY_CHECK_UNSPECIFIED" Possible values: ["QUOTA_SAFETY_CHECK_UNSPECIFIED", "QUOTA_DECREASE_BELOW_USAGE", "QUOTA_DECREASE_PERCENTAGE_TOO_HIGH"]`,
-				Default:      "QUOTA_SAFETY_CHECK_UNSPECIFIED",
+				ValidateFunc: validateQuotaPreferenceIgnoreSafetyChecks,
+				Description: `A comma-separated list of quota safety checks to be ignored, for example
+'QUOTA_DECREASE_BELOW_USAGE,QUOTA_DECREASE_PERCENTAGE_TOO_HIGH'. Possible
+values are 'QUOTA_SAFETY_CHECK_UNSPECIFIED', 'QUOTA_DECREASE_BELOW_USAGE' and
+'QUOTA_DECREASE_PERCENTAGE_TOO_HIGH'. 'QUOTA_SAFETY_CHECK_UNSPECIFIED' cannot
+be combined with other values.`,
+				Default: "QUOTA_SAFETY_CHECK_UNSPECIFIED",
 			},
 			"justification": {
 				Type:        schema.TypeString,
