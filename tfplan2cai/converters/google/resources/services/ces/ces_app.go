@@ -268,6 +268,13 @@ func expandCESAppAudioProcessingConfig(v interface{}, d tpgresource.TerraformRes
 		transformed["bargeInConfig"] = transformedBargeInConfig
 	}
 
+	transformedCustomVoiceSamples, err := expandCESAppAudioProcessingConfigCustomVoiceSamples(original["custom_voice_samples"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCustomVoiceSamples); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["customVoiceSamples"] = transformedCustomVoiceSamples
+	}
+
 	transformedInactivityTimeout, err := expandCESAppAudioProcessingConfigInactivityTimeout(original["inactivity_timeout"], d, config)
 	if err != nil {
 		return nil, err
@@ -356,6 +363,79 @@ func expandCESAppAudioProcessingConfigBargeInConfig(v interface{}, d tpgresource
 }
 
 func expandCESAppAudioProcessingConfigBargeInConfigBargeInAwareness(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppAudioProcessingConfigCustomVoiceSamples(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedConsentAudioGcsUri, err := expandCESAppAudioProcessingConfigCustomVoiceSamplesConsentAudioGcsUri(original["consent_audio_gcs_uri"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedConsentAudioGcsUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["consentAudioGcsUri"] = transformedConsentAudioGcsUri
+		}
+
+		transformedName, err := expandCESAppAudioProcessingConfigCustomVoiceSamplesName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedPreviewText, err := expandCESAppAudioProcessingConfigCustomVoiceSamplesPreviewText(original["preview_text"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPreviewText); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["previewText"] = transformedPreviewText
+		}
+
+		transformedVoiceInstruction, err := expandCESAppAudioProcessingConfigCustomVoiceSamplesVoiceInstruction(original["voice_instruction"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedVoiceInstruction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["voiceInstruction"] = transformedVoiceInstruction
+		}
+
+		transformedVoiceSampleGcsUri, err := expandCESAppAudioProcessingConfigCustomVoiceSamplesVoiceSampleGcsUri(original["voice_sample_gcs_uri"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedVoiceSampleGcsUri); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["voiceSampleGcsUri"] = transformedVoiceSampleGcsUri
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCESAppAudioProcessingConfigCustomVoiceSamplesConsentAudioGcsUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppAudioProcessingConfigCustomVoiceSamplesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppAudioProcessingConfigCustomVoiceSamplesPreviewText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppAudioProcessingConfigCustomVoiceSamplesVoiceInstruction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESAppAudioProcessingConfigCustomVoiceSamplesVoiceSampleGcsUri(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
