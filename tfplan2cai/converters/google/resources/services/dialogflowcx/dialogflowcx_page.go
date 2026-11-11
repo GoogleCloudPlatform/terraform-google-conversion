@@ -351,11 +351,11 @@ func expandDialogflowCXPageEntryFulfillmentMessagesPayload(v interface{}, d tpgr
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageEntryFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -385,11 +385,11 @@ func expandDialogflowCXPageEntryFulfillmentMessagesConversationSuccessMetadata(v
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageEntryFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -467,11 +467,11 @@ func expandDialogflowCXPageEntryFulfillmentMessagesLiveAgentHandoffMetadata(v in
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageEntryFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -952,11 +952,11 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMes
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -986,11 +986,11 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMes
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1068,11 +1068,11 @@ func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMes
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageFormParametersFillBehaviorInitialPromptFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1473,11 +1473,11 @@ func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTrigge
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1507,11 +1507,11 @@ func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTrigge
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -1589,11 +1589,11 @@ func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTrigge
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageFormParametersFillBehaviorRepromptEventHandlersTriggerFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -2103,11 +2103,11 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesPayload(v i
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -2137,11 +2137,11 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesConversatio
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -2219,11 +2219,11 @@ func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesLiveAgentHa
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageTransitionRoutesTriggerFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -2632,11 +2632,11 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesPayload(v inte
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -2666,11 +2666,11 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesConversationSu
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -2748,11 +2748,11 @@ func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesLiveAgentHando
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageEventHandlersTriggerFulfillmentMessagesPlayAudio(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -3259,11 +3259,11 @@ func expandDialogflowCXPageKnowledgeConnectorSettingsTriggerFulfillmentMessagesP
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageKnowledgeConnectorSettingsTriggerFulfillmentMessagesConversationSuccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -3293,11 +3293,11 @@ func expandDialogflowCXPageKnowledgeConnectorSettingsTriggerFulfillmentMessagesC
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageKnowledgeConnectorSettingsTriggerFulfillmentMessagesOutputAudioText(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
@@ -3375,11 +3375,11 @@ func expandDialogflowCXPageKnowledgeConnectorSettingsTriggerFulfillmentMessagesL
 	if len(b) == 0 {
 		return nil, nil
 	}
-	m := make(map[string]interface{})
-	if err := json.Unmarshal(b, &m); err != nil {
+	var j interface{}
+	if err := json.Unmarshal(b, &j); err != nil {
 		return nil, err
 	}
-	return m, nil
+	return j, nil
 }
 
 func expandDialogflowCXPageKnowledgeConnectorSettingsTriggerFulfillmentMessagesEndInteraction(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
