@@ -226,6 +226,41 @@ func expandVertexAICustomJobJobSpec(v interface{}, d tpgresource.TerraformResour
 		transformed["enableDashboardAccess"] = transformedEnableDashboardAccess
 	}
 
+	transformedExperiment, err := expandVertexAICustomJobJobSpecExperiment(original["experiment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExperiment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["experiment"] = transformedExperiment
+	}
+
+	transformedExperimentRun, err := expandVertexAICustomJobJobSpecExperimentRun(original["experiment_run"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedExperimentRun); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["experimentRun"] = transformedExperimentRun
+	}
+
+	transformedModels, err := expandVertexAICustomJobJobSpecModels(original["models"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedModels); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["models"] = transformedModels
+	}
+
+	transformedPersistentResourceId, err := expandVertexAICustomJobJobSpecPersistentResourceId(original["persistent_resource_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPersistentResourceId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["persistentResourceId"] = transformedPersistentResourceId
+	}
+
+	transformedProtectedArtifactLocationId, err := expandVertexAICustomJobJobSpecProtectedArtifactLocationId(original["protected_artifact_location_id"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedProtectedArtifactLocationId); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["protectedArtifactLocationId"] = transformedProtectedArtifactLocationId
+	}
+
 	return transformed, nil
 }
 
@@ -966,6 +1001,26 @@ func expandVertexAICustomJobJobSpecEnableWebAccess(v interface{}, d tpgresource.
 }
 
 func expandVertexAICustomJobJobSpecEnableDashboardAccess(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAICustomJobJobSpecExperiment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAICustomJobJobSpecExperimentRun(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAICustomJobJobSpecModels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAICustomJobJobSpecPersistentResourceId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAICustomJobJobSpecProtectedArtifactLocationId(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
