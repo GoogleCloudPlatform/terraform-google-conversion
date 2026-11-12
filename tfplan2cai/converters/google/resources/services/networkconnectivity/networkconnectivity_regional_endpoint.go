@@ -50,6 +50,22 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
+var regionalEndpointAddressURIRegex = regexp.MustCompile(`^projects/[^/]+/regions/[^/]+/addresses/[^/]+$`)
+
+// Legacy RegionalEndpoints created with an address URI have an empty subnetwork
+// server-side until backfilled. Suppress the diff when adding subnetwork to config
+// for those existing resources so Terraform does not force replacement.
+func regionalEndpointSubnetworkDiffSuppress(_, old, new string, d *schema.ResourceData) bool {
+	if d == nil || d.Id() == "" || old != "" || new == "" {
+		return false
+	}
+	addr, ok := d.Get("address").(string)
+	if !ok {
+		return false
+	}
+	return regionalEndpointAddressURIRegex.MatchString(addr)
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
