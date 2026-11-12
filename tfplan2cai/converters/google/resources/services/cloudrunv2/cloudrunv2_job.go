@@ -406,6 +406,13 @@ func expandCloudRunV2JobTemplateTemplate(v interface{}, d tpgresource.TerraformR
 		transformed["encryptionKey"] = transformedEncryptionKey
 	}
 
+	transformedSandboxes, err := expandCloudRunV2JobTemplateTemplateSandboxes(original["sandboxes"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSandboxes); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sandboxes"] = transformedSandboxes
+	}
+
 	transformedVpcAccess, err := expandCloudRunV2JobTemplateTemplateVpcAccess(original["vpc_access"], d, config)
 	if err != nil {
 		return nil, err
@@ -1419,6 +1426,207 @@ func expandCloudRunV2JobTemplateTemplateExecutionEnvironment(v interface{}, d tp
 }
 
 func expandCloudRunV2JobTemplateTemplateEncryptionKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxes(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedTemplates, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplates(original["templates"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedTemplates); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["templates"] = transformedTemplates
+	}
+
+	return transformed, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplates(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedImage, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesImage(original["image"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedImage); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["image"] = transformedImage
+		}
+
+		transformedCommand, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesCommand(original["command"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedCommand); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["command"] = transformedCommand
+		}
+
+		transformedArgs, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesArgs(original["args"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedArgs); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["args"] = transformedArgs
+		}
+
+		transformedEnv, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesEnv(original["env"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedEnv); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["env"] = transformedEnv
+		}
+
+		transformedVolumeMounts, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesVolumeMounts(original["volume_mounts"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedVolumeMounts); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["volumeMounts"] = transformedVolumeMounts
+		}
+
+		transformedWorkingDir, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesWorkingDir(original["working_dir"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedWorkingDir); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["workingDir"] = transformedWorkingDir
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesImage(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesCommand(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesArgs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesEnv(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	v = v.(*schema.Set).List()
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesEnvName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedValue, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesEnvValue(original["value"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedValue); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["value"] = transformedValue
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesEnvName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesEnvValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesVolumeMounts(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedName, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesVolumeMountsName(original["name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["name"] = transformedName
+		}
+
+		transformedMountPath, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesVolumeMountsMountPath(original["mount_path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedMountPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["mountPath"] = transformedMountPath
+		}
+
+		transformedSubPath, err := expandCloudRunV2JobTemplateTemplateSandboxesTemplatesVolumeMountsSubPath(original["sub_path"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedSubPath); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["subPath"] = transformedSubPath
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesVolumeMountsName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesVolumeMountsMountPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesVolumeMountsSubPath(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCloudRunV2JobTemplateTemplateSandboxesTemplatesWorkingDir(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
