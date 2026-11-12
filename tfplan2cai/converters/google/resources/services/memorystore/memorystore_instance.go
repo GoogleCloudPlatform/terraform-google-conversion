@@ -290,6 +290,11 @@ func resourceMemorystoreInstanceEncoder(d tpgresource.TerraformResourceData, met
 					pscAutoConnection["network"] = network
 				}
 
+				ipVersion := desiredEndpoint["ip_version"]
+				if val := reflect.ValueOf(ipVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+					pscAutoConnection["ipVersion"] = ipVersion
+				}
+
 				connectionObj["pscAutoConnection"] = pscAutoConnection
 				connections = append(connections, connectionObj)
 			}
