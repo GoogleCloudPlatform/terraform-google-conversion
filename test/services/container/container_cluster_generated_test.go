@@ -82,7 +82,7 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_withMaxRunDuration",
 		},
 		{
-			Name: "TestAccContainerCluster_withFlexStart",
+			Name: "TestAccContainerCluster_withFlexStartAndConsolidationDelay",
 		},
 		{
 			Name: "TestAccContainerCluster_withILBSubsetting",
