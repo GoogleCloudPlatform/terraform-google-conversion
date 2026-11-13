@@ -124,6 +124,12 @@ func GetOracleDatabaseOdbNetworkApiObject(d tpgresource.TerraformResourceData, c
 	} else if v, ok := d.GetOkExists("gcp_oracle_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(gcpOracleZoneProp)) && (ok || !reflect.DeepEqual(v, gcpOracleZoneProp)) {
 		obj["gcpOracleZone"] = gcpOracleZoneProp
 	}
+	serviceConnectivityConfigProp, err := expandOracleDatabaseOdbNetworkServiceConnectivityConfig(d.Get("service_connectivity_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("service_connectivity_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(serviceConnectivityConfigProp)) && (ok || !reflect.DeepEqual(v, serviceConnectivityConfigProp)) {
+		obj["serviceConnectivityConfig"] = serviceConnectivityConfigProp
+	}
 	effectiveLabelsProp, err := expandOracleDatabaseOdbNetworkEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -139,6 +145,54 @@ func expandOracleDatabaseOdbNetworkNetwork(v interface{}, d tpgresource.Terrafor
 }
 
 func expandOracleDatabaseOdbNetworkGcpOracleZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseOdbNetworkServiceConnectivityConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedPscInterfaceConfig, err := expandOracleDatabaseOdbNetworkServiceConnectivityConfigPscInterfaceConfig(original["psc_interface_config"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscInterfaceConfig); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscInterfaceConfig"] = transformedPscInterfaceConfig
+	}
+
+	return transformed, nil
+}
+
+func expandOracleDatabaseOdbNetworkServiceConnectivityConfigPscInterfaceConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedNetworkAttachment, err := expandOracleDatabaseOdbNetworkServiceConnectivityConfigPscInterfaceConfigNetworkAttachment(original["network_attachment"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNetworkAttachment); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["networkAttachment"] = transformedNetworkAttachment
+	}
+
+	return transformed, nil
+}
+
+func expandOracleDatabaseOdbNetworkServiceConnectivityConfigPscInterfaceConfigNetworkAttachment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
