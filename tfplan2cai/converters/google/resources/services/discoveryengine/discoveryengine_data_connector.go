@@ -355,6 +355,13 @@ func expandDiscoveryEngineDataConnectorActionConfig(v interface{}, d tpgresource
 		transformed["actionParams"] = transformedActionParams
 	}
 
+	transformedJsonActionParams, err := expandDiscoveryEngineDataConnectorActionConfigJsonActionParams(original["json_action_params"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJsonActionParams); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jsonActionParams"] = transformedJsonActionParams
+	}
+
 	transformedIsActionConfigured, err := expandDiscoveryEngineDataConnectorActionConfigIsActionConfigured(original["is_action_configured"], d, config)
 	if err != nil {
 		return nil, err
@@ -381,6 +388,10 @@ func expandDiscoveryEngineDataConnectorActionConfigActionParams(v interface{}, d
 		m[k] = val.(string)
 	}
 	return m, nil
+}
+
+func expandDiscoveryEngineDataConnectorActionConfigJsonActionParams(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDiscoveryEngineDataConnectorActionConfigIsActionConfigured(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
