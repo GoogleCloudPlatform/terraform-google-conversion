@@ -133,6 +133,16 @@ func (c *GkeonpremVmwareClusterCai2hclConverter) convertResourceData(asset caias
 	}
 	hclData := make(map[string]interface{})
 
+	res, err = resourceGkeonpremVmwareClusterDecoder(d, config, res)
+	if err != nil {
+		return nil, err
+	}
+
+	if res == nil {
+		// Decoding the object has resulted in it being gone. It may be marked deleted.
+		return nil, nil
+	}
+
 	outputFields := map[string]struct{}{"create_time": struct{}{}, "delete_time": struct{}{}, "effective_annotations": struct{}{}, "endpoint": struct{}{}, "etag": struct{}{}, "fleet": struct{}{}, "local_name": struct{}{}, "reconciling": struct{}{}, "state": struct{}{}, "status": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}, "validation_check": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//gkeonprem.googleapis.com/projects/{{project}}/locations/{{location}}/vmwareClusters/{{name}}", outputFields, hclData)
 
@@ -1028,4 +1038,9 @@ func flattenGkeonpremVmwareClusterVcenterCaCertData(v interface{}, d *schema.Res
 
 func flattenGkeonpremVmwareClusterVcenterStoragePolicyName(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
+}
+
+func resourceGkeonpremVmwareClusterDecoder(d *schema.ResourceData, meta interface{}, res map[string]interface{}) (map[string]interface{}, error) {
+	res["name"] = tpgresource.GetResourceNameFromSelfLink(res["name"].(string))
+	return res, nil
 }
