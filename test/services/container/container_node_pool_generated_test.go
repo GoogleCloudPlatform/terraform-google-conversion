@@ -256,7 +256,7 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_withMaxRunDuration",
 		},
 		{
-			Name: "TestAccContainerNodePool_withFlexStart",
+			Name: "TestAccContainerNodePool_withFlexStartAndConsolidationDelay",
 		},
 		{
 			Name: "TestAccContainerNodePool_tpuTopology",
