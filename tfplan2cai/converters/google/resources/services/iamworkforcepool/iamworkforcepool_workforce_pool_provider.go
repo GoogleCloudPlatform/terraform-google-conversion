@@ -197,6 +197,12 @@ func GetIAMWorkforcePoolWorkforcePoolProviderApiObject(d tpgresource.TerraformRe
 	} else if v, ok := d.GetOkExists("detailed_audit_logging"); !tpgresource.IsEmptyValue(reflect.ValueOf(detailedAuditLoggingProp)) && (ok || !reflect.DeepEqual(v, detailedAuditLoggingProp)) {
 		obj["detailedAuditLogging"] = detailedAuditLoggingProp
 	}
+	attributeSyncIntervalProp, err := expandIAMWorkforcePoolWorkforcePoolProviderAttributeSyncInterval(d.Get("attribute_sync_interval"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("attribute_sync_interval"); !tpgresource.IsEmptyValue(reflect.ValueOf(attributeSyncIntervalProp)) && (ok || !reflect.DeepEqual(v, attributeSyncIntervalProp)) {
+		obj["attributeSyncInterval"] = attributeSyncIntervalProp
+	}
 
 	return obj, nil
 }
@@ -722,5 +728,9 @@ func expandIAMWorkforcePoolWorkforcePoolProviderScimUsage(v interface{}, d tpgre
 }
 
 func expandIAMWorkforcePoolWorkforcePoolProviderDetailedAuditLogging(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIAMWorkforcePoolWorkforcePoolProviderAttributeSyncInterval(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
