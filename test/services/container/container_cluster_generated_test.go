@@ -723,6 +723,9 @@ func TestAccContainerCluster(t *testing.T) {
 		{
 			Name: "TestAccContainerCluster_nodePoolAdditionalNodeNetworkConfigsStackType",
 		},
+		{
+			Name: "TestAccContainerCluster_nodePoolEphemeralStorageLocalSsdConfigWithEphemeralCapacityGb",
+		},
 	}
 
 	for _, tt := range tests {
