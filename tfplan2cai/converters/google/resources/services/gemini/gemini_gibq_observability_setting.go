@@ -173,6 +173,13 @@ func expandGeminiGibqObservabilitySettingConversationalAnalyticsSetting(v interf
 		transformed["loggingEnabled"] = transformedLoggingEnabled
 	}
 
+	transformedBqaaEnabled, err := expandGeminiGibqObservabilitySettingConversationalAnalyticsSettingBqaaEnabled(original["bqaa_enabled"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["bqaaEnabled"] = transformedBqaaEnabled
+	}
+
 	return transformed, nil
 }
 
@@ -189,6 +196,10 @@ func expandGeminiGibqObservabilitySettingConversationalAnalyticsSettingFeedbackE
 }
 
 func expandGeminiGibqObservabilitySettingConversationalAnalyticsSettingLoggingEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandGeminiGibqObservabilitySettingConversationalAnalyticsSettingBqaaEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
