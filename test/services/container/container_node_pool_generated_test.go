@@ -214,6 +214,9 @@ func TestAccContainerNodePool(t *testing.T) {
 			Name: "TestAccContainerNodePool_ephemeralStorageLocalSsdConfigOnlyDataCacheCount",
 		},
 		{
+			Name: "TestAccContainerNodePool_ephemeralStorageLocalSsdConfigWithEphemeralCapacityGb",
+		},
+		{
 			Name: "TestAccContainerNodePool_localNvmeSsdBlockConfig",
 		},
 		{
