@@ -364,6 +364,9 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_nodeAutoprovisioningNetworkTags",
 		},
 		{
+			Name: "TestAccContainerCluster_nodePoolAutoConfigNetworkTagsWithoutAutoprovisioning",
+		},
+		{
 			Name: "TestAccContainerCluster_withDefaultComputeClassEnabled",
 		},
 		{
