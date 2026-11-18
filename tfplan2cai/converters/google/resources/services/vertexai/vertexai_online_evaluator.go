@@ -346,6 +346,13 @@ func expandVertexAIOnlineEvaluatorCloudObservabilityTraceScopeFilter(v interface
 			transformed["totalTokenUsage"] = transformedTotalTokenUsage
 		}
 
+		transformedServiceVersion, err := expandVertexAIOnlineEvaluatorCloudObservabilityTraceScopeFilterServiceVersion(original["service_version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedServiceVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["serviceVersion"] = transformedServiceVersion
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -422,6 +429,32 @@ func expandVertexAIOnlineEvaluatorCloudObservabilityTraceScopeFilterTotalTokenUs
 }
 
 func expandVertexAIOnlineEvaluatorCloudObservabilityTraceScopeFilterTotalTokenUsageValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIOnlineEvaluatorCloudObservabilityTraceScopeFilterServiceVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedValues, err := expandVertexAIOnlineEvaluatorCloudObservabilityTraceScopeFilterServiceVersionValues(original["values"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValues); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["values"] = transformedValues
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIOnlineEvaluatorCloudObservabilityTraceScopeFilterServiceVersionValues(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -540,6 +573,13 @@ func expandVertexAIOnlineEvaluatorCloudObservabilitySessionScopeFilter(v interfa
 			return nil, err
 		} else if val := reflect.ValueOf(transformedDuration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["duration"] = transformedDuration
+		}
+
+		transformedServiceVersion, err := expandVertexAIOnlineEvaluatorCloudObservabilitySessionScopeFilterServiceVersion(original["service_version"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedServiceVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["serviceVersion"] = transformedServiceVersion
 		}
 
 		req = append(req, transformed)
@@ -803,6 +843,32 @@ func expandVertexAIOnlineEvaluatorCloudObservabilitySessionScopeFilterDurationCo
 }
 
 func expandVertexAIOnlineEvaluatorCloudObservabilitySessionScopeFilterDurationValue(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIOnlineEvaluatorCloudObservabilitySessionScopeFilterServiceVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedValues, err := expandVertexAIOnlineEvaluatorCloudObservabilitySessionScopeFilterServiceVersionValues(original["values"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedValues); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["values"] = transformedValues
+	}
+
+	return transformed, nil
+}
+
+func expandVertexAIOnlineEvaluatorCloudObservabilitySessionScopeFilterServiceVersionValues(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
