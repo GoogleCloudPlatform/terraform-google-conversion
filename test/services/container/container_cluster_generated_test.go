@@ -163,9 +163,6 @@ func TestAccContainerCluster(t *testing.T) {
 			Name: "TestAccContainerCluster_regionalWithNodeLocations",
 		},
 		{
-			Name: "TestAccContainerCluster_withTpu",
-		},
-		{
 			Name: "TestAccContainerCluster_nodePoolWithUpgradeSettings",
 		},
 		{
@@ -518,9 +515,6 @@ func TestAccContainerCluster(t *testing.T) {
 		},
 		{
 			Name: "TestAccContainerCluster_withGatewayApiConfig",
-		},
-		{
-			Name: "TestAccContainerCluster_withTPUConfig",
 		},
 		{
 			Name: "TestAccContainerCluster_withProtectConfig",
