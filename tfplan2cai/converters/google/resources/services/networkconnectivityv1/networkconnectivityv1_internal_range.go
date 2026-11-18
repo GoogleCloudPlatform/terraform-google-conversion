@@ -188,6 +188,12 @@ func GetNetworkConnectivityv1InternalRangeApiObject(d tpgresource.TerraformResou
 	} else if v, ok := d.GetOkExists("immutable"); !tpgresource.IsEmptyValue(reflect.ValueOf(immutableProp)) && (ok || !reflect.DeepEqual(v, immutableProp)) {
 		obj["immutable"] = immutableProp
 	}
+	purposeProp, err := expandNetworkConnectivityv1InternalRangePurpose(d.Get("purpose"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("purpose"); !tpgresource.IsEmptyValue(reflect.ValueOf(purposeProp)) && (ok || !reflect.DeepEqual(v, purposeProp)) {
+		obj["purpose"] = purposeProp
+	}
 	effectiveLabelsProp, err := expandNetworkConnectivityv1InternalRangeEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -309,6 +315,10 @@ func expandNetworkConnectivityv1InternalRangeMigrationTarget(v interface{}, d tp
 }
 
 func expandNetworkConnectivityv1InternalRangeImmutable(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkConnectivityv1InternalRangePurpose(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
