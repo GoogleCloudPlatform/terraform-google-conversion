@@ -520,6 +520,13 @@ func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRule(v
 			transformed["fullPathMatch"] = transformedFullPathMatch
 		}
 
+		transformedRegexMatch, err := expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRuleRegexMatch(original["regex_match"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRegexMatch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["regexMatch"] = transformedRegexMatch
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -577,6 +584,13 @@ func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRuleHe
 			transformed["suffixMatch"] = transformedSuffixMatch
 		}
 
+		transformedRegexMatch, err := expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRuleHeaderMatchRegexMatch(original["regex_match"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRegexMatch); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["regexMatch"] = transformedRegexMatch
+		}
+
 		transformedInvertMatch, err := expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRuleHeaderMatchInvertMatch(original["invert_match"], d, config)
 		if err != nil {
 			return nil, err
@@ -606,6 +620,10 @@ func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRuleHe
 }
 
 func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRuleHeaderMatchSuffixMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRuleHeaderMatchRegexMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -673,6 +691,10 @@ func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRulePa
 }
 
 func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRuleFullPathMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleMatchRuleRegexMatch(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -1322,6 +1344,13 @@ func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteAction
 		transformed["pathTemplateRewrite"] = transformedPathTemplateRewrite
 	}
 
+	transformedRegexRewrite, err := expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteActionUrlRewriteRegexRewrite(original["regex_rewrite"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedRegexRewrite); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["regexRewrite"] = transformedRegexRewrite
+	}
+
 	return transformed, nil
 }
 
@@ -1334,6 +1363,10 @@ func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteAction
 }
 
 func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteActionUrlRewritePathTemplateRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesEdgeCacheServiceRoutingPathMatcherRouteRuleRouteActionUrlRewriteRegexRewrite(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
