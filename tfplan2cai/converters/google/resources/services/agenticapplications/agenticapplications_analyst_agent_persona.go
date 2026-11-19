@@ -142,6 +142,12 @@ func GetAgenticApplicationsAnalystAgentPersonaApiObject(d tpgresource.TerraformR
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
+	experimentalFeaturesEnabledProp, err := expandAgenticApplicationsAnalystAgentPersonaExperimentalFeaturesEnabled(d.Get("experimental_features_enabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("experimental_features_enabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(experimentalFeaturesEnabledProp)) && (ok || !reflect.DeepEqual(v, experimentalFeaturesEnabledProp)) {
+		obj["experimentalFeaturesEnabled"] = experimentalFeaturesEnabledProp
+	}
 	externalDataSourcesProp, err := expandAgenticApplicationsAnalystAgentPersonaExternalDataSources(d.Get("external_data_sources"), d, config)
 	if err != nil {
 		return nil, err
@@ -1724,6 +1730,10 @@ func expandAgenticApplicationsAnalystAgentPersonaDisplayDescription(v interface{
 }
 
 func expandAgenticApplicationsAnalystAgentPersonaDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAgenticApplicationsAnalystAgentPersonaExperimentalFeaturesEnabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
