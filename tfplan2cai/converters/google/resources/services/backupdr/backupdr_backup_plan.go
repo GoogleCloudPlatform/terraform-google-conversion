@@ -220,6 +220,20 @@ func expandBackupDRBackupPlanBackupRules(v interface{}, d tpgresource.TerraformR
 			transformed["standardSchedule"] = transformedStandardSchedule
 		}
 
+		transformedBackupVault, err := expandBackupDRBackupPlanBackupRulesBackupVault(original["backup_vault"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBackupVault); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["backupVault"] = transformedBackupVault
+		}
+
+		transformedBackupVaultServiceAccount, err := expandBackupDRBackupPlanBackupRulesBackupVaultServiceAccount(original["backup_vault_service_account"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedBackupVaultServiceAccount); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["backupVaultServiceAccount"] = transformedBackupVaultServiceAccount
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -399,6 +413,14 @@ func expandBackupDRBackupPlanBackupRulesStandardScheduleBackupWindowStartHourOfD
 }
 
 func expandBackupDRBackupPlanBackupRulesStandardScheduleBackupWindowEndHourOfDay(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBackupDRBackupPlanBackupRulesBackupVault(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBackupDRBackupPlanBackupRulesBackupVaultServiceAccount(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

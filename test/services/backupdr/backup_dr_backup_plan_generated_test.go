@@ -25,6 +25,10 @@ func TestAccBackupDRBackupPlan(t *testing.T) {
 
 	tests := []test.TestCase{
 		{
+			Name: "TestAccBackupDRBackupPlan_mvbp",
+			Skip: "The test uses beta-only fields not in GA tgc_next schema",
+		},
+		{
 			Name: "TestAccBackupDRBackupPlan_backupDrBackupPlanSimpleExample",
 		},
 		{
