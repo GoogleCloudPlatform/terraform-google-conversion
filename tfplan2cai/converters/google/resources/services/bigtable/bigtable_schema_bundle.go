@@ -118,6 +118,12 @@ func GetBigtableSchemaBundleApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("proto_schema"); !tpgresource.IsEmptyValue(reflect.ValueOf(protoSchemaProp)) && (ok || !reflect.DeepEqual(v, protoSchemaProp)) {
 		obj["protoSchema"] = protoSchemaProp
 	}
+	avroSchemaProp, err := expandBigtableSchemaBundleAvroSchema(d.Get("avro_schema"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("avro_schema"); !tpgresource.IsEmptyValue(reflect.ValueOf(avroSchemaProp)) && (ok || !reflect.DeepEqual(v, avroSchemaProp)) {
+		obj["avroSchema"] = avroSchemaProp
+	}
 
 	return obj, nil
 }
@@ -145,5 +151,31 @@ func expandBigtableSchemaBundleProtoSchema(v interface{}, d tpgresource.Terrafor
 }
 
 func expandBigtableSchemaBundleProtoSchemaProtoDescriptors(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandBigtableSchemaBundleAvroSchema(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedJsonSchemas, err := expandBigtableSchemaBundleAvroSchemaJsonSchemas(original["json_schemas"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedJsonSchemas); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["jsonSchemas"] = transformedJsonSchemas
+	}
+
+	return transformed, nil
+}
+
+func expandBigtableSchemaBundleAvroSchemaJsonSchemas(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
