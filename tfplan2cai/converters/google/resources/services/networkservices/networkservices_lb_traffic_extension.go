@@ -306,6 +306,20 @@ func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensions(v interfac
 			transformed["observabilityMode"] = transformedObservabilityMode
 		}
 
+		transformedRequestBodySendMode, err := expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsRequestBodySendMode(original["request_body_send_mode"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedRequestBodySendMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["requestBodySendMode"] = transformedRequestBodySendMode
+		}
+
+		transformedResponseBodySendMode, err := expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsResponseBodySendMode(original["response_body_send_mode"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedResponseBodySendMode); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["responseBodySendMode"] = transformedResponseBodySendMode
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -355,6 +369,14 @@ func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsMetadata(v 
 }
 
 func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsObservabilityMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsRequestBodySendMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandNetworkServicesLbTrafficExtensionExtensionChainsExtensionsResponseBodySendMode(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
