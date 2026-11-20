@@ -124,6 +124,12 @@ func GetHealthcareDicomStoreApiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("notification_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(notificationConfigProp)) && (ok || !reflect.DeepEqual(v, notificationConfigProp)) {
 		obj["notificationConfig"] = notificationConfigProp
 	}
+	notificationConfigsProp, err := expandHealthcareDicomStoreNotificationConfigs(d.Get("notification_configs"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("notification_configs"); !tpgresource.IsEmptyValue(reflect.ValueOf(notificationConfigsProp)) && (ok || !reflect.DeepEqual(v, notificationConfigsProp)) {
+		obj["notificationConfigs"] = notificationConfigsProp
+	}
 	streamConfigsProp, err := expandHealthcareDicomStoreStreamConfigs(d.Get("stream_configs"), d, config)
 	if err != nil {
 		return nil, err
@@ -178,6 +184,35 @@ func expandHealthcareDicomStoreNotificationConfigPubsubTopic(v interface{}, d tp
 }
 
 func expandHealthcareDicomStoreNotificationConfigSendForBulkImport(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandHealthcareDicomStoreNotificationConfigs(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedPubsubTopic, err := expandHealthcareDicomStoreNotificationConfigsPubsubTopic(original["pubsub_topic"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedPubsubTopic); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["pubsubTopic"] = transformedPubsubTopic
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandHealthcareDicomStoreNotificationConfigsPubsubTopic(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
