@@ -118,6 +118,12 @@ func GetVertexAIDatasetApiObject(d tpgresource.TerraformResourceData, config *tr
 	} else if v, ok := d.GetOkExists("display_name"); !tpgresource.IsEmptyValue(reflect.ValueOf(displayNameProp)) && (ok || !reflect.DeepEqual(v, displayNameProp)) {
 		obj["displayName"] = displayNameProp
 	}
+	descriptionProp, err := expandVertexAIDatasetDescription(d.Get("description"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("description"); !tpgresource.IsEmptyValue(reflect.ValueOf(descriptionProp)) && (ok || !reflect.DeepEqual(v, descriptionProp)) {
+		obj["description"] = descriptionProp
+	}
 	encryptionSpecProp, err := expandVertexAIDatasetEncryptionSpec(d.Get("encryption_spec"), d, config)
 	if err != nil {
 		return nil, err
@@ -141,6 +147,10 @@ func GetVertexAIDatasetApiObject(d tpgresource.TerraformResourceData, config *tr
 }
 
 func expandVertexAIDatasetDisplayName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIDatasetDescription(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
