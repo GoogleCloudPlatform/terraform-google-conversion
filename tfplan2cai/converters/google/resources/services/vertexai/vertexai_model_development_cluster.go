@@ -355,11 +355,39 @@ func expandVertexAIModelDevelopmentClusterNetwork(v interface{}, d tpgresource.T
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
 
+	transformedEffectivePodsSecondaryRangeName, err := expandVertexAIModelDevelopmentClusterNetworkEffectivePodsSecondaryRangeName(original["effective_pods_secondary_range_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEffectivePodsSecondaryRangeName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["effectivePodsSecondaryRangeName"] = transformedEffectivePodsSecondaryRangeName
+	}
+
+	transformedEffectiveServicesSecondaryRangeName, err := expandVertexAIModelDevelopmentClusterNetworkEffectiveServicesSecondaryRangeName(original["effective_services_secondary_range_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedEffectiveServicesSecondaryRangeName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["effectiveServicesSecondaryRangeName"] = transformedEffectiveServicesSecondaryRangeName
+	}
+
 	transformedNetwork, err := expandVertexAIModelDevelopmentClusterNetworkNetwork(original["network"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedNetwork); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["network"] = transformedNetwork
+	}
+
+	transformedPodsSecondaryRangeName, err := expandVertexAIModelDevelopmentClusterNetworkPodsSecondaryRangeName(original["pods_secondary_range_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPodsSecondaryRangeName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["podsSecondaryRangeName"] = transformedPodsSecondaryRangeName
+	}
+
+	transformedServicesSecondaryRangeName, err := expandVertexAIModelDevelopmentClusterNetworkServicesSecondaryRangeName(original["services_secondary_range_name"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedServicesSecondaryRangeName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["servicesSecondaryRangeName"] = transformedServicesSecondaryRangeName
 	}
 
 	transformedSubnetwork, err := expandVertexAIModelDevelopmentClusterNetworkSubnetwork(original["subnetwork"], d, config)
@@ -372,7 +400,23 @@ func expandVertexAIModelDevelopmentClusterNetwork(v interface{}, d tpgresource.T
 	return transformed, nil
 }
 
+func expandVertexAIModelDevelopmentClusterNetworkEffectivePodsSecondaryRangeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIModelDevelopmentClusterNetworkEffectiveServicesSecondaryRangeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
 func expandVertexAIModelDevelopmentClusterNetworkNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIModelDevelopmentClusterNetworkPodsSecondaryRangeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIModelDevelopmentClusterNetworkServicesSecondaryRangeName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
@@ -978,6 +1022,27 @@ func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpec(v inter
 		transformed["nodePoolVersions"] = transformedNodePoolVersions
 	}
 
+	transformedKueueVersion, err := expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecKueueVersion(original["kueue_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedKueueVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["kueueVersion"] = transformedKueueVersion
+	}
+
+	transformedNcclGibVersion, err := expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecNcclGibVersion(original["nccl_gib_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNcclGibVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["ncclGibVersion"] = transformedNcclGibVersion
+	}
+
+	transformedMaintenancePolicy, err := expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecMaintenancePolicy(original["maintenance_policy"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedMaintenancePolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["maintenancePolicy"] = transformedMaintenancePolicy
+	}
+
 	return transformed, nil
 }
 
@@ -1016,6 +1081,18 @@ func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecNodePool
 		return transformed, nil
 	}
 	return nil, nil
+}
+
+func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecKueueVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecNcclGibVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandVertexAIModelDevelopmentClusterOrchestratorSpecKubernetesSpecMaintenancePolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandVertexAIModelDevelopmentClusterRuntimeSpec(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
