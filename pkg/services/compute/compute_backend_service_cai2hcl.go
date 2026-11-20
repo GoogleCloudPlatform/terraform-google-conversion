@@ -189,6 +189,7 @@ func (c *ComputeBackendServiceCai2hclConverter) convertResourceData(asset caiass
 	hclData["service_lb_policy"] = flattenComputeBackendServiceServiceLbPolicy(res["serviceLbPolicy"], d, config)
 	hclData["tls_settings"] = flattenComputeBackendServiceTlsSettings(res["tlsSettings"], d, config)
 	hclData["max_stream_duration"] = flattenComputeBackendServiceMaxStreamDuration(res["maxStreamDuration"], d, config)
+	hclData["dynamic_forwarding"] = flattenComputeBackendServiceDynamicForwarding(res["dynamicForwarding"], d, config)
 	hclData["params"] = flattenComputeBackendServiceParams(res["params"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
@@ -1932,6 +1933,38 @@ func flattenComputeBackendServiceMaxStreamDurationNanos(v interface{}, d *schema
 	}
 
 	return v // let terraform core handle it otherwise
+}
+
+func flattenComputeBackendServiceDynamicForwarding(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["ip_port_selection"] =
+		flattenComputeBackendServiceDynamicForwardingIpPortSelection(original["ipPortSelection"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeBackendServiceDynamicForwardingIpPortSelection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["enabled"] =
+		flattenComputeBackendServiceDynamicForwardingIpPortSelectionEnabled(original["enabled"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeBackendServiceDynamicForwardingIpPortSelectionEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeBackendServiceParams(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {

@@ -182,6 +182,7 @@ func (c *ComputeRegionBackendServiceCai2hclConverter) convertResourceData(asset 
 	hclData["timeout_sec"] = flattenComputeRegionBackendServiceTimeoutSec(res["timeoutSec"], d, config)
 	hclData["log_config"] = flattenComputeRegionBackendServiceLogConfig(res["logConfig"], d, config)
 	hclData["network"] = flattenComputeRegionBackendServiceNetwork(res["network"], d, config)
+	hclData["dynamic_forwarding"] = flattenComputeRegionBackendServiceDynamicForwarding(res["dynamicForwarding"], d, config)
 	hclData["ha_policy"] = flattenComputeRegionBackendServiceHaPolicy(res["haPolicy"], d, config)
 	hclData["params"] = flattenComputeRegionBackendServiceParams(res["params"], d, config)
 	hclData["service_lb_policy"] = flattenComputeRegionBackendServiceServiceLbPolicy(res["serviceLbPolicy"], d, config)
@@ -1649,6 +1650,67 @@ func flattenComputeRegionBackendServiceNetwork(v interface{}, d *schema.Resource
 		return v
 	}
 	return relative
+}
+
+func flattenComputeRegionBackendServiceDynamicForwarding(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["ip_port_selection"] =
+		flattenComputeRegionBackendServiceDynamicForwardingIpPortSelection(original["ipPortSelection"], d, config)
+	transformed["forward_proxy"] =
+		flattenComputeRegionBackendServiceDynamicForwardingForwardProxy(original["forwardProxy"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeRegionBackendServiceDynamicForwardingIpPortSelection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["enabled"] =
+		flattenComputeRegionBackendServiceDynamicForwardingIpPortSelectionEnabled(original["enabled"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeRegionBackendServiceDynamicForwardingIpPortSelectionEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenComputeRegionBackendServiceDynamicForwardingForwardProxy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	original := v.(map[string]interface{})
+	transformed := make(map[string]interface{})
+	transformed["enabled"] =
+		flattenComputeRegionBackendServiceDynamicForwardingForwardProxyEnabled(original["enabled"], d, config)
+	transformed["proxy_mode"] =
+		flattenComputeRegionBackendServiceDynamicForwardingForwardProxyProxyMode(original["proxyMode"], d, config)
+	if tgcresource.AllValuesAreNil(transformed) {
+		return nil
+	}
+	return []interface{}{transformed}
+}
+
+func flattenComputeRegionBackendServiceDynamicForwardingForwardProxyEnabled(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return false
+	}
+	return v
+}
+
+func flattenComputeRegionBackendServiceDynamicForwardingForwardProxyProxyMode(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
 }
 
 func flattenComputeRegionBackendServiceHaPolicy(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
