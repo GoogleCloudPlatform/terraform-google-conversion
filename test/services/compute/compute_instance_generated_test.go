@@ -275,6 +275,9 @@ func TestAccComputeInstance(t *testing.T) {
 			Name: "TestAccComputeInstance_aliasIpRangeCommonAddresses",
 		},
 		{
+			Name: "TestAccComputeInstance_aliasIpRangeNetmaskShift",
+		},
+		{
 			Name: "TestAccComputeInstance_hostname",
 		},
 		{
