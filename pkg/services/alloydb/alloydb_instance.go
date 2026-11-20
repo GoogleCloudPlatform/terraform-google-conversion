@@ -321,6 +321,14 @@ These should be specified as project numbers only.`,
 								ValidateFunc: verify.ValidateRegexp(`^\d+$`),
 							},
 						},
+						"psc_auto_connection_policy_state": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							ValidateFunc: verify.ValidateEnum([]string{"ENABLED", "DISABLED", ""}),
+							Description: `Configuration for setting up PSC auto connection policy for the instance.
+If unspecified, PSC auto connection policy is disabled for older instances and enabled by default for new instances.
+Use 'psc_instance_info.effective_psc_auto_connection_policy' to check the effective state of PSC auto connection policy. Possible values: ["ENABLED", "DISABLED"]`,
+						},
 						"psc_auto_connections": {
 							Type:        schema.TypeList,
 							Optional:    true,
@@ -345,6 +353,14 @@ and not the project number).`,
 									},
 								},
 							},
+						},
+						"psc_auto_dns_state": {
+							Type:         schema.TypeString,
+							Optional:     true,
+							ValidateFunc: verify.ValidateEnum([]string{"PSC_AUTO_DNS_STATE_ENABLED", "PSC_AUTO_DNS_STATE_DISABLED", ""}),
+							Description: `Configuration for setting up PSC auto DNS for the instance.
+If unspecified, PSC auto DNS is disabled for older instances and enabled by default for new instances.
+Use 'psc_instance_info.effective_psc_auto_dns_enabled' to check the effective state of PSC auto DNS. Possible values: ["PSC_AUTO_DNS_STATE_ENABLED", "PSC_AUTO_DNS_STATE_DISABLED"]`,
 						},
 						"psc_interface_configs": {
 							Type:     schema.TypeList,
@@ -447,6 +463,14 @@ networkConfig.enableOutboundPublicIp is set to true. These IP addresses are used
 for outbound connections.`,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
+				},
+			},
+			"psc_instance_info": {
+				Type:        schema.TypeList,
+				Computed:    true,
+				Description: `Information about the Private Service Connect (PSC) for the instance.`,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{},
 				},
 			},
 			"public_ip_address": {
