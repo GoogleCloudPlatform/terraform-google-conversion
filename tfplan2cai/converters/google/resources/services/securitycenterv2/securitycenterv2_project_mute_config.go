@@ -130,6 +130,12 @@ func GetSecurityCenterV2ProjectMuteConfigApiObject(d tpgresource.TerraformResour
 	} else if v, ok := d.GetOkExists("type"); !tpgresource.IsEmptyValue(reflect.ValueOf(typeProp)) && (ok || !reflect.DeepEqual(v, typeProp)) {
 		obj["type"] = typeProp
 	}
+	expiryTimeProp, err := expandSecurityCenterV2ProjectMuteConfigExpiryTime(d.Get("expiry_time"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("expiry_time"); !tpgresource.IsEmptyValue(reflect.ValueOf(expiryTimeProp)) && (ok || !reflect.DeepEqual(v, expiryTimeProp)) {
+		obj["expiryTime"] = expiryTimeProp
+	}
 
 	return obj, nil
 }
@@ -143,5 +149,9 @@ func expandSecurityCenterV2ProjectMuteConfigFilter(v interface{}, d tpgresource.
 }
 
 func expandSecurityCenterV2ProjectMuteConfigType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandSecurityCenterV2ProjectMuteConfigExpiryTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
