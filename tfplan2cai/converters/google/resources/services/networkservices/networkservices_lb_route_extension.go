@@ -153,6 +153,12 @@ func GetNetworkServicesLbRouteExtensionApiObject(d tpgresource.TerraformResource
 	} else if v, ok := d.GetOkExists("load_balancing_scheme"); !tpgresource.IsEmptyValue(reflect.ValueOf(loadBalancingSchemeProp)) && (ok || !reflect.DeepEqual(v, loadBalancingSchemeProp)) {
 		obj["loadBalancingScheme"] = loadBalancingSchemeProp
 	}
+	metadataProp, err := expandNetworkServicesLbRouteExtensionMetadata(d.Get("metadata"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("metadata"); !tpgresource.IsEmptyValue(reflect.ValueOf(metadataProp)) && (ok || !reflect.DeepEqual(v, metadataProp)) {
+		obj["metadata"] = metadataProp
+	}
 	effectiveLabelsProp, err := expandNetworkServicesLbRouteExtensionEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -389,6 +395,17 @@ func expandNetworkServicesLbRouteExtensionExtensionChainsExtensionsObservability
 
 func expandNetworkServicesLbRouteExtensionLoadBalancingScheme(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
+}
+
+func expandNetworkServicesLbRouteExtensionMetadata(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
+	if v == nil {
+		return map[string]string{}, nil
+	}
+	m := make(map[string]string)
+	for k, val := range v.(map[string]interface{}) {
+		m[k] = val.(string)
+	}
+	return m, nil
 }
 
 func expandNetworkServicesLbRouteExtensionEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {
