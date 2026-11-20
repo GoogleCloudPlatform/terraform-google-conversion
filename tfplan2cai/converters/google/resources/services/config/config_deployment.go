@@ -154,6 +154,12 @@ func GetConfigDeploymentApiObject(d tpgresource.TerraformResourceData, config *t
 	} else if v, ok := d.GetOkExists("quota_validation"); !tpgresource.IsEmptyValue(reflect.ValueOf(quotaValidationProp)) && (ok || !reflect.DeepEqual(v, quotaValidationProp)) {
 		obj["quotaValidation"] = quotaValidationProp
 	}
+	providerConfigProp, err := expandConfigDeploymentProviderConfig(d.Get("provider_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("provider_config"); !tpgresource.IsEmptyValue(reflect.ValueOf(providerConfigProp)) && (ok || !reflect.DeepEqual(v, providerConfigProp)) {
+		obj["providerConfig"] = providerConfigProp
+	}
 	effectiveLabelsProp, err := expandConfigDeploymentEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -325,6 +331,32 @@ func expandConfigDeploymentImportExistingResources(v interface{}, d tpgresource.
 }
 
 func expandConfigDeploymentQuotaValidation(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandConfigDeploymentProviderConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedSourceType, err := expandConfigDeploymentProviderConfigSourceType(original["source_type"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSourceType); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["sourceType"] = transformedSourceType
+	}
+
+	return transformed, nil
+}
+
+func expandConfigDeploymentProviderConfigSourceType(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
