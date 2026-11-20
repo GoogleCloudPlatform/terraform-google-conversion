@@ -52,6 +52,15 @@ func TestAccComputeRegionBackendService(t *testing.T) {
 			Name: "TestAccComputeRegionBackendService_regionBackendServiceIlbCustomMetricsExample",
 		},
 		{
+			Name: "TestAccComputeRegionBackendService_regionBackendServiceDynamicForwardingExample",
+		},
+		{
+			Name: "TestAccComputeRegionBackendService_regionBackendServiceDynamicForwardingForwardProxyCloudRunExample",
+		},
+		{
+			Name: "TestAccComputeRegionBackendService_regionBackendServiceDynamicForwardingForwardProxyDirectForwardingExample",
+		},
+		{
 			Name: "TestAccComputeRegionBackendService_regionBackendServiceHaPolicyExample",
 		},
 		{

@@ -65,6 +65,9 @@ func TestAccComputeBackendService(t *testing.T) {
 			Name: "TestAccComputeBackendService_backendServiceIdentityExample",
 		},
 		{
+			Name: "TestAccComputeBackendService_backendServiceDynamicForwardingExample",
+		},
+		{
 			Name: "TestAccComputeBackendService_basic",
 		},
 		{
@@ -214,6 +217,7 @@ func TestAccComputeBackendService(t *testing.T) {
 					"deletion_protection",
 					"depends_on",
 					"dynamic",
+					"dynamic_forwarding",
 					"for_each",
 					"iap.oauth2_client_id",
 					"iap.oauth2_client_secret",
