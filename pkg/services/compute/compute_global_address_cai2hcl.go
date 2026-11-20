@@ -145,6 +145,7 @@ func (c *ComputeGlobalAddressCai2hclConverter) convertResourceData(asset caiasse
 	hclData["address_type"] = flattenComputeGlobalAddressAddressType(res["addressType"], d, config)
 	hclData["purpose"] = flattenComputeGlobalAddressPurpose(res["purpose"], d, config)
 	hclData["network"] = flattenComputeGlobalAddressNetwork(res["network"], d, config)
+	hclData["ip_collection"] = flattenComputeGlobalAddressIpCollection(res["ipCollection"], d, config)
 
 	ctyVal, err := utils.MapToCtyValWithSchema(hclData, c.schema)
 	if err != nil {
@@ -229,4 +230,14 @@ func flattenComputeGlobalAddressNetwork(v interface{}, d *schema.ResourceData, c
 		return v
 	}
 	return relative
+}
+
+func flattenComputeGlobalAddressIpCollection(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	if v == nil {
+		return nil
+	}
+	if strVal, ok := v.(string); ok && strVal == "" {
+		return nil
+	}
+	return v
 }
