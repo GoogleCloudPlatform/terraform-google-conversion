@@ -171,6 +171,12 @@ func GetComputeGlobalAddressCaiObject(d tpgresource.TerraformResourceData, confi
 	} else if v, ok := d.GetOkExists("network"); !tpgresource.IsEmptyValue(reflect.ValueOf(networkProp)) && (ok || !reflect.DeepEqual(v, networkProp)) {
 		obj["network"] = networkProp
 	}
+	ipCollectionProp, err := expandComputeGlobalAddressIpCollection(d.Get("ip_collection"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("ip_collection"); !tpgresource.IsEmptyValue(reflect.ValueOf(ipCollectionProp)) && (ok || !reflect.DeepEqual(v, ipCollectionProp)) {
+		obj["ipCollection"] = ipCollectionProp
+	}
 	effectiveLabelsProp, err := expandComputeGlobalAddressEffectiveLabels(d.Get("effective_labels"), d, config)
 	if err != nil {
 		return nil, err
@@ -220,6 +226,21 @@ func expandComputeGlobalAddressNetwork(v interface{}, d tpgresource.TerraformRes
 	}
 	url := tgcresource.GetFullUrl(config, f.RelativeLink(), "https://www.googleapis.com/compute/v1/")
 	return url, nil
+}
+
+func expandComputeGlobalAddressIpCollection(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	s, ok := v.(string)
+	if !ok || s == "" {
+		return v, nil
+	}
+	// The API requires InternalRange references to be namespaced with the
+	// networkconnectivity.googleapis.com service name. Prefix bare relative
+	// paths (such as google_network_connectivity_internal_range.id) so users
+	// can pass the resource id directly.
+	if strings.HasPrefix(s, "projects/") {
+		return "//networkconnectivity.googleapis.com/" + s, nil
+	}
+	return s, nil
 }
 
 func expandComputeGlobalAddressEffectiveLabels(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]string, error) {

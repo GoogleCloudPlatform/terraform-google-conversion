@@ -28,6 +28,9 @@ func TestAccComputeGlobalAddress(t *testing.T) {
 			Name: "TestAccComputeGlobalAddress_globalAddressBasicExample",
 		},
 		{
+			Name: "TestAccComputeGlobalAddress_globalAddressPscInternalRangeExample",
+		},
+		{
 			Name: "TestAccComputeGlobalAddress_update",
 		},
 		{
@@ -56,6 +59,7 @@ func TestAccComputeGlobalAddress(t *testing.T) {
 					"depends_on",
 					"dynamic",
 					"for_each",
+					"ip_collection",
 					"ip_version",
 					"lifecycle",
 					"provider",

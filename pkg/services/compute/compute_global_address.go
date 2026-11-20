@@ -116,6 +116,20 @@ address or omitted to allow GCP to choose a valid one for you.`,
 				ForceNew:    true,
 				Description: `An optional description of this resource.`,
 			},
+			"ip_collection": {
+				Type:             schema.TypeString,
+				Optional:         true,
+				ForceNew:         true,
+				DiffSuppressFunc: tpgresource.CompareSelfLinkOrResourceName,
+				Description: `Reference to an InternalRange to allocate the address from. Only applicable
+when 'address_type' is 'INTERNAL' and 'purpose' is 'PRIVATE_SERVICE_CONNECT'.
+The InternalRange must have 'purpose' set to 'INTERNAL_ADDRESS'.
+Use one of the following formats to specify an InternalRange:
+Full resource URL, as in:
+  * 'https://networkconnectivity.googleapis.com/v1/projects/{{projectId}}/locations/global/internalRanges/{{internal-range-name}}'
+Partial URL, as in:
+  * 'projects/{{projectId}}/locations/global/internalRanges/{{internal-range-name}}'`,
+			},
 			"ip_version": {
 				Type:             schema.TypeString,
 				Optional:         true,
