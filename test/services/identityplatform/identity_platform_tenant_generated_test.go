@@ -28,6 +28,9 @@ func TestAccIdentityPlatformTenant(t *testing.T) {
 			Name: "TestAccIdentityPlatformTenant_identityPlatformTenantBasicExample",
 		},
 		{
+			Name: "TestAccIdentityPlatformTenant_identityPlatformTenantAnonymousExample",
+		},
+		{
 			Name: "TestAccIdentityPlatformTenant_identityPlatformTenantUpdate",
 		},
 	}

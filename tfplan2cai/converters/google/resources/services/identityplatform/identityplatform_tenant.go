@@ -130,6 +130,12 @@ func GetIdentityPlatformTenantApiObject(d tpgresource.TerraformResourceData, con
 	} else if v, ok := d.GetOkExists("enable_email_link_signin"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableEmailLinkSigninProp)) && (ok || !reflect.DeepEqual(v, enableEmailLinkSigninProp)) {
 		obj["enableEmailLinkSignin"] = enableEmailLinkSigninProp
 	}
+	enableAnonymousUserProp, err := expandIdentityPlatformTenantEnableAnonymousUser(d.Get("enable_anonymous_user"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("enable_anonymous_user"); !tpgresource.IsEmptyValue(reflect.ValueOf(enableAnonymousUserProp)) && (ok || !reflect.DeepEqual(v, enableAnonymousUserProp)) {
+		obj["enableAnonymousUser"] = enableAnonymousUserProp
+	}
 	disableAuthProp, err := expandIdentityPlatformTenantDisableAuth(d.Get("disable_auth"), d, config)
 	if err != nil {
 		return nil, err
@@ -155,6 +161,10 @@ func expandIdentityPlatformTenantAllowPasswordSignup(v interface{}, d tpgresourc
 }
 
 func expandIdentityPlatformTenantEnableEmailLinkSignin(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandIdentityPlatformTenantEnableAnonymousUser(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

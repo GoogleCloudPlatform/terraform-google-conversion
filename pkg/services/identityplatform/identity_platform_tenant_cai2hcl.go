@@ -139,6 +139,7 @@ func (c *IdentityPlatformTenantCai2hclConverter) convertResourceData(asset caias
 	hclData["display_name"] = flattenIdentityPlatformTenantDisplayName(res["displayName"], d, config)
 	hclData["allow_password_signup"] = flattenIdentityPlatformTenantAllowPasswordSignup(res["allowPasswordSignup"], d, config)
 	hclData["enable_email_link_signin"] = flattenIdentityPlatformTenantEnableEmailLinkSignin(res["enableEmailLinkSignin"], d, config)
+	hclData["enable_anonymous_user"] = flattenIdentityPlatformTenantEnableAnonymousUser(res["enableAnonymousUser"], d, config)
 	hclData["disable_auth"] = flattenIdentityPlatformTenantDisableAuth(res["disableAuth"], d, config)
 	hclData["client"] = flattenIdentityPlatformTenantClient(res["client"], d, config)
 
@@ -168,6 +169,10 @@ func flattenIdentityPlatformTenantAllowPasswordSignup(v interface{}, d *schema.R
 }
 
 func flattenIdentityPlatformTenantEnableEmailLinkSignin(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenIdentityPlatformTenantEnableAnonymousUser(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 

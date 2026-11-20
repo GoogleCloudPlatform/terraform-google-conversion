@@ -124,6 +124,11 @@ func ResourceIdentityPlatformTenant() *schema.Resource {
 the disabled tenant are not allowed to sign-in. Admins of the disabled tenant
 are not able to manage its users.`,
 			},
+			"enable_anonymous_user": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: `Whether to enable anonymous user authentication.`,
+			},
 			"enable_email_link_signin": {
 				Type:        schema.TypeBool,
 				Optional:    true,
