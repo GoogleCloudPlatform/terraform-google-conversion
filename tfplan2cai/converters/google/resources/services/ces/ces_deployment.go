@@ -195,6 +195,13 @@ func expandCESDeploymentChannelProfile(v interface{}, d tpgresource.TerraformRes
 		transformed["disableDtmf"] = transformedDisableDtmf
 	}
 
+	transformedNoiseSuppressionLevel, err := expandCESDeploymentChannelProfileNoiseSuppressionLevel(original["noise_suppression_level"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedNoiseSuppressionLevel); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["noiseSuppressionLevel"] = transformedNoiseSuppressionLevel
+	}
+
 	transformedPersonaProperty, err := expandCESDeploymentChannelProfilePersonaProperty(original["persona_property"], d, config)
 	if err != nil {
 		return nil, err
@@ -235,6 +242,10 @@ func expandCESDeploymentChannelProfileDisableBargeInControl(v interface{}, d tpg
 }
 
 func expandCESDeploymentChannelProfileDisableDtmf(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandCESDeploymentChannelProfileNoiseSuppressionLevel(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
