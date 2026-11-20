@@ -615,6 +615,20 @@ func expandAlloydbInstancePscInstanceConfig(v interface{}, d tpgresource.Terrafo
 		transformed["pscAutoConnections"] = transformedPscAutoConnections
 	}
 
+	transformedPscAutoDnsState, err := expandAlloydbInstancePscInstanceConfigPscAutoDnsState(original["psc_auto_dns_state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscAutoDnsState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscAutoDnsState"] = transformedPscAutoDnsState
+	}
+
+	transformedPscAutoConnectionPolicyState, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionPolicyState(original["psc_auto_connection_policy_state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscAutoConnectionPolicyState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscAutoConnectionPolicyState"] = transformedPscAutoConnectionPolicyState
+	}
+
 	return transformed, nil
 }
 
@@ -707,6 +721,27 @@ func expandAlloydbInstancePscInstanceConfigPscAutoConnections(v interface{}, d t
 			transformed["consumerNetworkStatus"] = transformedConsumerNetworkStatus
 		}
 
+		transformedServiceConnectionPolicy, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionsServiceConnectionPolicy(original["service_connection_policy"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedServiceConnectionPolicy); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["serviceConnectionPolicy"] = transformedServiceConnectionPolicy
+		}
+
+		transformedServiceConnectionPolicyCreationState, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionsServiceConnectionPolicyCreationState(original["service_connection_policy_creation_state"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedServiceConnectionPolicyCreationState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["serviceConnectionPolicyCreationState"] = transformedServiceConnectionPolicyCreationState
+		}
+
+		transformedDnsAutomationInfos, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionsDnsAutomationInfos(original["dns_automation_infos"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedDnsAutomationInfos); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["dnsAutomationInfos"] = transformedDnsAutomationInfos
+		}
+
 		req = append(req, transformed)
 	}
 	return req, nil
@@ -729,6 +764,62 @@ func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsStatus(v interface{
 }
 
 func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerNetworkStatus(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsServiceConnectionPolicy(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsServiceConnectionPolicyCreationState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsDnsAutomationInfos(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	req := make([]interface{}, 0, len(l))
+	for _, raw := range l {
+		if raw == nil {
+			continue
+		}
+		original := raw.(map[string]interface{})
+		transformed := make(map[string]interface{})
+
+		transformedState, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionsDnsAutomationInfosState(original["state"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["state"] = transformedState
+		}
+
+		transformedFullyQualifiedDomainName, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionsDnsAutomationInfosFullyQualifiedDomainName(original["fully_qualified_domain_name"], d, config)
+		if err != nil {
+			return nil, err
+		} else if val := reflect.ValueOf(transformedFullyQualifiedDomainName); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+			transformed["fullyQualifiedDomainName"] = transformedFullyQualifiedDomainName
+		}
+
+		req = append(req, transformed)
+	}
+	return req, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsDnsAutomationInfosState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsDnsAutomationInfosFullyQualifiedDomainName(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoDnsState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionPolicyState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

@@ -456,6 +456,20 @@ func expandAlloydbInstancePscInstanceConfig(v interface{}, d tpgresource.Terrafo
 		transformed["pscAutoConnections"] = transformedPscAutoConnections
 	}
 
+	transformedPscAutoDnsState, err := expandAlloydbInstancePscInstanceConfigPscAutoDnsState(original["psc_auto_dns_state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscAutoDnsState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscAutoDnsState"] = transformedPscAutoDnsState
+	}
+
+	transformedPscAutoConnectionPolicyState, err := expandAlloydbInstancePscInstanceConfigPscAutoConnectionPolicyState(original["psc_auto_connection_policy_state"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedPscAutoConnectionPolicyState); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["pscAutoConnectionPolicyState"] = transformedPscAutoConnectionPolicyState
+	}
+
 	return transformed, nil
 }
 
@@ -529,6 +543,14 @@ func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerProject(v i
 }
 
 func expandAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerNetwork(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoDnsState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandAlloydbInstancePscInstanceConfigPscAutoConnectionPolicyState(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

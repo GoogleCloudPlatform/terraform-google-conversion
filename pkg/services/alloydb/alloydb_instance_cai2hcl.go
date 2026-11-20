@@ -133,7 +133,7 @@ func (c *AlloydbInstanceCai2hclConverter) convertResourceData(asset caiasset.Ass
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "ip_address": struct{}{}, "name": struct{}{}, "outbound_public_ip_addresses": struct{}{}, "public_ip_address": struct{}{}, "reconciling": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
+	outputFields := map[string]struct{}{"create_time": struct{}{}, "effective_annotations": struct{}{}, "effective_labels": struct{}{}, "ip_address": struct{}{}, "name": struct{}{}, "outbound_public_ip_addresses": struct{}{}, "psc_instance_info": struct{}{}, "public_ip_address": struct{}{}, "reconciling": struct{}{}, "state": struct{}{}, "terraform_labels": struct{}{}, "uid": struct{}{}, "update_time": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//alloydb.googleapis.com/{{cluster}}/instances/{{instance_id}}", outputFields, hclData)
 
 	hclData["labels"] = flattenAlloydbInstanceLabels(res["labels"], d, config)
@@ -386,6 +386,10 @@ func flattenAlloydbInstancePscInstanceConfig(v interface{}, d *schema.ResourceDa
 		flattenAlloydbInstancePscInstanceConfigPscInterfaceConfigs(original["pscInterfaceConfigs"], d, config)
 	transformed["psc_auto_connections"] =
 		flattenAlloydbInstancePscInstanceConfigPscAutoConnections(original["pscAutoConnections"], d, config)
+	transformed["psc_auto_dns_state"] =
+		flattenAlloydbInstancePscInstanceConfigPscAutoDnsState(original["pscAutoDnsState"], d, config)
+	transformed["psc_auto_connection_policy_state"] =
+		flattenAlloydbInstancePscInstanceConfigPscAutoConnectionPolicyState(original["pscAutoConnectionPolicyState"], d, config)
 	if tgcresource.AllValuesAreNil(transformed) {
 		return nil
 	}
@@ -462,6 +466,14 @@ func flattenAlloydbInstancePscInstanceConfigPscAutoConnectionsConsumerNetwork(v 
 	if strVal, ok := v.(string); ok && strVal == "" {
 		return nil
 	}
+	return v
+}
+
+func flattenAlloydbInstancePscInstanceConfigPscAutoDnsState(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
+	return v
+}
+
+func flattenAlloydbInstancePscInstanceConfigPscAutoConnectionPolicyState(v interface{}, d *schema.ResourceData, config *transport_tpg.Config) interface{} {
 	return v
 }
 
