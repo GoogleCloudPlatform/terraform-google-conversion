@@ -425,10 +425,21 @@ func expandStorageBatchOperationsJobRewriteObject(v interface{}, d tpgresource.T
 		transformed["kmsKey"] = transformedKmsKey
 	}
 
+	transformedStorageClass, err := expandStorageBatchOperationsJobRewriteObjectStorageClass(original["storage_class"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedStorageClass); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["storageClass"] = transformedStorageClass
+	}
+
 	return transformed, nil
 }
 
 func expandStorageBatchOperationsJobRewriteObjectKmsKey(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandStorageBatchOperationsJobRewriteObjectStorageClass(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
