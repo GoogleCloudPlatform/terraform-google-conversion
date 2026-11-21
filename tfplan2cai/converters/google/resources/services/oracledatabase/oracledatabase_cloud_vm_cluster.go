@@ -172,6 +172,12 @@ func GetOracleDatabaseCloudVmClusterApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("odb_dns_zone"); !tpgresource.IsEmptyValue(reflect.ValueOf(odbDnsZoneProp)) && (ok || !reflect.DeepEqual(v, odbDnsZoneProp)) {
 		obj["odbDnsZone"] = odbDnsZoneProp
 	}
+	identityConnectorDisabledProp, err := expandOracleDatabaseCloudVmClusterIdentityConnectorDisabled(d.Get("identity_connector_disabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("identity_connector_disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(identityConnectorDisabledProp)) && (ok || !reflect.DeepEqual(v, identityConnectorDisabledProp)) {
+		obj["identityConnectorDisabled"] = identityConnectorDisabledProp
+	}
 	exascaleDbStorageVaultProp, err := expandOracleDatabaseCloudVmClusterExascaleDbStorageVault(d.Get("exascale_db_storage_vault"), d, config)
 	if err != nil {
 		return nil, err
@@ -698,6 +704,10 @@ func expandOracleDatabaseCloudVmClusterBackupOdbSubnet(v interface{}, d tpgresou
 }
 
 func expandOracleDatabaseCloudVmClusterOdbDnsZone(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseCloudVmClusterIdentityConnectorDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 

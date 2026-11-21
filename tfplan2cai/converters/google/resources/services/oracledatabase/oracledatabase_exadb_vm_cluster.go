@@ -136,6 +136,12 @@ func GetOracleDatabaseExadbVmClusterApiObject(d tpgresource.TerraformResourceDat
 	} else if v, ok := d.GetOkExists("odb_subnet"); !tpgresource.IsEmptyValue(reflect.ValueOf(odbSubnetProp)) && (ok || !reflect.DeepEqual(v, odbSubnetProp)) {
 		obj["odbSubnet"] = odbSubnetProp
 	}
+	identityConnectorDisabledProp, err := expandOracleDatabaseExadbVmClusterIdentityConnectorDisabled(d.Get("identity_connector_disabled"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("identity_connector_disabled"); !tpgresource.IsEmptyValue(reflect.ValueOf(identityConnectorDisabledProp)) && (ok || !reflect.DeepEqual(v, identityConnectorDisabledProp)) {
+		obj["identityConnectorDisabled"] = identityConnectorDisabledProp
+	}
 	propertiesProp, err := expandOracleDatabaseExadbVmClusterProperties(d.Get("properties"), d, config)
 	if err != nil {
 		return nil, err
@@ -165,6 +171,10 @@ func expandOracleDatabaseExadbVmClusterOdbNetwork(v interface{}, d tpgresource.T
 }
 
 func expandOracleDatabaseExadbVmClusterOdbSubnet(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandOracleDatabaseExadbVmClusterIdentityConnectorDisabled(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
