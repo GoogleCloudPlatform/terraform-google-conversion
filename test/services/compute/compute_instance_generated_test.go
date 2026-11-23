@@ -551,6 +551,7 @@ func TestAccComputeInstance(t *testing.T) {
 					"min_cpu_platform",
 					"network_interface.subnetwork_project",
 					"provider",
+					"scheduling.graceful_shutdown.max_duration.nanos",
 					"service_account.scopes",
 					"timeouts",
 				},
