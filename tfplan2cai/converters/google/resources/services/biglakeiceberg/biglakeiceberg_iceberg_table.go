@@ -117,6 +117,76 @@ func expandIcebergTableSortOrderForCommit(v interface{}) map[string]interface{} 
 	}
 }
 
+// icebergTableInt converts a numeric value from config (int) or from a JSON
+// response (json.Number or float64) to an int.
+func icebergTableInt(v interface{}) (int, bool) {
+	switch n := v.(type) {
+	case int:
+		return n, true
+	case float64:
+		return int(n), true
+	case json.Number:
+		i, err := n.Int64()
+		return int(i), err == nil
+	}
+	return 0, false
+}
+
+// icebergTablePartitionFieldsWithIds returns a copy of the partition spec
+// fields of an "add-spec" update with a "field-id" set on each one, and the
+// table's new last assigned partition id. The server keeps the ids it is sent,
+// and Iceberg v2 partition field ids must be unique across all of a table's
+// specs. So, as Iceberg's reference implementation does, a field with the same
+// source id and transform as a field in any existing spec reuses that field's
+// id, and any other field gets the next id after lastPartitionId.
+func icebergTablePartitionFieldsWithIds(fields, existingSpecs []interface{}, lastPartitionId int) ([]interface{}, int) {
+	existingIds := map[string]int{}
+	for _, s := range existingSpecs {
+		spec, ok := s.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		specFields, _ := spec["fields"].([]interface{})
+		for _, f := range specFields {
+			field, ok := f.(map[string]interface{})
+			if !ok {
+				continue
+			}
+			sourceId, ok1 := icebergTableInt(field["source-id"])
+			fieldId, ok2 := icebergTableInt(field["field-id"])
+			if !ok1 || !ok2 {
+				continue
+			}
+			key := fmt.Sprintf("%d/%v", sourceId, field["transform"])
+			if _, seen := existingIds[key]; !seen {
+				existingIds[key] = fieldId
+			}
+		}
+	}
+
+	result := make([]interface{}, 0, len(fields))
+	for _, f := range fields {
+		field, ok := f.(map[string]interface{})
+		if !ok {
+			result = append(result, f)
+			continue
+		}
+		withId := make(map[string]interface{}, len(field))
+		for k, v := range field {
+			withId[k] = v
+		}
+		sourceId, _ := icebergTableInt(field["source-id"])
+		if id, ok := existingIds[fmt.Sprintf("%d/%v", sourceId, field["transform"])]; ok {
+			withId["field-id"] = id
+		} else {
+			lastPartitionId++
+			withId["field-id"] = lastPartitionId
+		}
+		result = append(result, withId)
+	}
+	return result, lastPartitionId
+}
+
 var (
 	_ = bytes.Clone
 	_ = context.WithCancel
