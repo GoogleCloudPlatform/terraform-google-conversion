@@ -285,6 +285,11 @@ a Google API or a PSC Producer Service Attachment.`,
 
 Optional URL of the subnetwork to which all network endpoints in the NEG belong.`,
 			},
+			"generated_id": {
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Description: `The uniquely generated identifier for the resource. This identifier is defined by the server.`,
+			},
 			"project": {
 				Type:     schema.TypeString,
 				Optional: true,

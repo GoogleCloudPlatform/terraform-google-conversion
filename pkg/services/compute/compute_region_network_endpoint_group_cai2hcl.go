@@ -133,7 +133,7 @@ func (c *ComputeRegionNetworkEndpointGroupCai2hclConverter) convertResourceData(
 	}
 	hclData := make(map[string]interface{})
 
-	outputFields := map[string]struct{}{}
+	outputFields := map[string]struct{}{"generated_id": struct{}{}}
 	utils.ParseUrlParamValuesFromAssetName(asset.Name, "//compute.googleapis.com/projects/{{project}}/regions/{{region}}/networkEndpointGroups/{{name}}", outputFields, hclData)
 
 	hclData["name"] = flattenComputeRegionNetworkEndpointGroupName(res["name"], d, config)
