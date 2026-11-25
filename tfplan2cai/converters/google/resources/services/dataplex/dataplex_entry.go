@@ -447,6 +447,13 @@ func expandDataplexEntryAspectsAspect(v interface{}, d tpgresource.TerraformReso
 		transformed["data"] = transformedData
 	}
 
+	transformedAspectSource, err := expandDataplexEntryAspectsAspectAspectSource(original["aspect_source"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedAspectSource); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["aspectSource"] = transformedAspectSource
+	}
+
 	return transformed, nil
 }
 
@@ -476,6 +483,54 @@ func expandDataplexEntryAspectsAspectData(v interface{}, d tpgresource.Terraform
 		return nil, err
 	}
 	return j, nil
+}
+
+func expandDataplexEntryAspectsAspectAspectSource(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedCreateTime, err := expandDataplexEntryAspectsAspectAspectSourceCreateTime(original["create_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedCreateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["createTime"] = transformedCreateTime
+	}
+
+	transformedUpdateTime, err := expandDataplexEntryAspectsAspectAspectSourceUpdateTime(original["update_time"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedUpdateTime); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["updateTime"] = transformedUpdateTime
+	}
+
+	transformedDataVersion, err := expandDataplexEntryAspectsAspectAspectSourceDataVersion(original["data_version"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedDataVersion); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["dataVersion"] = transformedDataVersion
+	}
+
+	return transformed, nil
+}
+
+func expandDataplexEntryAspectsAspectAspectSourceCreateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexEntryAspectsAspectAspectSourceUpdateTime(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDataplexEntryAspectsAspectAspectSourceDataVersion(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
 }
 
 func expandDataplexEntryParentEntry(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
