@@ -160,6 +160,12 @@ func GetDialogflowGeneratorApiObject(d tpgresource.TerraformResourceData, config
 	} else if v, ok := d.GetOkExists("tools"); !tpgresource.IsEmptyValue(reflect.ValueOf(toolsProp)) && (ok || !reflect.DeepEqual(v, toolsProp)) {
 		obj["tools"] = toolsProp
 	}
+	suggestionDedupingConfigProp, err := expandDialogflowGeneratorSuggestionDedupingConfig(d.Get("suggestion_deduping_config"), d, config)
+	if err != nil {
+		return nil, err
+	} else if v, ok := d.GetOkExists("suggestion_deduping_config"); ok || (v != nil && !reflect.DeepEqual(v, suggestionDedupingConfigProp)) {
+		obj["suggestionDedupingConfig"] = suggestionDedupingConfigProp
+	}
 	generatorIdProp, err := expandDialogflowGeneratorGeneratorId(d.Get("generator_id"), d, config)
 	if err != nil {
 		return nil, err
@@ -953,6 +959,48 @@ func expandDialogflowGeneratorPublishedModel(v interface{}, d tpgresource.Terraf
 }
 
 func expandDialogflowGeneratorTools(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorSuggestionDedupingConfig(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	l := v.([]interface{})
+	if len(l) == 0 {
+		return nil, nil
+	}
+
+	if l[0] == nil {
+		transformed := make(map[string]interface{})
+		return transformed, nil
+	}
+	raw := l[0]
+	original := raw.(map[string]interface{})
+	transformed := make(map[string]interface{})
+
+	transformedEnableDeduping, err := expandDialogflowGeneratorSuggestionDedupingConfigEnableDeduping(original["enable_deduping"], d, config)
+	if err != nil {
+		return nil, err
+	} else {
+		transformed["enableDeduping"] = transformedEnableDeduping
+	}
+
+	transformedSimilarityThreshold, err := expandDialogflowGeneratorSuggestionDedupingConfigSimilarityThreshold(original["similarity_threshold"], d, config)
+	if err != nil {
+		return nil, err
+	} else if val := reflect.ValueOf(transformedSimilarityThreshold); val.IsValid() && !tpgresource.IsEmptyValue(val) {
+		transformed["similarityThreshold"] = transformedSimilarityThreshold
+	}
+
+	return transformed, nil
+}
+
+func expandDialogflowGeneratorSuggestionDedupingConfigEnableDeduping(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
+	return v, nil
+}
+
+func expandDialogflowGeneratorSuggestionDedupingConfigSimilarityThreshold(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
 
