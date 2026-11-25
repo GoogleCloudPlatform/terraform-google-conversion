@@ -51,13 +51,10 @@ import (
 )
 
 import (
-	"net/url"
-
 	rmClient "github.com/hashicorp/terraform-provider-google-beta/google-beta/services/resourcemanager/client"
 )
 
 var (
-	_ = url.Parse
 	_ = rmClient.NewClient
 )
 
